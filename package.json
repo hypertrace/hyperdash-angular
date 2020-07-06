@@ -30,7 +30,7 @@
     "@hypertrace/hyperdash": "^1.0.0",
     "core-js": "^3.6.5",
     "lodash": "^4.17.15",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.0",
     "tslib": "^1.0.0",
     "zone.js": "~0.10.3"
   },
