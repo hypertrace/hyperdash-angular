@@ -1,4 +1,3 @@
-import { PortalInjector } from '@angular/cdk/portal';
 import {
   ComponentFactory,
   ComponentFactoryResolver,
@@ -132,9 +131,14 @@ export class DashboardRendererService {
     rendererDestruction$: Observable<void>,
     viewContainerRef: ViewContainerRef
   ): Injector {
-    return new PortalInjector(
-      viewContainerRef.injector,
-      new WeakMap([[RENDERER_API, this.rendererApiFactory.buildApi(model, rendererDestruction$)]])
+    return Injector.create(
+      [
+        {
+          provide: RENDERER_API,
+          useValue: this.rendererApiFactory.buildApi(model, rendererDestruction$)
+        }
+      ],
+      viewContainerRef.injector
     );
   }
 
