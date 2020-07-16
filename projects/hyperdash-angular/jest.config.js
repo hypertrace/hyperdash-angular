@@ -22,6 +22,9 @@ module.exports = {
       }
     ]
   ],
+  moduleNameMapper: {
+    '^lodash-es$': 'lodash'
+  },
   modulePathIgnorePatterns: ['BOGUS'], // Need to reset from app project, but empty is merged
   watchPathIgnorePatterns: ['test-results']
 };

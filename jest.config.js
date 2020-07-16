@@ -22,6 +22,7 @@ module.exports = {
   modulePathIgnorePatterns: ['<rootDir>/projects'],
   watchPathIgnorePatterns: ['test-results'],
   moduleNameMapper: {
+    '^lodash-es$': 'lodash',
     '^@hypertrace/hyperdash-angular$': '<rootDir>/projects/hyperdash-angular/src/public_api.ts'
   }
 };

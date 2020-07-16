@@ -22,7 +22,7 @@ import {
   RendererApi,
   RENDERER_API
 } from '@hypertrace/hyperdash-angular';
-import { remove } from 'lodash';
+import { remove } from 'lodash-es';
 import { EMPTY, interval, Observable, of } from 'rxjs';
 // tslint:disable-next-line:no-submodule-imports
 import { catchError, map, take } from 'rxjs/operators';

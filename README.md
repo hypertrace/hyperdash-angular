@@ -1,6 +1,6 @@
 # Hyperdash Angular
 
-[![CircleCI](https://circleci.com/gh/hypertrace/hyperdash-angular.svg?style=svg)](https://circleci.com/gh/hypertrace/hyperdash-angular)
+[![CircleCI](https://circleci.com/gh/hypertrace/hyperdash-angular.svg?style=shield)](https://circleci.com/gh/hypertrace/hyperdash-angular)
 [![codecov](https://codecov.io/gh/hypertrace/hyperdash-angular/branch/master/graph/badge.svg)](https://codecov.io/gh/hypertrace/hyperdash-angular)
 
 ## Prerequisites
