@@ -5,7 +5,7 @@
     "entryFile": "src/public_api.ts",
     "umdModuleIds": {
       "@hypertrace/hyperdash": "hyperdash",
-      "lodash": "_"
+      "lodash-es": "_"
     }
   }
 }

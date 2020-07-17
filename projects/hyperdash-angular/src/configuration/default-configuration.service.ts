@@ -1,6 +1,6 @@
 import { Inject, Injectable, Injector, Type } from '@angular/core';
 import { ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
-import { flatten, uniq } from 'lodash';
+import { flatten, uniq } from 'lodash-es';
 import { DefaultModelApiBuilderService } from '../injectable-wrappers/default-model-api-builder.service';
 import { ArrayDeserializerService } from '../injectable-wrappers/deserialization/array-deserializer.service';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
