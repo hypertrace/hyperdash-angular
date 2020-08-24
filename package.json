@@ -90,6 +90,9 @@
     "registry": "https://api.bintray.com/npm/hypertrace/npm"
   },
   "release": {
+    "branches": [
+      "main"
+    ],
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
