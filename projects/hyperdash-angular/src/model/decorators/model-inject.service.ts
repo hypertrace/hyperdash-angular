@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken, Injector, Type } from '@angular/core';
+import { AbstractType, Injectable, InjectionToken, Injector, Type } from '@angular/core';
 import { ModelApi, ModelDecorator } from '@hypertrace/hyperdash';
 
 @Injectable({ providedIn: 'root' })
@@ -85,7 +85,7 @@ type PropertyKey = string | number;
 interface ModelInjectData {
   injectHostClass: Type<unknown>;
   propertyKey: PropertyKey;
-  injectKey: InjectionToken<unknown> | Type<unknown>;
+  injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>;
 }
 
 const injectDefinitions: ModelInjectData[] = [];
@@ -95,7 +95,9 @@ const injectDefinitions: ModelInjectData[] = [];
  * @see `MODEL_API`
  */
 // tslint:disable-next-line:only-arrow-functions
-export function ModelInject(injectKey: InjectionToken<unknown> | Type<unknown>): PropertyDecorator {
+export function ModelInject(
+  injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>
+): PropertyDecorator {
   return (modelPrototype: object, propertyKey: string | symbol): void => {
     injectDefinitions.push({
       injectHostClass: modelPrototype.constructor as Type<unknown>,
