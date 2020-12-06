@@ -1,10 +1,10 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/spec",
+    "outDir": "./out-tsc/spec",
     "types": ["jest", "webpack-env"],
     "module": "commonjs"
   },
-  "files": ["polyfills.ts"],
+  "files": ["src/polyfills.ts"],
   "include": ["**/*.spec.ts", "**/*.test.ts"]
 }

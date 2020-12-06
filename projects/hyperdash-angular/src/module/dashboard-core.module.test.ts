@@ -28,6 +28,6 @@ describe('Dashboard core module', () => {
       ]
     });
 
-    expect(TestBed.get(MODEL_PROPERTY_TYPES)).toContainEqual([testPropType, testPropType2, PropertyTypeProvider]);
+    expect(TestBed.inject(MODEL_PROPERTY_TYPES)).toContainEqual([testPropType, testPropType2, PropertyTypeProvider]);
   });
 });

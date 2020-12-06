@@ -33,8 +33,8 @@ describe('Default configuration service', () => {
       ]
     });
 
-    defaultConfigurationService = TestBed.get(DefaultConfigurationService);
-    logger = TestBed.get(LoggerService);
+    defaultConfigurationService = TestBed.inject(DefaultConfigurationService);
+    logger = TestBed.inject(LoggerService);
     const errorSpy = jest.spyOn(logger, 'error');
     errorSpy.mockImplementation(
       message =>
@@ -49,10 +49,10 @@ describe('Default configuration service', () => {
   });
 
   test('correctly configures deserialization', () => {
-    const deserializationManager = TestBed.get(DeserializationManagerService) as DeserializationManagerService;
-    const modelLibrary = TestBed.get(ModelLibraryService) as ModelLibraryService;
+    const deserializationManager = TestBed.inject(DeserializationManagerService);
+    const modelLibrary = TestBed.inject(ModelLibraryService);
 
-    (TestBed.get(ModelPropertyValidatorService) as ModelPropertyValidatorService).setStrictSchema(false);
+    TestBed.inject(ModelPropertyValidatorService).setStrictSchema(false);
     const testModel = class ModelClass {
       public constructor(public prop: unknown) {}
     };
@@ -97,8 +97,8 @@ describe('Default configuration service', () => {
   });
 
   test('correctly configures deserialization and setting of variables', () => {
-    const deserializationManager = TestBed.get(DeserializationManagerService) as DeserializationManagerService;
-    const modelLibrary = TestBed.get(ModelLibraryService) as ModelLibraryService;
+    const deserializationManager = TestBed.inject(DeserializationManagerService);
+    const modelLibrary = TestBed.inject(ModelLibraryService);
 
     const testModel = class ModelClass {
       public constructor(public prop?: number) {}
@@ -121,7 +121,7 @@ describe('Default configuration service', () => {
 
     expect(deserializedModel).toEqual(new testModel());
 
-    (TestBed.get(VariableManagerService) as VariableManagerService).set('test', 42, deserializedModel);
+    TestBed.inject(VariableManagerService).set('test', 42, deserializedModel);
 
     expect(deserializedModel).toEqual(new testModel(42));
   });
@@ -135,9 +135,9 @@ describe('Default configuration service', () => {
   });
 
   test('correctly configures serialization', () => {
-    const serializationManager = TestBed.get(SerializationManagerService) as SerializationManagerService;
-    const modelLibrary = TestBed.get(ModelLibraryService) as ModelLibraryService;
-    const modelManager = TestBed.get(ModelManagerService) as ModelManagerService;
+    const serializationManager = TestBed.inject(SerializationManagerService);
+    const modelLibrary = TestBed.inject(ModelLibraryService);
+    const modelManager = TestBed.inject(ModelManagerService);
 
     const testModel = class {
       public constructor(public prop?: unknown[]) {}
@@ -170,7 +170,7 @@ describe('Default configuration service', () => {
   });
 
   test('registers provided property types', () => {
-    const propertyTypeLibrary = TestBed.get(ModelPropertyTypeLibraryService) as ModelPropertyTypeLibraryService;
+    const propertyTypeLibrary = TestBed.inject(ModelPropertyTypeLibraryService);
     propertyTypeLibrary.registerPropertyType = jest.fn();
     defaultConfigurationService.configure();
     expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledWith({ type: 'test-property' });

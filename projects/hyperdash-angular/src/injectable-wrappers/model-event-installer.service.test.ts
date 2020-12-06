@@ -15,11 +15,11 @@ describe('Model event installer service', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: eventKeyInjectionToken, useValue: eventKey }]
     });
-    modelEventInstallerService = TestBed.get(ModelEventInstallerService);
+    modelEventInstallerService = TestBed.inject(ModelEventInstallerService);
   });
 
   test('should support injecting event keys', () => {
-    const dashEventManagerService: DashboardEventManagerService = TestBed.get(DashboardEventManagerService);
+    const dashEventManagerService: DashboardEventManagerService = TestBed.inject(DashboardEventManagerService);
     dashEventManagerService.publishEvent = jest.fn();
 
     class TestModelClass {

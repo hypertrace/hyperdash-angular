@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DashboardModelDirective } from './dashboard-model.directive';
 import { DashboardRendererService } from './dashboard-renderer.service';
 
@@ -7,17 +7,19 @@ describe('DashboardModelDirective', () => {
   let dashboardRendererService: DashboardRendererService;
   let host: ComponentFixture<HostComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: DashboardRendererService, useValue: {} }],
-      declarations: [HostComponent, DashboardModelDirective]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: DashboardRendererService, useValue: {} }],
+        declarations: [HostComponent, DashboardModelDirective]
+      }).compileComponents();
 
-    dashboardRendererService = TestBed.get(DashboardRendererService);
-    dashboardRendererService.renderInViewContainer = jest.fn();
+      dashboardRendererService = TestBed.inject(DashboardRendererService);
+      dashboardRendererService.renderInViewContainer = jest.fn();
 
-    host = TestBed.createComponent(HostComponent);
-  }));
+      host = TestBed.createComponent(HostComponent);
+    })
+  );
 
   test('passes initial value to renderer service', () => {
     expect(dashboardRendererService.renderInViewContainer).not.toHaveBeenCalled();

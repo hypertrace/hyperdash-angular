@@ -43,11 +43,11 @@ describe('Model editor component', () => {
       imports: [DashboardEditorModule, moduleWithEntryComponents(PropEditorComponent)]
     });
 
-    mockModelEditorService = TestBed.get(ModelEditorService);
+    mockModelEditorService = TestBed.inject(ModelEditorService);
     mockModelEditorService.getRenderData = jest.fn().mockReturnValue([
       {
         component: PropEditorComponent,
-        injector: TestBed.get(Injector)
+        injector: TestBed.inject(Injector)
       }
     ]);
 

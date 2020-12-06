@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { async, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
   DashboardCoreModule,
@@ -12,22 +12,24 @@ import { ExampleDashModule } from './example-dash.module';
 import { GraphQlDataSourceModule } from './graphql-data-source.module';
 
 describe('example dash component', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ExampleDashComponent],
-      imports: [
-        ExampleDashModule,
-        DashboardCoreModule,
-        DashboardEditorModule,
-        FormsModule,
-        GraphQlDataSourceModule,
-        HttpClientTestingModule
-      ],
-      providers: [{ provide: LoggerService, useValue: { warn: jest.fn() } }]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ExampleDashComponent],
+        imports: [
+          ExampleDashModule,
+          DashboardCoreModule,
+          DashboardEditorModule,
+          FormsModule,
+          GraphQlDataSourceModule,
+          HttpClientTestingModule
+        ],
+        providers: [{ provide: LoggerService, useValue: { warn: jest.fn() } }]
+      }).compileComponents();
 
-    (TestBed.get(DefaultConfigurationService) as DefaultConfigurationService).configure();
-  }));
+      TestBed.inject(DefaultConfigurationService).configure();
+    })
+  );
 
   test('can detect clicks inside the dashboard', () => {
     const fixture = TestBed.createComponent(ExampleDashComponent);
