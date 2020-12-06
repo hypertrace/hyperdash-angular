@@ -21,7 +21,7 @@
     "rxjs": "^6.6.3",
     "zone.js": "~0.10.3",
     "lodash-es": "^4.17.15",
-    "@hypertrace/hyperdash": "^1.1.2"
+    "@hypertrace/hyperdash": "^1.2.0"
   },
   "dependencies": {
     "tslib": "^2.0.3"

@@ -3,7 +3,7 @@ import { ModelPropertyType } from '@hypertrace/hyperdash';
 import { DeserializationManagerService } from './deserialization/deserialization-manager.service';
 import { ModelManagerService } from './model-manager.service';
 /**
- * Injectable implementation of `RendererLModelPropertyTypeibrary`
+ * Injectable implementation of `ModelPropertyType`
  */
 @Injectable({
   providedIn: 'root'

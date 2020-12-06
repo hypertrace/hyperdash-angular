@@ -1,13 +1,8 @@
-import { Inject, Injectable, Injector, Type } from '@angular/core';
-import { ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
+import { AbstractType, Inject, Injectable, Injector, Type } from '@angular/core';
+import { Deserializer, ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
 import { flatten, uniq } from 'lodash-es';
 import { DefaultModelApiBuilderService } from '../injectable-wrappers/default-model-api-builder.service';
-import { ArrayDeserializerService } from '../injectable-wrappers/deserialization/array-deserializer.service';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
-import { ModelDeserializerService } from '../injectable-wrappers/deserialization/model-deserializer.service';
-import { ObjectDeserializerService } from '../injectable-wrappers/deserialization/object-deserializer.service';
-import { PrimitiveDeserializerService } from '../injectable-wrappers/deserialization/primitive-deserializer.service';
-import { VariableDeserializerService } from '../injectable-wrappers/deserialization/variable-deserializer.service';
 import { ModelEventInstallerService } from '../injectable-wrappers/model-event-installer.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { ModelPropertyTypeLibraryService } from '../injectable-wrappers/model-property-type-library.service';
@@ -18,7 +13,7 @@ import { PrimitiveSerializerService } from '../injectable-wrappers/serialization
 import { SerializationManagerService } from '../injectable-wrappers/serialization/serialization-manager.service';
 import { VariableSerializerService } from '../injectable-wrappers/serialization/variable-serializer.service';
 import { ModelInjectService } from '../model/decorators/model-inject.service';
-import { MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
+import { DASHBOARD_DESERIALIZERS, MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
 
 /**
  * Configures dashboard services for default behavior
@@ -28,14 +23,10 @@ import { MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
 })
 export class DefaultConfigurationService {
   private configured: boolean = false;
+  private readonly registeredObjects: WeakSet<object> = new WeakSet();
 
   public constructor(
     private readonly deserializationManager: DeserializationManagerService,
-    private readonly objectDeserializer: ObjectDeserializerService,
-    private readonly arrayDeserializer: ArrayDeserializerService,
-    private readonly primitiveDeserializer: PrimitiveDeserializerService,
-    private readonly modelDeserializer: ModelDeserializerService,
-    private readonly variableDeserializer: VariableDeserializerService,
     private readonly modelManager: ModelManagerService,
     private readonly defaultModelApiBuilder: DefaultModelApiBuilderService,
     private readonly serializationManager: SerializationManagerService,
@@ -48,35 +39,43 @@ export class DefaultConfigurationService {
     private readonly modelEventInstaller: ModelEventInstallerService,
     private readonly modelInjectService: ModelInjectService,
     private readonly injector: Injector,
-    @Inject(MODEL_PROPERTY_TYPES) private readonly propertyTypes: PropertyTypeRegistration[][]
+    @Inject(MODEL_PROPERTY_TYPES) private readonly propertyTypes: PropertyTypeRegistration[][],
+    @Inject(DASHBOARD_DESERIALIZERS)
+    private readonly deserializers: (Type<Deserializer> | AbstractType<Deserializer>)[][]
   ) {}
 
   /**
-   * Does the configuration. This should be called during application bootstrap.
+   * Does the configuration. This should be called during application bootstrap. Later calls will
+   * do incremental configuration.
    *
-   * @throws Error if configure is called more than once
    */
   public configure(): void {
+    this.registerPropertyTypes();
+    this.registerDeserializers();
+
     if (this.configured) {
-      throw new Error('Default Configuration Service cannot be configured twice');
+      return;
     }
     this.configured = true;
-    this.registerPropertyTypes();
-    this.configureDeserialization();
+    // Beyond here, code should only be invoked once
     this.configureSerialization();
     this.registerModelDecorators();
     this.configureModelApiBuilder();
   }
 
-  private configureDeserialization(): void {
-    this.deserializationManager.registerDeserializer(this.variableDeserializer);
-    this.deserializationManager.registerDeserializer(this.primitiveDeserializer);
-    this.deserializationManager.registerDeserializer(this.modelDeserializer);
-    this.deserializationManager.registerDeserializer(this.arrayDeserializer);
-    this.deserializationManager.registerDeserializer(this.objectDeserializer);
+  private registerDeserializers(): void {
+    uniq(flatten(this.deserializers)).forEach(deserializerClass => {
+      if (this.registeredObjects.has(deserializerClass)) {
+        return;
+      }
+      this.registeredObjects.add(deserializerClass);
+
+      this.deserializationManager.registerDeserializer(this.injector.get(deserializerClass));
+    });
   }
 
   private configureSerialization(): void {
+    // TODO - expose customizing serializers similar to deserializers
     this.serializationManager.registerSerializer(this.variableSerializer);
     this.serializationManager.registerSerializer(this.primitiveSerializer);
     this.serializationManager.registerSerializer(this.modelSerializer);
@@ -90,6 +89,11 @@ export class DefaultConfigurationService {
 
   private registerPropertyTypes(): void {
     uniq(flatten(this.propertyTypes)).forEach(propertyType => {
+      if (this.registeredObjects.has(propertyType)) {
+        return;
+      }
+      this.registeredObjects.add(propertyType);
+
       if (typeof propertyType === 'object') {
         this.propertyTypeLibrary.registerPropertyType(propertyType);
       } else {
