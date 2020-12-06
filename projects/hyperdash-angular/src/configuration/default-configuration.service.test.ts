@@ -2,20 +2,18 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   ARRAY_PROPERTY,
-  BOOLEAN_PROPERTY,
+  Deserializer,
+  JsonPrimitive,
   LogMessage,
-  ModelPropertyTypeRegistrationInformation,
-  NUMBER_PROPERTY
+  ModelPropertyTypeRegistrationInformation
 } from '@hypertrace/hyperdash';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
 import { LoggerService } from '../injectable-wrappers/logger.service';
 import { ModelLibraryService } from '../injectable-wrappers/model-library.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { ModelPropertyTypeLibraryService } from '../injectable-wrappers/model-property-type-library.service';
-import { ModelPropertyValidatorService } from '../injectable-wrappers/model-property-validator.service';
 import { SerializationManagerService } from '../injectable-wrappers/serialization/serialization-manager.service';
-import { VariableManagerService } from '../injectable-wrappers/variable-manager.service';
-import { MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
+import { DASHBOARD_DESERIALIZERS, MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
 import { DefaultConfigurationService } from './default-configuration.service';
 
 describe('Default configuration service', () => {
@@ -28,6 +26,11 @@ describe('Default configuration service', () => {
         {
           provide: MODEL_PROPERTY_TYPES,
           useValue: [{ type: 'test-property' }, TestPropertyTypeProvider],
+          multi: true
+        },
+        {
+          provide: DASHBOARD_DESERIALIZERS,
+          useValue: [TestDeserializer],
           multi: true
         }
       ]
@@ -46,92 +49,6 @@ describe('Default configuration service', () => {
         } as LogMessage)
     );
     logger.warn = jest.fn();
-  });
-
-  test('correctly configures deserialization', () => {
-    const deserializationManager = TestBed.inject(DeserializationManagerService);
-    const modelLibrary = TestBed.inject(ModelLibraryService);
-
-    TestBed.inject(ModelPropertyValidatorService).setStrictSchema(false);
-    const testModel = class ModelClass {
-      public constructor(public prop: unknown) {}
-    };
-
-    modelLibrary.registerModelClass(testModel, { type: 'test-model' });
-    modelLibrary.registerModelProperty(testModel, 'prop', {
-      type: BOOLEAN_PROPERTY.type,
-      key: 'prop'
-    });
-
-    // Should throw until we configure the deserialization
-    expect(() => deserializationManager.deserialize({ type: 'test-model', prop: false })).toThrow();
-
-    defaultConfigurationService.configure();
-    expect(deserializationManager.deserialize({ type: 'test-model', prop: false })).toEqual(new testModel(false));
-    expect(deserializationManager.deserialize({ type: 'test-model', prop: [false] })).toEqual(new testModel([false]));
-    expect(deserializationManager.deserialize({ type: 'test-model', prop: { nested: false } })).toEqual(
-      new testModel({ nested: false })
-    );
-
-    expect(
-      deserializationManager.deserialize({
-        type: 'test-model',
-        prop: {
-          type: 'test-model',
-          prop: 'two models'
-        }
-      })
-    ).toEqual(new testModel(new testModel('two models')));
-
-    expect(
-      deserializationManager.deserialize({
-        type: 'test-model',
-        prop: {
-          nested: {
-            type: 'test-model',
-            prop: 'object sandwich'
-          }
-        }
-      })
-    ).toEqual(new testModel({ nested: new testModel('object sandwich') }));
-  });
-
-  test('correctly configures deserialization and setting of variables', () => {
-    const deserializationManager = TestBed.inject(DeserializationManagerService);
-    const modelLibrary = TestBed.inject(ModelLibraryService);
-
-    const testModel = class ModelClass {
-      public constructor(public prop?: number) {}
-    };
-
-    modelLibrary.registerModelClass(testModel, { type: 'test-model' });
-    modelLibrary.registerModelProperty(testModel, 'prop', {
-      type: NUMBER_PROPERTY.type,
-      key: 'prop',
-      required: false
-    });
-
-    defaultConfigurationService.configure();
-
-    const deserializedModel = deserializationManager.deserialize<object>({
-      type: 'test-model',
-      // tslint:disable-next-line:no-invalid-template-strings
-      prop: '${test}'
-    });
-
-    expect(deserializedModel).toEqual(new testModel());
-
-    TestBed.inject(VariableManagerService).set('test', 42, deserializedModel);
-
-    expect(deserializedModel).toEqual(new testModel(42));
-  });
-
-  test('should throw if attempting to configure twice', () => {
-    defaultConfigurationService.configure();
-
-    expect(() => defaultConfigurationService.configure()).toThrow(
-      'Default Configuration Service cannot be configured twice'
-    );
   });
 
   test('correctly configures serialization', () => {
@@ -173,9 +90,26 @@ describe('Default configuration service', () => {
     const propertyTypeLibrary = TestBed.inject(ModelPropertyTypeLibraryService);
     propertyTypeLibrary.registerPropertyType = jest.fn();
     defaultConfigurationService.configure();
-    expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledWith({ type: 'test-property' });
 
+    expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledTimes(2);
+    expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledWith({ type: 'test-property' });
     expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledWith(expect.any(TestPropertyTypeProvider));
+
+    defaultConfigurationService.configure();
+    // Should not be called a third time
+    expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledTimes(2);
+  });
+
+  test('registers provided deserializers', () => {
+    const deserializationManager = TestBed.inject(DeserializationManagerService);
+    deserializationManager.registerDeserializer = jest.fn();
+    defaultConfigurationService.configure();
+    expect(deserializationManager.registerDeserializer).toHaveBeenCalledTimes(1);
+    expect(deserializationManager.registerDeserializer).toHaveBeenCalledWith(expect.any(TestDeserializer));
+
+    defaultConfigurationService.configure();
+    // Should not be called a second time
+    expect(deserializationManager.registerDeserializer).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -184,4 +118,16 @@ describe('Default configuration service', () => {
 })
 class TestPropertyTypeProvider implements ModelPropertyTypeRegistrationInformation {
   public readonly type: string = 'test-prop-provider';
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+class TestDeserializer implements Deserializer<string, string> {
+  public canDeserialize(json: JsonPrimitive): json is string {
+    return typeof json === 'string';
+  }
+  public deserialize(json: string): string {
+    return json.toUpperCase();
+  }
 }

@@ -1,24 +1,30 @@
-import { InjectionToken, ModuleWithProviders, NgModule, Type } from '@angular/core';
+import { AbstractType, InjectionToken, ModuleWithProviders, NgModule, Type } from '@angular/core';
 import {
   ARRAY_PROPERTY,
   BOOLEAN_PROPERTY,
+  Deserializer,
   ModelPropertyTypeRegistrationInformation,
   NUMBER_PROPERTY,
   PLAIN_OBJECT_PROPERTY,
   STRING_PROPERTY,
   UNKNOWN_PROPERTY
 } from '@hypertrace/hyperdash';
+import { ArrayDeserializerService } from '../injectable-wrappers/deserialization/array-deserializer.service';
+import { ModelDeserializerService } from '../injectable-wrappers/deserialization/model-deserializer.service';
+import { ObjectDeserializerService } from '../injectable-wrappers/deserialization/object-deserializer.service';
+import { PrimitiveDeserializerService } from '../injectable-wrappers/deserialization/primitive-deserializer.service';
+import { VariableDeserializerService } from '../injectable-wrappers/deserialization/variable-deserializer.service';
 import { ModelPropertyTypeService } from '../injectable-wrappers/model-property-type.service';
 import { DashboardModelDirective } from '../rendering/dashboard-model.directive';
 import { DashboardComponent } from '../rendering/dashboard.component';
 import { ThemePropertyPipe } from '../rendering/theme-property.pipe';
 
-export const MODEL_PROPERTY_TYPES =
-  // tslint:disable-next-line: max-line-length
-  new InjectionToken<(ModelPropertyTypeRegistrationInformation | Type<ModelPropertyTypeRegistrationInformation>)[][]>(
-    'MODEL_PROPERTY_TYPES'
-  );
-
+export const MODEL_PROPERTY_TYPES = new InjectionToken<
+  (ModelPropertyTypeRegistrationInformation | Type<ModelPropertyTypeRegistrationInformation>)[][]
+>('MODEL_PROPERTY_TYPES');
+export const DASHBOARD_DESERIALIZERS = new InjectionToken<(Type<Deserializer> | AbstractType<Deserializer>)[]>(
+  'DASHBOARD_DESERIALIZERS'
+);
 const RETAINED_REFERENCES = new InjectionToken<Type<object>[][]>('RETAINED_REFERENCES');
 
 /**
@@ -40,6 +46,17 @@ const RETAINED_REFERENCES = new InjectionToken<Type<object>[][]>('RETAINED_REFER
         ModelPropertyTypeService
       ],
       multi: true
+    },
+    {
+      provide: DASHBOARD_DESERIALIZERS,
+      useValue: [
+        ObjectDeserializerService,
+        ArrayDeserializerService,
+        ModelDeserializerService,
+        PrimitiveDeserializerService,
+        VariableDeserializerService
+      ],
+      multi: true
     }
   ]
 })
@@ -58,14 +75,17 @@ export class DashboardCoreModule {
         {
           provide: MODEL_PROPERTY_TYPES,
           multi: true,
-          // tslint:disable-next-line: strict-boolean-expressions
-          useValue: metadata.propertyTypes || []
+          useValue: metadata.propertyTypes ?? []
         },
         {
           provide: RETAINED_REFERENCES,
           multi: true,
-          // tslint:disable-next-line: strict-boolean-expressions
-          useValue: [...(metadata.models || []), ...(metadata.renderers || []), ...(metadata.editors || [])]
+          useValue: [...(metadata.models ?? []), ...(metadata.renderers ?? []), ...(metadata.editors ?? [])]
+        },
+        {
+          provide: DASHBOARD_DESERIALIZERS,
+          multi: true,
+          useValue: metadata.deserializers ?? []
         }
       ]
     };
@@ -97,5 +117,14 @@ export interface DashboardMetadata {
   /**
    * New property types to be registered, or injectable classes that implement a property type
    */
-  propertyTypes?: (Type<ModelPropertyTypeRegistrationInformation> | ModelPropertyTypeRegistrationInformation)[];
+  propertyTypes?: (
+    | AbstractType<ModelPropertyTypeRegistrationInformation>
+    | Type<ModelPropertyTypeRegistrationInformation>
+    | ModelPropertyTypeRegistrationInformation
+  )[];
+
+  /**
+   * New deserializer classes to be registered
+   */
+  deserializers?: (AbstractType<Deserializer> | Type<Deserializer>)[];
 }
