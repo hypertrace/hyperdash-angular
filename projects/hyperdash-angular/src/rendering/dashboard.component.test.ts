@@ -53,7 +53,7 @@ describe('Dashboard Component', () => {
       declarations: [HostComponent, DashboardComponent, mockDashDirective]
     });
 
-    dashboardManagerService = TestBed.get(DashboardManagerService);
+    dashboardManagerService = TestBed.inject(DashboardManagerService);
     dashboardManagerService.create = jest.fn().mockImplementation(val => ({ root: val, destroy: jest.fn() }));
 
     host = TestBed.createComponent(HostComponent);
@@ -130,7 +130,7 @@ describe('Dashboard Component', () => {
     expect(componentChangeDetector.markForCheck).not.toHaveBeenCalled();
 
     // Trigger a model change event
-    const modelChanged = TestBed.get(ModelChangedEventService) as ModelChangedEventService;
+    const modelChanged = TestBed.inject(ModelChangedEventService);
     modelChanged.publishChange(host.componentInstance.dashboard!.root);
 
     expect(componentChangeDetector.markForCheck).toHaveBeenCalled();

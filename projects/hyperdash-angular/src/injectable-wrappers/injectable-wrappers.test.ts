@@ -78,40 +78,40 @@ import { VariableManagerService } from './variable-manager.service';
 
 describe('Injectable wrappers', () => {
   test('should correctly register providers', () => {
-    expect(TestBed.get(ModelLibraryService) instanceof ModelLibrary).toBeTruthy();
-    expect(TestBed.get(RendererLibraryService) instanceof RendererLibrary).toBeTruthy();
-    expect(TestBed.get(ModelDeserializerService) instanceof ModelDeserializer).toBeTruthy();
-    expect(TestBed.get(ArrayDeserializerService) instanceof ArrayDeserializer).toBeTruthy();
-    expect(TestBed.get(ObjectDeserializerService) instanceof ObjectDeserializer).toBeTruthy();
-    expect(TestBed.get(PrimitiveDeserializerService) instanceof PrimitiveDeserializer).toBeTruthy();
-    expect(TestBed.get(DeserializationManagerService) instanceof DeserializationManager).toBeTruthy();
-    expect(TestBed.get(ModelManagerService) instanceof ModelManager).toBeTruthy();
-    expect(TestBed.get(DashboardManagerService) instanceof DashboardManager).toBeTruthy();
-    expect(TestBed.get(DataSourceManagerService) instanceof DataSourceManagerService).toBeTruthy();
-    expect(TestBed.get(LoggerService) instanceof Logger).toBeTruthy();
-    expect(TestBed.get(ModelPropertyTypeLibraryService) instanceof ModelPropertyTypeLibrary).toBeTruthy();
-    expect(TestBed.get(VariableManagerService) instanceof VariableManager).toBeTruthy();
-    expect(TestBed.get(VariableDeserializerService) instanceof VariableDeserializer).toBeTruthy();
-    expect(TestBed.get(DashboardEventManagerService) instanceof DashboardEventManager).toBeTruthy();
-    expect(TestBed.get(DefaultModelApiBuilderService) instanceof DefaultModelApiBuilder).toBeTruthy();
-    expect(TestBed.get(ModelCreatedEventService) instanceof ModelCreatedEvent).toBeTruthy();
-    expect(TestBed.get(ModelDestroyedEventService) instanceof ModelDestroyedEvent).toBeTruthy();
-    expect(TestBed.get(ModelPropertyValidatorService) instanceof ModelPropertyValidator).toBeTruthy();
-    expect(TestBed.get(ModelChangedEventService) instanceof ModelChangedEvent).toBeTruthy();
-    expect(TestBed.get(ThemeManagerService) instanceof ThemeManager).toBeTruthy();
-    expect(TestBed.get(ModelEventInstallerService) instanceof ModelEventInstaller).toBeTruthy();
-    expect(TestBed.get(ModelSerializerService) instanceof ModelSerializer).toBeTruthy();
-    expect(TestBed.get(ArraySerializerService) instanceof ArraySerializer).toBeTruthy();
-    expect(TestBed.get(ObjectSerializerService) instanceof ObjectSerializer).toBeTruthy();
-    expect(TestBed.get(PrimitiveSerializerService) instanceof PrimitiveSerializer).toBeTruthy();
-    expect(TestBed.get(SerializationManagerService) instanceof SerializationManager).toBeTruthy();
-    expect(TestBed.get(VariableSerializerService) instanceof VariableSerializer).toBeTruthy();
-    expect(TestBed.get(EditorLibraryService) instanceof EditorLibrary).toBeTruthy();
-    expect(TestBed.get(EditorApiFactoryService) instanceof EditorApiFactory).toBeTruthy();
-    expect(TestBed.get(ModelPropertyTypeService) instanceof ModelPropertyType).toBeTruthy();
-    expect(TestBed.get(DataRefreshEventService) instanceof DataRefreshEvent).toBeTruthy();
-    expect(TestBed.get(TimeRangeChangedEventService) instanceof TimeRangeChangedEvent).toBeTruthy();
-    expect(TestBed.get(TimeRangeManagerService) instanceof TimeRangeManager).toBeTruthy();
+    expect(TestBed.inject(ModelLibraryService) instanceof ModelLibrary).toBeTruthy();
+    expect(TestBed.inject(RendererLibraryService) instanceof RendererLibrary).toBeTruthy();
+    expect(TestBed.inject(ModelDeserializerService) instanceof ModelDeserializer).toBeTruthy();
+    expect(TestBed.inject(ArrayDeserializerService) instanceof ArrayDeserializer).toBeTruthy();
+    expect(TestBed.inject(ObjectDeserializerService) instanceof ObjectDeserializer).toBeTruthy();
+    expect(TestBed.inject(PrimitiveDeserializerService) instanceof PrimitiveDeserializer).toBeTruthy();
+    expect(TestBed.inject(DeserializationManagerService) instanceof DeserializationManager).toBeTruthy();
+    expect(TestBed.inject(ModelManagerService) instanceof ModelManager).toBeTruthy();
+    expect(TestBed.inject(DashboardManagerService) instanceof DashboardManager).toBeTruthy();
+    expect(TestBed.inject(DataSourceManagerService) instanceof DataSourceManagerService).toBeTruthy();
+    expect(TestBed.inject(LoggerService) instanceof Logger).toBeTruthy();
+    expect(TestBed.inject(ModelPropertyTypeLibraryService) instanceof ModelPropertyTypeLibrary).toBeTruthy();
+    expect(TestBed.inject(VariableManagerService) instanceof VariableManager).toBeTruthy();
+    expect(TestBed.inject(VariableDeserializerService) instanceof VariableDeserializer).toBeTruthy();
+    expect(TestBed.inject(DashboardEventManagerService) instanceof DashboardEventManager).toBeTruthy();
+    expect(TestBed.inject(DefaultModelApiBuilderService) instanceof DefaultModelApiBuilder).toBeTruthy();
+    expect(TestBed.inject(ModelCreatedEventService) instanceof ModelCreatedEvent).toBeTruthy();
+    expect(TestBed.inject(ModelDestroyedEventService) instanceof ModelDestroyedEvent).toBeTruthy();
+    expect(TestBed.inject(ModelPropertyValidatorService) instanceof ModelPropertyValidator).toBeTruthy();
+    expect(TestBed.inject(ModelChangedEventService) instanceof ModelChangedEvent).toBeTruthy();
+    expect(TestBed.inject(ThemeManagerService) instanceof ThemeManager).toBeTruthy();
+    expect(TestBed.inject(ModelEventInstallerService) instanceof ModelEventInstaller).toBeTruthy();
+    expect(TestBed.inject(ModelSerializerService) instanceof ModelSerializer).toBeTruthy();
+    expect(TestBed.inject(ArraySerializerService) instanceof ArraySerializer).toBeTruthy();
+    expect(TestBed.inject(ObjectSerializerService) instanceof ObjectSerializer).toBeTruthy();
+    expect(TestBed.inject(PrimitiveSerializerService) instanceof PrimitiveSerializer).toBeTruthy();
+    expect(TestBed.inject(SerializationManagerService) instanceof SerializationManager).toBeTruthy();
+    expect(TestBed.inject(VariableSerializerService) instanceof VariableSerializer).toBeTruthy();
+    expect(TestBed.inject(EditorLibraryService) instanceof EditorLibrary).toBeTruthy();
+    expect(TestBed.inject(EditorApiFactoryService) instanceof EditorApiFactory).toBeTruthy();
+    expect(TestBed.inject(ModelPropertyTypeService) instanceof ModelPropertyType).toBeTruthy();
+    expect(TestBed.inject(DataRefreshEventService) instanceof DataRefreshEvent).toBeTruthy();
+    expect(TestBed.inject(TimeRangeChangedEventService) instanceof TimeRangeChangedEvent).toBeTruthy();
+    expect(TestBed.inject(TimeRangeManagerService) instanceof TimeRangeManager).toBeTruthy();
   });
 
   test('support model decorators', () => {
@@ -119,7 +119,7 @@ describe('Injectable wrappers', () => {
     class TestModelDecoratorClass {}
 
     expect(
-      (TestBed.get(ModelLibraryService) as ModelLibrary).lookupModelMetadata(TestModelDecoratorClass)
+      (TestBed.inject(ModelLibraryService) as ModelLibrary).lookupModelMetadata(TestModelDecoratorClass)
     ).toMatchObject({
       type: 'test-model-decorator'
     });
@@ -129,7 +129,7 @@ describe('Injectable wrappers', () => {
     class TestLateModelDecoratorClass {}
 
     expect(
-      (TestBed.get(ModelLibraryService) as ModelLibrary).lookupModelMetadata(TestLateModelDecoratorClass)
+      (TestBed.inject(ModelLibraryService) as ModelLibrary).lookupModelMetadata(TestLateModelDecoratorClass)
     ).toMatchObject({
       type: 'test-late-model-decorator'
     });
@@ -141,7 +141,7 @@ describe('Injectable wrappers', () => {
     @Renderer({ modelClass: modelClass })
     class TestRendererDecoratorClass {}
 
-    expect((TestBed.get(RendererLibraryService) as RendererLibrary).lookupRenderer(modelClass)).toBe(
+    expect((TestBed.inject(RendererLibraryService) as RendererLibrary).lookupRenderer(modelClass)).toBe(
       TestRendererDecoratorClass
     );
 
@@ -151,7 +151,7 @@ describe('Injectable wrappers', () => {
     @Renderer({ modelClass: secondModelClass })
     class TestSecondRendererDecoratorClass {}
 
-    expect((TestBed.get(RendererLibraryService) as RendererLibrary).lookupRenderer(secondModelClass)).toBe(
+    expect((TestBed.inject(RendererLibraryService) as RendererLibrary).lookupRenderer(secondModelClass)).toBe(
       TestSecondRendererDecoratorClass
     );
   });
@@ -180,7 +180,7 @@ describe('Injectable wrappers', () => {
       public booleanProp?: boolean;
     }
 
-    expect((TestBed.get(EditorLibraryService) as EditorLibrary).getEditorData(TestModelClass)).toMatchObject({
+    expect((TestBed.inject(EditorLibraryService) as EditorLibrary).getEditorData(TestModelClass)).toMatchObject({
       title: 'Test Model',
       subeditors: [
         {
@@ -193,7 +193,7 @@ describe('Injectable wrappers', () => {
     @ModelPropertyEditor({ propertyType: BOOLEAN_PROPERTY.type })
     class LateTestEditorClass {}
 
-    expect((TestBed.get(EditorLibraryService) as EditorLibrary).getEditorData(TestModelClass)).toMatchObject({
+    expect((TestBed.inject(EditorLibraryService) as EditorLibrary).getEditorData(TestModelClass)).toMatchObject({
       title: 'Test Model',
       subeditors: [
         {

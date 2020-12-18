@@ -69,7 +69,7 @@ describe('Model JSON editor component', () => {
       imports: [DashboardEditorModule, TestDashboardModule]
     });
 
-    (TestBed.get(DefaultConfigurationService) as DefaultConfigurationService).configure();
+    TestBed.inject(DefaultConfigurationService).configure();
     host = TestBed.createComponent(HostComponent);
     host.detectChanges();
   });
@@ -124,7 +124,7 @@ describe('Model JSON editor component', () => {
   test('destroys models when a new json object is provided', () => {
     const destroySpy = jest.fn();
 
-    (TestBed.get(ModelDestroyedEventService) as ModelDestroyedEventService).getObservable().subscribe(destroySpy);
+    TestBed.inject(ModelDestroyedEventService).getObservable().subscribe(destroySpy);
 
     host.componentInstance.modelJson = {
       type: 'test-model',

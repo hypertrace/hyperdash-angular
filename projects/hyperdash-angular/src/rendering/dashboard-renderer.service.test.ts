@@ -1,5 +1,5 @@
 import { Component, Inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModelApi } from '@hypertrace/hyperdash';
 import { ReplaySubject } from 'rxjs';
@@ -21,24 +21,26 @@ describe('Dashboard Renderer Service', () => {
     return model;
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [HostComponent],
-      imports: [moduleWithEntryComponents(RendererComponent)]
-    }).compileComponents();
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [HostComponent],
+        imports: [moduleWithEntryComponents(RendererComponent)]
+      }).compileComponents();
 
-    dashboardRendererService = TestBed.get(DashboardRendererService);
-    modelManager = TestBed.get(ModelManagerService) as ModelManagerService;
-    modelManager.registerModelApiBuilder({
-      matches: () => true,
-      // tslint:disable-next-line: no-object-literal-type-assertion
-      build: () => ({} as ModelApi)
-    });
-    const rendererLibrary = TestBed.get(RendererLibraryService);
-    rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
+      dashboardRendererService = TestBed.inject(DashboardRendererService);
+      modelManager = TestBed.inject(ModelManagerService);
+      modelManager.registerModelApiBuilder({
+        matches: () => true,
+        // tslint:disable-next-line: no-object-literal-type-assertion
+        build: () => ({} as ModelApi)
+      });
+      const rendererLibrary = TestBed.inject(RendererLibraryService);
+      rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
 
-    host = TestBed.createComponent(HostComponent);
-  }));
+      host = TestBed.createComponent(HostComponent);
+    })
+  );
 
   test('can render', () => {
     dashboardRendererService.renderInViewContainer(createModel('Renderer'), host.componentInstance.viewContainerRef);
