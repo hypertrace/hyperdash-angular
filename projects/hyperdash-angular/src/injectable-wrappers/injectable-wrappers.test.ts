@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import {
   ArrayDeserializer,
   ArraySerializer,
+  BeforeModelDestroyedEvent,
   BOOLEAN_PROPERTY,
   DashboardEventManager,
   DashboardManager,
@@ -42,6 +43,7 @@ import {
   VariableSerializer
 } from '@hypertrace/hyperdash';
 import { ModelLibraryService } from '../injectable-wrappers/model-library.service';
+import { BeforeModelDestroyedEventService } from './before-model-destroyed-event.service';
 import { DashboardEventManagerService } from './dashboard-event-manager.service';
 import { DashboardManagerService } from './dashboard-manager.service';
 import { DataRefreshEventService } from './data-refresh-event.service';
@@ -112,6 +114,7 @@ describe('Injectable wrappers', () => {
     expect(TestBed.inject(DataRefreshEventService) instanceof DataRefreshEvent).toBeTruthy();
     expect(TestBed.inject(TimeRangeChangedEventService) instanceof TimeRangeChangedEvent).toBeTruthy();
     expect(TestBed.inject(TimeRangeManagerService) instanceof TimeRangeManager).toBeTruthy();
+    expect(TestBed.inject(BeforeModelDestroyedEventService) instanceof BeforeModelDestroyedEvent).toBeTruthy();
   });
 
   test('support model decorators', () => {
