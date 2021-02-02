@@ -14,14 +14,14 @@
     "commit": "pushd ../.. && npm run commit"
   },
   "peerDependencies": {
-    "@angular/common": "^11.0.2",
-    "@angular/core": "^11.0.2",
-    "@angular/platform-browser": "^11.0.2",
-    "core-js": "^3.7.0",
+    "@angular/common": "^11.1.1",
+    "@angular/core": "^11.1.1",
+    "@angular/platform-browser": "^11.1.1",
+    "core-js": "^3.8.3",
     "rxjs": "^6.6.3",
     "zone.js": "~0.10.3",
-    "lodash-es": "^4.17.15",
-    "@hypertrace/hyperdash": "^1.1.2"
+    "lodash-es": "^4.17.20",
+    "@hypertrace/hyperdash": "^1.2.1"
   },
   "dependencies": {
     "tslib": "^2.0.3"
