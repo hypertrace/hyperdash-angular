@@ -28,7 +28,7 @@
     "@hypertrace/hyperdash": "^1.2.1",
     "core-js": "^3.9.1",
     "lodash-es": "^4.17.21",
-    "rxjs": "^6.6.3",
+    "rxjs": "^6.6.6",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
   },
