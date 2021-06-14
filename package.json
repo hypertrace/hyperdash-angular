@@ -44,7 +44,7 @@
     "@ngneat/spectator": "^7.1.0",
     "@types/jest": "^25.0.0",
     "@types/lodash-es": "^4.17.4",
-    "@types/node": "^15.12.1",
+    "@types/node": "^15.12.2",
     "@types/webpack-env": "^1.15.3",
     "codelyzer": "^6.0.2",
     "commitizen": "^4.2.4",
