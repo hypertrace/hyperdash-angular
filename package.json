@@ -40,7 +40,7 @@
     "@angular/language-service": "^11.1.1",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@compodoc/compodoc": "^1.1.13",
+    "@compodoc/compodoc": "^1.1.14",
     "@ngneat/spectator": "^7.2.0",
     "@types/jest": "^25.0.0",
     "@types/lodash-es": "^4.17.4",
