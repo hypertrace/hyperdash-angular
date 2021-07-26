@@ -38,7 +38,7 @@
     "@angular/cli": "^11.1.2",
     "@angular/compiler-cli": "^11.1.2",
     "@angular/language-service": "^11.1.1",
-    "@commitlint/cli": "^12.1.4",
+    "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@compodoc/compodoc": "^1.1.14",
     "@ngneat/spectator": "^7.2.0",
