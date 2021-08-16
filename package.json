@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "NG_PERSISTENT_BUILD_CACHE=1 ng serve",
-    "build": "NG_PERSISTENT_BUILD_CACHE-1 ng build",
+    "build": "NG_PERSISTENT_BUILD_CACHE=1 ng build",
     "test": "ng test",
     "lint": "ng lint",
     "commit": "git-cz",
