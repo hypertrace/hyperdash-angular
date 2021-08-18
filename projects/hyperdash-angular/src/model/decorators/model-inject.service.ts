@@ -92,7 +92,7 @@ const injectDefinitions: ModelInjectData[] = [];
 /**
  * Registers the decorated property for injection usisng the provided DI token. This will be resolved
  * against the root of the DI tree, with one special token available for resolving the model api:
- * @see `MODEL_API`
+ * `MODEL_API`
  */
 // tslint:disable-next-line:only-arrow-functions
 export function ModelInject(
