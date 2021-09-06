@@ -22,7 +22,7 @@
     "@angular/core": "^12.2.1",
     "@angular/forms": "^12.2.1",
     "@angular/platform-browser": "^12.2.1",
-    "@angular/platform-browser-dynamic": "^12.2.1",
+    "@angular/platform-browser-dynamic": "^12.2.4",
     "@hypertrace/hyperdash": "^1.2.1",
     "core-js": "^3.16.4",
     "lodash-es": "^4.17.21",
