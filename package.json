@@ -20,7 +20,7 @@
   "dependencies": {
     "@angular/common": "^12.2.1",
     "@angular/core": "^12.2.1",
-    "@angular/forms": "^12.2.1",
+    "@angular/forms": "^12.2.8",
     "@angular/platform-browser": "^12.2.1",
     "@angular/platform-browser-dynamic": "^12.2.1",
     "@hypertrace/hyperdash": "^1.2.1",
@@ -52,7 +52,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^7.0.2",
     "jest": "^26.6.3",
-    "jest-config": "^27.2.2",
+    "jest-config": "^27.2.4",
     "jest-html-reporter": "^3.4.1",
     "jest-junit": "^12.3.0",
     "lodash": "^4.17.21",
