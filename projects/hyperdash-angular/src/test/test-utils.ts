@@ -5,8 +5,7 @@ import { TestScheduler } from 'rxjs/testing';
 
 export const moduleWithEntryComponents = (...components: Type<unknown>[]): unknown =>
   NgModule({
-    declarations: [...components],
-    entryComponents: [...components]
+    declarations: [...components]
   })(class {});
 
 export const mockDirective = <T = unknown>(config: {

@@ -53,7 +53,6 @@ describe('Model JSON editor component', () => {
 
   @NgModule({
     declarations: [PropEditorComponent],
-    entryComponents: [PropEditorComponent],
     imports: [
       DashboardCoreModule.with({
         models: [TestModel],
