@@ -111,6 +111,5 @@
         }
       }
     }
-  },
-  "defaultProject": "hyperdash-angular-app"
+  }
 }
