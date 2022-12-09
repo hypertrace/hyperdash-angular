@@ -12,7 +12,8 @@
         "plugin:@angular-eslint/ng-cli-compat",
         "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:@typescript-eslint/all"
+        "plugin:@typescript-eslint/all",
+        "prettier"
       ],
       "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn", "eslint-plugin-react"],
       "rules": {
@@ -99,8 +100,7 @@
         "@typescript-eslint/strict-boolean-expressions": [
           "error",
           {
-            "allowNullable": true,
-            "ignoreRhs": true
+            "allowNullableObject": true
           }
         ],
         "@typescript-eslint/type-annotation-spacing": "off",

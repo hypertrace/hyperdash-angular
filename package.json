@@ -57,6 +57,7 @@
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.28.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "latest",
     "eslint-plugin-jsdoc": "latest",
     "eslint-plugin-no-null": "latest",

@@ -236,8 +236,7 @@
         "@typescript-eslint/strict-boolean-expressions": [
           "error",
           {
-            "allowNullable": true,
-            "ignoreRhs": true
+            "allowNullableObject": true
           }
         ],
         "@typescript-eslint/type-annotation-spacing": "off",
