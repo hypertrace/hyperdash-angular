@@ -7,19 +7,17 @@ describe('DashboardModelDirective', () => {
   let dashboardRendererService: DashboardRendererService;
   let host: ComponentFixture<HostComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        providers: [{ provide: DashboardRendererService, useValue: {} }],
-        declarations: [HostComponent, DashboardModelDirective]
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: DashboardRendererService, useValue: {} }],
+      declarations: [HostComponent, DashboardModelDirective]
+    }).compileComponents();
 
-      dashboardRendererService = TestBed.inject(DashboardRendererService);
-      dashboardRendererService.renderInViewContainer = jest.fn();
+    dashboardRendererService = TestBed.inject(DashboardRendererService);
+    dashboardRendererService.renderInViewContainer = jest.fn();
 
-      host = TestBed.createComponent(HostComponent);
-    })
-  );
+    host = TestBed.createComponent(HostComponent);
+  }));
 
   test('passes initial value to renderer service', () => {
     expect(dashboardRendererService.renderInViewContainer).not.toHaveBeenCalled();
@@ -73,7 +71,7 @@ describe('DashboardModelDirective', () => {
   template: '<ng-container [hdaDashboardModel]=model><ng-container>'
 })
 class HostComponent {
-  // tslint:disable-next-line:completed-docs
+  // eslint-disable-next-line
   @Input()
   public model?: object;
 }

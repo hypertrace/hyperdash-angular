@@ -1,4 +1,4 @@
-// tslint:disable:completed-docs
+/* eslint-disable */
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -23,7 +23,7 @@ describe('Dashboard Component', () => {
 
   @Component({
     selector: 'hda-host',
-    // tslint:disable-next-line: max-inline-declarations
+    // eslint-disable-next-line
     template: `
       <hda-dashboard
         [json]="json"
@@ -118,9 +118,11 @@ describe('Dashboard Component', () => {
 
   test('updates change detector when model has changed.', () => {
     // Initialize
-    const componentChangeDetector = (host.debugElement.query(By.directive(DashboardComponent)).componentInstance as {
-      changeDetector: ChangeDetectorRef;
-    }).changeDetector;
+    const componentChangeDetector = (
+      host.debugElement.query(By.directive(DashboardComponent)).componentInstance as {
+        changeDetector: ChangeDetectorRef;
+      }
+    ).changeDetector;
 
     componentChangeDetector.markForCheck = jest.fn();
 

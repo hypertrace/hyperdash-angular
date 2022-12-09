@@ -1,0 +1,350 @@
+{
+  "extends": "../../.eslintrc.json",
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["projects/hyperdash-angular/tsconfig.lib.json", "projects/hyperdash-angular/tsconfig.spec.json"],
+        "createDefaultProgram": true
+      },
+      "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn", "eslint-plugin-react"],
+      "rules": {
+        "@angular-eslint/component-max-inline-declarations": [
+          "error",
+          {
+            "template": 10
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "hda",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "hda",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/no-attribute-decorator": "error",
+        "@angular-eslint/no-forward-ref": "error",
+        "@angular-eslint/no-lifecycle-call": "error",
+        "@angular-eslint/no-pipe-impure": "error",
+        "@angular-eslint/no-queries-metadata-property": "error",
+        "@angular-eslint/prefer-output-readonly": "error",
+        "@angular-eslint/use-component-selector": "error",
+        "@angular-eslint/use-component-view-encapsulation": "error",
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array"
+          }
+        ],
+        "@typescript-eslint/await-thenable": "error",
+        "@typescript-eslint/ban-ts-comment": "error",
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "types": {
+              "Object": {
+                "message": "Avoid using the `Object` type. Did you mean `object`?"
+              },
+              "Function": {
+                "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+              },
+              "Boolean": {
+                "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+              },
+              "Number": {
+                "message": "Avoid using the `Number` type. Did you mean `number`?"
+              },
+              "String": {
+                "message": "Avoid using the `String` type. Did you mean `string`?"
+              },
+              "Symbol": {
+                "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+              },
+              "ArrayDeserializer": {
+                "message": "Please use the Angular injectable version instead: ArrayDeserializerService"
+              },
+              "DeserializationManager": {
+                "message": "Please use the Angular injectable version instead: DeserializationManagerService"
+              },
+              "ModelDeserializer": {
+                "message": "Please use the Angular injectable version instead: ModelDeserializerService"
+              },
+              "ModelLibrary": {
+                "message": "Please use the Angular injectable version instead: ModelLibraryService"
+              },
+              "ModelManager": {
+                "message": "Please use the Angular injectable version instead: ModelManagerService"
+              },
+              "ObjectDeserializer": {
+                "message": "Please use the Angular injectable version instead: ObjectDeserializerService"
+              },
+              "PrimitiveDeserializer": {
+                "message": "Please use the Angular injectable version instead: PrimitiveDeserializerService"
+              },
+              "RendererLibrary": {
+                "message": "Please use the Angular injectable version instead: RendererLibraryService"
+              },
+              "DashboardManager": {
+                "message": "Please use the Angular injectable version instead: DashboardManagerService"
+              },
+              "Logger": {
+                "message": "Please use the Angular injectable version instead: LoggerService"
+              },
+              "DataSourceManager": {
+                "message": "Please use the Angular injectable version instead: DataSourceManagerService"
+              },
+              "ModelPropertyTypeLibrary": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyTypeLibraryService"
+              },
+              "VariableManager": {
+                "message": "Please use the Angular injectable version instead: VariableManagerService"
+              },
+              "VariableDeserializer": {
+                "message": "Please use the Angular injectable version instead: VariableDeserializerService"
+              },
+              "DashboardEventManager": {
+                "message": "Please use the Angular injectable version instead: DashboardEventManagerService"
+              },
+              "ModelCreatedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelCreatedEventService"
+              },
+              "ModelDestroyedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelDestroyedEventService"
+              },
+              "ModelPropertyValidator": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyValidatorService"
+              },
+              "DefaultModelApiBuilder": {
+                "message": "Please use the Angular injectable version instead: DefaultModelApiBuilderService"
+              },
+              "ModelChangedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelChangedEventService"
+              },
+              "ThemeManager": {
+                "message": "Please use the Angular injectable version instead: ThemeManagerService"
+              },
+              "ModelEventInstaller": {
+                "message": "Please use the Angular injectable version instead: ModelEventInstallerService"
+              },
+              "ArraySerializer": {
+                "message": "Please use the Angular injectable version instead: ArraySerializerService"
+              },
+              "SerializationManager": {
+                "message": "Please use the Angular injectable version instead: SerializationManagerService"
+              },
+              "ModelSerializer": {
+                "message": "Please use the Angular injectable version instead: ModelSerializerService"
+              },
+              "VariableSerializer": {
+                "message": "Please use the Angular injectable version instead: VariableSerializerService"
+              },
+              "ObjectSerializer": {
+                "message": "Please use the Angular injectable version instead: ObjectSerializerService"
+              },
+              "PrimitiveSerializer": {
+                "message": "Please use the Angular injectable version instead: PrimitiveSerializerService"
+              },
+              "EditorLibary": {
+                "message": "Please use the Angular injectable version instead: EditorLibaryService"
+              },
+              "EditorApiFactory": {
+                "message": "Please use the Angular injectable version instead: EditorApiFactoryService"
+              },
+              "ModelPropertyType": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyTypeService"
+              },
+              "DataRefreshEvent": {
+                "message": "Please use the Angular injectable version instead: DataRefreshEventService"
+              },
+              "TimeRangeChangedEvent": {
+                "message": "Please use the Angular injectable version instead: TimeRangeChangedEventService"
+              },
+              "TimeRangeManager": {
+                "message": "Please use the Angular injectable version instead: TimeRangeManagerService"
+              }
+            }
+          }
+        ],
+        "@typescript-eslint/consistent-type-definitions": "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "explicit",
+              "constructors": "explicit",
+              "parameterProperties": "explicit"
+            }
+          }
+        ],
+        "@typescript-eslint/member-delimiter-style": [
+          "off",
+          {
+            "multiline": {
+              "delimiter": "none",
+              "requireLast": true
+            },
+            "singleline": {
+              "delimiter": "semi",
+              "requireLast": false
+            }
+          }
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "@typescript-eslint/no-empty-function": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-extraneous-class": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-for-in-array": "error",
+        "@typescript-eslint/no-inferrable-types": [
+          "error",
+          {
+            "ignoreParameters": true,
+            "ignoreProperties": true
+          }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/no-this-alias": "error",
+        "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
+        "@typescript-eslint/no-unnecessary-qualifier": "error",
+        "@typescript-eslint/no-unnecessary-type-arguments": "error",
+        "@typescript-eslint/no-unnecessary-type-assertion": "error",
+        "@typescript-eslint/no-var-requires": "error",
+        "@typescript-eslint/prefer-readonly": "error",
+        "@typescript-eslint/promise-function-async": "error",
+        "@typescript-eslint/quotes": [
+          "error",
+          "single",
+          {
+            "avoidEscape": true
+          }
+        ],
+        "@typescript-eslint/require-await": "error",
+        "@typescript-eslint/restrict-plus-operands": "error",
+        "@typescript-eslint/semi": ["off", null],
+        "@typescript-eslint/strict-boolean-expressions": [
+          "error",
+          {
+            "allowNullable": true,
+            "ignoreRhs": true
+          }
+        ],
+        "@typescript-eslint/type-annotation-spacing": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "arrow-body-style": ["error", "always"],
+        "arrow-parens": ["off", "always"],
+        "brace-style": ["off", "off"],
+        "capitalized-comments": ["error", "always"],
+        "class-methods-use-this": "off",
+        "comma-dangle": "error",
+        "complexity": "error",
+        "default-case": "error",
+        "eol-last": "off",
+        "eqeqeq": ["error", "always"],
+        "import/no-default-export": "error",
+        "import/no-deprecated": "off",
+        "import/no-extraneous-dependencies": "error",
+        "import/no-internal-modules": [
+          "error",
+          {
+            "allow": [
+              "@angular/core/testing/*",
+              "@angular/platform-browser-dynamic/testing/*",
+              "zone.js/dist/*",
+              "core-js/*",
+              "@angular/common/http/*",
+              "rxjs/operators/*",
+              "@ngneat/spectator/jest/*"
+            ]
+          }
+        ],
+        "import/no-unassigned-import": "error",
+        "import/order": "error",
+        "linebreak-style": "off",
+        "max-len": "off",
+        "max-lines": ["error", 500],
+        "new-parens": "off",
+        "newline-per-chained-call": "off",
+        "no-duplicate-case": "error",
+        "no-duplicate-imports": "error",
+        "no-empty": "error",
+        "no-extra-bind": "error",
+        "no-extra-semi": "off",
+        "no-irregular-whitespace": "off",
+        "no-magic-numbers": "off",
+        "no-new-func": "error",
+        "no-null/no-null": "error",
+        "no-param-reassign": "error",
+        "no-plusplus": [
+          "off",
+          {
+            "allowForLoopAfterthoughts": true
+          }
+        ],
+        "no-redeclare": "error",
+        "no-restricted-syntax": ["error", "ForInStatement"],
+        "no-return-await": "error",
+        "no-sequences": "error",
+        "no-sparse-arrays": "error",
+        "no-template-curly-in-string": "error",
+        "no-trailing-spaces": "off",
+        "no-useless-constructor": "error",
+        "no-void": "error",
+        "object-shorthand": ["error", "never"],
+        "padding-line-between-statements": [
+          "error",
+          {
+            "blankLine": "always",
+            "prev": "*",
+            "next": "return"
+          }
+        ],
+        "prefer-object-spread": "error",
+        "prefer-template": "error",
+        "quote-props": "off",
+        "react/jsx-curly-spacing": "off",
+        "react/jsx-equals-spacing": "off",
+        "react/jsx-tag-spacing": [
+          "off",
+          {
+            "afterOpening": "allow",
+            "closingSlash": "allow"
+          }
+        ],
+        "react/jsx-wrap-multilines": "off",
+        "space-before-function-paren": "off",
+        "space-in-parens": ["off", "never"],
+        "unicorn/filename-case": "error",
+        "yoda": "error"
+      }
+    },
+    {
+      "files": ["*.html"],
+      "rules": {
+        "@angular-eslint/template/conditional-complexity": [
+          "error",
+          {
+            "maxComplexity": 4
+          }
+        ],
+        "@angular-eslint/template/cyclomatic-complexity": [
+          "error",
+          {
+            "maxComplexity": 5
+          }
+        ]
+      }
+    }
+  ]
+}

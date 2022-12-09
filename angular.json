@@ -108,8 +108,17 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {}
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/hyperdash-angular/**/*.ts", "projects/hyperdash-angular/**/*.html"]
+          }
         }
       }
     }
+  },
+  "cli": {
+    "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

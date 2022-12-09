@@ -1,6 +1,6 @@
-// tslint:disable:completed-docs
+/* eslint-disable */
 import { Directive, NgModule, Type } from '@angular/core';
-// tslint:disable-next-line: no-submodule-imports
+// eslint-disable-next-line import/no-internal-modules
 import { TestScheduler } from 'rxjs/testing';
 
 export const moduleWithEntryComponents = (...components: Type<unknown>[]): unknown =>

@@ -94,7 +94,7 @@ const injectDefinitions: ModelInjectData[] = [];
  * against the root of the DI tree, with one special token available for resolving the model api:
  * `MODEL_API`
  */
-// tslint:disable-next-line:only-arrow-functions
+// eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function ModelInject(
   injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>
 ): PropertyDecorator {

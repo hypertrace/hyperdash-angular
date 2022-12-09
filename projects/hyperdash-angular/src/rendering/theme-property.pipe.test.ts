@@ -76,7 +76,7 @@ describe('Theme property pipe', () => {
       mockModelChangeObservable = coldMock;
       buildPipe();
       mockThemeManager.getThemePropertyForModel = jest.fn();
-      // tslint:disable-next-line: no-lifecycle-call
+      // eslint-disable-next-line @angular-eslint/no-lifecycle-call
       pipe.ngOnDestroy();
 
       expectSubscriptions(coldMock.subscriptions).toBe('(^!)');

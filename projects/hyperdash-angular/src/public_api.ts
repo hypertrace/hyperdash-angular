@@ -1,4 +1,4 @@
-// tslint:disable:file-name-casing
+/* eslint-disable unicorn/filename-case */
 
 /*
  * Public API Surface of hyperdash-angular

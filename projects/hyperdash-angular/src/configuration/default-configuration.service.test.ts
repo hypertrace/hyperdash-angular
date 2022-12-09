@@ -41,7 +41,7 @@ describe('Default configuration service', () => {
     const errorSpy = jest.spyOn(logger, 'error');
     errorSpy.mockImplementation(
       message =>
-        // tslint:disable-next-line: no-object-literal-type-assertion
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         ({
           throw: () => {
             throw new Error(message);

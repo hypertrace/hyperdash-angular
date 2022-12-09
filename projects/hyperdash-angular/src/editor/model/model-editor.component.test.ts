@@ -1,6 +1,6 @@
 import { Component, Injector } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-// tslint:disable-next-line:no-implicit-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { By } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';

@@ -11,7 +11,7 @@ import { RendererApi, RENDERER_API } from './api/renderer-api';
  */
 @Pipe({
   name: 'themeProp',
-  // tslint:disable-next-line: no-pipe-impure Must be impure - result depends on state of model tree
+  // eslint-disable-next-line @angular-eslint/no-pipe-impure,
   pure: false
 })
 export class ThemePropertyPipe implements PipeTransform, OnDestroy {
@@ -21,7 +21,7 @@ export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   private readonly modelChangedSubscription: Subscription;
 
   public constructor(
-    // tslint:disable-next-line:ban-types TODO - ngc doesn't seem to support `object` here
+    // eslint-disable-next-line @typescript-eslint/ban-types
     @Inject(RENDERER_API) public readonly rendererApi: RendererApi<object>,
     private readonly themeManager: ThemeManagerService,
     modelManager: ModelManagerService,
@@ -55,7 +55,7 @@ export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   }
 
   private calculateValue(keyRequested: string): string {
-    // tslint:disable-next-line:strict-boolean-expressions
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     return this.themeManager.getThemePropertyForModel(this.rendererApi.model, keyRequested) || '';
   }
 }

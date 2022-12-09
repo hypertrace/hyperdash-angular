@@ -33,13 +33,13 @@ describe('Model editor service', () => {
           title: 'Model editor',
           kind: EditorKind.Composite,
           subeditors: [
-            // tslint:disable-next-line: no-object-literal-type-assertion
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               title: 'first prop editor',
               editor: editorClass1,
               kind: EditorKind.Leaf
             } as LeafEditorData,
-            // tslint:disable-next-line: no-object-literal-type-assertion
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               title: 'second prop editor',
               editor: editorClass2,
