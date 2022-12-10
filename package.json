@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "NG_PERSISTENT_BUILD_CACHE=1 ng serve",
-    "build": "NG_PERSISTENT_BUILD_CACHE=1 ng build",
+    "start": "ng serve",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "commit": "git-cz",
