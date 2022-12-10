@@ -85,7 +85,7 @@ describe('Dashboard Renderer Service', () => {
 
     host.detectChanges();
 
-    expect(host.nativeElement as HTMLElement).toBe('Host > Second Model');
+    expect((host.nativeElement as HTMLElement).textContent).toBe('Host > Second Model');
   });
 
   test('allows subscribing to DOM events', () => {

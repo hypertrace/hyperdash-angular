@@ -195,8 +195,8 @@ export class ExampleModel {
         // eslint-disable-next-line no-null/no-null
         return JSON.stringify(value, null, 2);
       }),
-      // eslint-disable-next-line no-null/no-null
       catchError(err => {
+        // eslint-disable-next-line no-null/no-null
         return of(JSON.stringify(err, null, 2));
       })
     );
