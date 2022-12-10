@@ -1,5 +1,5 @@
-import { Injectable, Injector, Type } from '@angular/core';
-import { CompositeEditorData, EditorKind, NestedEditorData } from '@hypertrace/hyperdash';
+import { Injectable, Injector, type Type } from '@angular/core';
+import { type CompositeEditorData, EditorKind, type NestedEditorData } from '@hypertrace/hyperdash';
 import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
 import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
@@ -42,7 +42,9 @@ export class ModelEditorService {
       editorsToUse.push(editorData.themeEditor);
     }
 
-    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model));
+    return editorsToUse.map(editor => {
+      return this.getRenderableEditorForEditorData(editor, model);
+    });
   }
 
   private createInjectorForEditorData(editorData: NestedEditorData, model: object): Injector {

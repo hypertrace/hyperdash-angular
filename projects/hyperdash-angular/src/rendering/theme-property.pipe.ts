@@ -1,5 +1,5 @@
-import { Inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Inject, type OnDestroy, Pipe, type PipeTransform } from '@angular/core';
+import { type Subscription } from 'rxjs';
 import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
@@ -16,8 +16,11 @@ import { RendererApi, RENDERER_API } from './api/renderer-api';
 })
 export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   private modelChanged: boolean = true;
+
   private lastKeyRequested: string = '';
+
   private lastValue: string = '';
+
   private readonly modelChangedSubscription: Subscription;
 
   public constructor(
@@ -29,7 +32,9 @@ export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   ) {
     this.modelChangedSubscription = modelChangedEvent
       .getObservableForModel(modelManager.getRoot(rendererApi.model))
-      .subscribe(() => (this.modelChanged = true));
+      .subscribe(() => {
+        return (this.modelChanged = true);
+      });
   }
 
   /**
@@ -56,6 +61,6 @@ export class ThemePropertyPipe implements PipeTransform, OnDestroy {
 
   private calculateValue(keyRequested: string): string {
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-    return this.themeManager.getThemePropertyForModel(this.rendererApi.model, keyRequested) || '';
+    return this.themeManager.getThemePropertyForModel(this.rendererApi.model, keyRequested) ?? '';
   }
 }

@@ -1,9 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  type OnChanges,
+  type OnDestroy,
+  Output
+} from '@angular/core';
 import { DeserializationManagerService } from '../../injectable-wrappers/deserialization/deserialization-manager.service';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../../injectable-wrappers/model-manager.service';
 import { SerializationManagerService } from '../../injectable-wrappers/serialization/serialization-manager.service';
-import { ModelEditorService, RenderableEditor } from '../model-editor.service';
+import { ModelEditorService, type RenderableEditor } from '../model-editor.service';
 
 /**
  * A dynamic editor generated based on the provided model json.
@@ -24,6 +32,7 @@ export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
   public readonly modelJsonChange: EventEmitter<object> = new EventEmitter<object>();
 
   public modelObject?: object;
+
   /**
    * Discovered subeditors for the provided model, signifying the editable properties or subproperties.
    */
@@ -47,9 +56,9 @@ export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
     // One way of fixing this would be to include a context token in render data that doesn't reveal
     // The model, but allows us to internally use it to lookup values
     this.modelObject = this.deserializationManager.deserialize<object>(this.modelJson);
-    this.modelChangedEvent
-      .getObservableForModel(this.modelObject)
-      .subscribe(() => this.modelJsonChange.emit(this.serializationManager.serialize(this.modelObject)));
+    this.modelChangedEvent.getObservableForModel(this.modelObject).subscribe(() => {
+      this.modelJsonChange.emit(this.serializationManager.serialize(this.modelObject));
+    });
     this.subeditors = this.modelEditorService.getRenderData(this.modelObject);
   }
 

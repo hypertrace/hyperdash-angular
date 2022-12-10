@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  type OnChanges,
+  type OnDestroy,
+  Output
+} from '@angular/core';
+import { type Subscription } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
-import { ModelEditorService, RenderableEditor } from '../model-editor.service';
+import { ModelEditorService, type RenderableEditor } from '../model-editor.service';
 
 /**
  * A dynamic editor generated based on the provided model
@@ -30,7 +38,7 @@ export class ModelEditorComponent implements OnChanges, OnDestroy {
    * Would need to clone variable, theme, data state as well as figure out how to destroy the original
    */
   @Output()
-  public readonly modelChange: EventEmitter<object> = new EventEmitter();
+  public readonly modelChange = new EventEmitter<object>();
 
   /**
    * Discovered subeditors for the provided model, signifying the editable properties or subproperties.
@@ -52,9 +60,9 @@ export class ModelEditorComponent implements OnChanges, OnDestroy {
     this.unsubscribeModelChanges();
     this.subeditors = this.modelEditorService.getRenderData(this.model);
 
-    this.modelChangeSubscription = this.modelChangedEvent
-      .getObservableForModel(this.model)
-      .subscribe(() => this.modelChange.emit(this.model));
+    this.modelChangeSubscription = this.modelChangedEvent.getObservableForModel(this.model).subscribe(() => {
+      this.modelChange.emit(this.model);
+    });
   }
 
   public ngOnDestroy(): void {

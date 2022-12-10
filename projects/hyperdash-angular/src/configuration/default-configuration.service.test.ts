@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import {
   ARRAY_PROPERTY,
-  Deserializer,
-  JsonPrimitive,
-  LogMessage,
-  ModelPropertyTypeRegistrationInformation
+  type Deserializer,
+  type JsonPrimitive,
+  type LogMessage,
+  type ModelPropertyTypeRegistrationInformation
 } from '@hypertrace/hyperdash';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
 import { LoggerService } from '../injectable-wrappers/logger.service';
@@ -15,6 +15,26 @@ import { ModelPropertyTypeLibraryService } from '../injectable-wrappers/model-pr
 import { SerializationManagerService } from '../injectable-wrappers/serialization/serialization-manager.service';
 import { DASHBOARD_DESERIALIZERS, MODEL_PROPERTY_TYPES } from '../module/dashboard-core.module';
 import { DefaultConfigurationService } from './default-configuration.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+class TestPropertyTypeProvider implements ModelPropertyTypeRegistrationInformation {
+  public readonly type: string = 'test-prop-provider';
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+class TestDeserializer implements Deserializer<string, string> {
+  public canDeserialize(json: JsonPrimitive): json is string {
+    return typeof json === 'string';
+  }
+
+  public deserialize(json: string): string {
+    return json.toUpperCase();
+  }
+}
 
 describe('Default configuration service', () => {
   let defaultConfigurationService: DefaultConfigurationService;
@@ -39,14 +59,15 @@ describe('Default configuration service', () => {
     defaultConfigurationService = TestBed.inject(DefaultConfigurationService);
     logger = TestBed.inject(LoggerService);
     const errorSpy = jest.spyOn(logger, 'error');
-    errorSpy.mockImplementation(
-      message =>
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        ({
+    errorSpy.mockImplementation(message =>
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      {
+        return {
           throw: () => {
             throw new Error(message);
           }
-        } as LogMessage)
+        } as LogMessage;
+      }
     );
     logger.warn = jest.fn();
   });
@@ -112,22 +133,3 @@ describe('Default configuration service', () => {
     expect(deserializationManager.registerDeserializer).toHaveBeenCalledTimes(1);
   });
 });
-
-@Injectable({
-  providedIn: 'root'
-})
-class TestPropertyTypeProvider implements ModelPropertyTypeRegistrationInformation {
-  public readonly type: string = 'test-prop-provider';
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-class TestDeserializer implements Deserializer<string, string> {
-  public canDeserialize(json: JsonPrimitive): json is string {
-    return typeof json === 'string';
-  }
-  public deserialize(json: string): string {
-    return json.toUpperCase();
-  }
-}

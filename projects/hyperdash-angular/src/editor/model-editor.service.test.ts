@@ -1,7 +1,7 @@
 import { Injector } from '@angular/core';
-import { EditorKind, LeafEditorData, UnresolvedCompositeEditorData } from '@hypertrace/hyperdash';
-import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
-import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
+import { EditorKind, type LeafEditorData, type UnresolvedCompositeEditorData } from '@hypertrace/hyperdash';
+import { type EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
+import { type EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
 import { ModelEditorService } from './model-editor.service';
 import { NestedModelEditorComponent } from './nested-model/nested-model-editor.component';
@@ -18,8 +18,12 @@ describe('Model editor service', () => {
 
   beforeEach(() => {
     mockEditorApiFactory = {
-      buildLeafEditorApi: jest.fn((_, editorData: LeafEditorData) => `${editorData.title} LEAF API`) as jest.Mock,
-      buildNestedEditorApi: jest.fn((_, data: UnresolvedCompositeEditorData) => `${data.title} NESTED API`) as jest.Mock
+      buildLeafEditorApi: jest.fn((_, editorData: LeafEditorData) => {
+        return `${editorData.title} LEAF API`;
+      }) as jest.Mock,
+      buildNestedEditorApi: jest.fn((_, data: UnresolvedCompositeEditorData) => {
+        return `${data.title} NESTED API`;
+      }) as jest.Mock
     };
     mockInjector = Injector.create({ providers: [] });
     model = new modelClass();

@@ -1,9 +1,9 @@
-import { AbstractType, InjectionToken, ModuleWithProviders, NgModule, Type } from '@angular/core';
+import { type AbstractType, InjectionToken, type ModuleWithProviders, NgModule, type Type } from '@angular/core';
 import {
   ARRAY_PROPERTY,
   BOOLEAN_PROPERTY,
-  Deserializer,
-  ModelPropertyTypeRegistrationInformation,
+  type Deserializer,
+  type ModelPropertyTypeRegistrationInformation,
   NUMBER_PROPERTY,
   PLAIN_OBJECT_PROPERTY,
   STRING_PROPERTY,
@@ -22,7 +22,7 @@ import { ThemePropertyPipe } from '../rendering/theme-property.pipe';
 export const MODEL_PROPERTY_TYPES = new InjectionToken<
   (ModelPropertyTypeRegistrationInformation | Type<ModelPropertyTypeRegistrationInformation>)[][]
 >('MODEL_PROPERTY_TYPES');
-export const DASHBOARD_DESERIALIZERS = new InjectionToken<(Type<Deserializer> | AbstractType<Deserializer>)[]>(
+export const DASHBOARD_DESERIALIZERS = new InjectionToken<(AbstractType<Deserializer> | Type<Deserializer>)[]>(
   'DASHBOARD_DESERIALIZERS'
 );
 const RETAINED_REFERENCES = new InjectionToken<Type<object>[][]>('RETAINED_REFERENCES');
@@ -119,8 +119,8 @@ export interface DashboardMetadata {
    */
   propertyTypes?: (
     | AbstractType<ModelPropertyTypeRegistrationInformation>
-    | Type<ModelPropertyTypeRegistrationInformation>
     | ModelPropertyTypeRegistrationInformation
+    | Type<ModelPropertyTypeRegistrationInformation>
   )[];
 
   /**

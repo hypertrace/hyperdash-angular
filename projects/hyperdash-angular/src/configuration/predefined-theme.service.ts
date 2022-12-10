@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Theme } from '@hypertrace/hyperdash';
+import { type Theme } from '@hypertrace/hyperdash';
 
 /**
  * An injectable global theme implementation. This should not be used as a model, but

@@ -15,8 +15,24 @@
         "plugin:@typescript-eslint/all",
         "prettier"
       ],
-      "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn", "eslint-plugin-react"],
+      "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn"],
       "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "hda",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "hda",
+            "style": "camelCase"
+          }
+        ],
         "@angular-eslint/component-max-inline-declarations": [
           "error",
           {
@@ -31,6 +47,145 @@
         "@angular-eslint/prefer-output-readonly": "error",
         "@angular-eslint/use-component-selector": "error",
         "@angular-eslint/use-component-view-encapsulation": "error",
+
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "types": {
+              "Object": {
+                "message": "Avoid using the `Object` type. Did you mean `object`?"
+              },
+              "Function": {
+                "message": "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+              },
+              "Boolean": {
+                "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+              },
+              "Number": {
+                "message": "Avoid using the `Number` type. Did you mean `number`?"
+              },
+              "String": {
+                "message": "Avoid using the `String` type. Did you mean `string`?"
+              },
+              "Symbol": {
+                "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+              },
+              "ArrayDeserializer": {
+                "message": "Please use the Angular injectable version instead: ArrayDeserializerService"
+              },
+              "DeserializationManager": {
+                "message": "Please use the Angular injectable version instead: DeserializationManagerService"
+              },
+              "ModelDeserializer": {
+                "message": "Please use the Angular injectable version instead: ModelDeserializerService"
+              },
+              "ModelLibrary": {
+                "message": "Please use the Angular injectable version instead: ModelLibraryService"
+              },
+              "ModelManager": {
+                "message": "Please use the Angular injectable version instead: ModelManagerService"
+              },
+              "ObjectDeserializer": {
+                "message": "Please use the Angular injectable version instead: ObjectDeserializerService"
+              },
+              "PrimitiveDeserializer": {
+                "message": "Please use the Angular injectable version instead: PrimitiveDeserializerService"
+              },
+              "RendererLibrary": {
+                "message": "Please use the Angular injectable version instead: RendererLibraryService"
+              },
+              "DashboardManager": {
+                "message": "Please use the Angular injectable version instead: DashboardManagerService"
+              },
+              "Logger": {
+                "message": "Please use the Angular injectable version instead: LoggerService"
+              },
+              "DataSourceManager": {
+                "message": "Please use the Angular injectable version instead: DataSourceManagerService"
+              },
+              "ModelPropertyTypeLibrary": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyTypeLibraryService"
+              },
+              "VariableManager": {
+                "message": "Please use the Angular injectable version instead: VariableManagerService"
+              },
+              "VariableDeserializer": {
+                "message": "Please use the Angular injectable version instead: VariableDeserializerService"
+              },
+              "DashboardEventManager": {
+                "message": "Please use the Angular injectable version instead: DashboardEventManagerService"
+              },
+              "ModelCreatedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelCreatedEventService"
+              },
+              "ModelDestroyedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelDestroyedEventService"
+              },
+              "ModelPropertyValidator": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyValidatorService"
+              },
+              "DefaultModelApiBuilder": {
+                "message": "Please use the Angular injectable version instead: DefaultModelApiBuilderService"
+              },
+              "ModelChangedEvent": {
+                "message": "Please use the Angular injectable version instead: ModelChangedEventService"
+              },
+              "ThemeManager": {
+                "message": "Please use the Angular injectable version instead: ThemeManagerService"
+              },
+              "ModelEventInstaller": {
+                "message": "Please use the Angular injectable version instead: ModelEventInstallerService"
+              },
+              "ArraySerializer": {
+                "message": "Please use the Angular injectable version instead: ArraySerializerService"
+              },
+              "SerializationManager": {
+                "message": "Please use the Angular injectable version instead: SerializationManagerService"
+              },
+              "ModelSerializer": {
+                "message": "Please use the Angular injectable version instead: ModelSerializerService"
+              },
+              "VariableSerializer": {
+                "message": "Please use the Angular injectable version instead: VariableSerializerService"
+              },
+              "ObjectSerializer": {
+                "message": "Please use the Angular injectable version instead: ObjectSerializerService"
+              },
+              "PrimitiveSerializer": {
+                "message": "Please use the Angular injectable version instead: PrimitiveSerializerService"
+              },
+              "EditorLibary": {
+                "message": "Please use the Angular injectable version instead: EditorLibaryService"
+              },
+              "EditorApiFactory": {
+                "message": "Please use the Angular injectable version instead: EditorApiFactoryService"
+              },
+              "ModelPropertyType": {
+                "message": "Please use the Angular injectable version instead: ModelPropertyTypeService"
+              },
+              "DataRefreshEvent": {
+                "message": "Please use the Angular injectable version instead: DataRefreshEventService"
+              },
+              "TimeRangeChangedEvent": {
+                "message": "Please use the Angular injectable version instead: TimeRangeChangedEventService"
+              },
+              "TimeRangeManager": {
+                "message": "Please use the Angular injectable version instead: TimeRangeManagerService"
+              }
+            }
+          }
+        ],
+        "@typescript-eslint/consistent-type-imports": [
+          "error",
+          {
+            "fixStyle": "inline-type-imports"
+          }
+        ],
+        "@typescript-eslint/no-type-alias": "off",
+        "@typescript-eslint/prefer-readonly-parameter-types": "off",
+        "@typescript-eslint/parameter-properties": ["error", { "prefer": "parameter-property" }],
+        "@typescript-eslint/no-magic-numbers": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
         "@typescript-eslint/array-type": [
           "error",
           {
@@ -105,6 +260,8 @@
         ],
         "@typescript-eslint/type-annotation-spacing": "off",
         "@typescript-eslint/unbound-method": "off",
+        "@typescript-eslint/init-declarations": "off",
+        "init-declarations": "off",
         "arrow-body-style": ["error", "always"],
         "arrow-parens": ["off", "always"],
         "brace-style": ["off", "off"],
@@ -127,8 +284,8 @@
               "zone.js/dist/*",
               "core-js/*",
               "@angular/common/http/*",
-              "rxjs/operators/*",
-              "@ngneat/spectator/jest/*"
+              "rxjs/operators",
+              "@ngneat/spectator/*"
             ]
           }
         ],
@@ -162,7 +319,6 @@
         "no-sparse-arrays": "error",
         "no-template-curly-in-string": "error",
         "no-trailing-spaces": "off",
-        "no-useless-constructor": "error",
         "no-void": "error",
         "object-shorthand": ["error", "never"],
         "padding-line-between-statements": [
@@ -176,16 +332,6 @@
         "prefer-object-spread": "error",
         "prefer-template": "error",
         "quote-props": "off",
-        "react/jsx-curly-spacing": "off",
-        "react/jsx-equals-spacing": "off",
-        "react/jsx-tag-spacing": [
-          "off",
-          {
-            "afterOpening": "allow",
-            "closingSlash": "allow"
-          }
-        ],
-        "react/jsx-wrap-multilines": "off",
         "space-before-function-paren": "off",
         "space-in-parens": ["off", "never"],
         "unicorn/filename-case": "error",

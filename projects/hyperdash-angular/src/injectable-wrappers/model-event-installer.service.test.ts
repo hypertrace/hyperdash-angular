@@ -23,8 +23,9 @@ describe('Model event installer service', () => {
     dashEventManagerService.publishEvent = jest.fn();
 
     class TestModelClass {
-      public event$: Subject<string> = new Subject();
-      public otherEvent$: Subject<string> = new Subject();
+      public event$ = new Subject<string>();
+
+      public otherEvent$ = new Subject<string>();
     }
 
     modelEventInstallerService.registerModelEvent(

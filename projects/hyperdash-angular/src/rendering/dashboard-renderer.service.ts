@@ -1,13 +1,13 @@
 import {
-  ComponentFactory,
+  type ComponentFactory,
   ComponentFactoryResolver,
-  ComponentRef,
+  type ComponentRef,
   Injectable,
   Injector,
-  Type,
-  ViewContainerRef
+  type Type,
+  type ViewContainerRef
 } from '@angular/core';
-import { fromEvent, Observable, Subject } from 'rxjs';
+import { fromEvent, type Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ModelDestroyedEventService } from '../injectable-wrappers/model-destroyed-event.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
@@ -22,8 +22,9 @@ import { RendererApiFactoryService } from './api/renderer-api-factory.service';
   providedIn: 'root'
 })
 export class DashboardRendererService {
-  private readonly renderedComponentByModel: Map<object, RenderedComponent> = new Map();
-  private readonly domEventSubscribers: Map<object, DomEventSubscriber[]> = new Map();
+  private readonly renderedComponentByModel = new Map<object, RenderedComponent>();
+
+  private readonly domEventSubscribers = new Map<object, DomEventSubscriber[]>();
 
   public constructor(
     private readonly rendererLibrary: RendererLibraryService,
@@ -57,18 +58,22 @@ export class DashboardRendererService {
       componentDestruction$: rendererDestructionSubject.asObservable()
     });
 
-    this.findMatchingSubscribers(model).forEach(subscriber =>
-      this.addEventSubscriptionForRenderedModel(model, subscriber)
-    );
+    this.findMatchingSubscribers(model).forEach(subscriber => {
+      this.addEventSubscriptionForRenderedModel(model, subscriber);
+    });
 
     // If the renderer is destroyed, remove the model
-    rendererDestructionSubject.subscribe(() => this.renderedComponentByModel.delete(model));
+    rendererDestructionSubject.subscribe(() => {
+      return this.renderedComponentByModel.delete(model);
+    });
     // If the renderer and model are destroyed at the same time, we need to clean up immediately.
     // The renderer destruction fires asynchronously
     this.modelDestroyedEvent
       .getDestructionObservable(model)
       .pipe(takeUntil(rendererDestructionSubject))
-      .subscribe(() => this.renderedComponentByModel.delete(model));
+      .subscribe(() => {
+        return this.renderedComponentByModel.delete(model);
+      });
 
     return componentRef;
   }
@@ -81,7 +86,7 @@ export class DashboardRendererService {
   public getObservableForRendererDomEvent<
     TEventName extends keyof GlobalEventHandlersEventMap,
     TModel extends object,
-    TRenderer extends unknown
+    TRenderer extends object
   >(
     eventName: TEventName,
     rootModel: object
@@ -94,19 +99,19 @@ export class DashboardRendererService {
     const subscriber: DomEventSubscriber = {
       event: eventName,
       rootModel: rootModel,
-      eventSubject: (eventSubject as unknown) as Subject<RendererDomEvent<Event, object, unknown>> // TODO better cast?
+      eventSubject: eventSubject as unknown as Subject<RendererDomEvent<Event, object>> // TODO better cast?
     };
-    const subscribers = this.domEventSubscribers.get(rootModel) || [];
+    const subscribers = this.domEventSubscribers.get(rootModel) ?? [];
     subscribers.push(subscriber);
     this.domEventSubscribers.set(rootModel, subscribers);
 
-    this.findMatchingRenderedModels(subscriber.rootModel).forEach(model =>
-      this.addEventSubscriptionForRenderedModel(model, subscriber)
-    );
+    this.findMatchingRenderedModels(subscriber.rootModel).forEach(model => {
+      this.addEventSubscriptionForRenderedModel(model, subscriber);
+    });
 
-    this.modelDestroyedEvent
-      .getDestructionObservable(rootModel)
-      .subscribe(() => this.cleanupSubscribersForRootModel(rootModel));
+    this.modelDestroyedEvent.getDestructionObservable(rootModel).subscribe(() => {
+      this.cleanupSubscribersForRootModel(rootModel);
+    });
 
     return eventSubject.asObservable();
   }
@@ -118,7 +123,7 @@ export class DashboardRendererService {
     /* Get it from the appropriate injector based on usage location. Need to jump through hoops here
     because ComponentFactoryResolver is an abstract type which doesn't play nice with generics */
     const resolver = viewContainerRef.injector.get(
-      (ComponentFactoryResolver as unknown) as Type<ComponentFactoryResolver>
+      ComponentFactoryResolver as unknown as Type<ComponentFactoryResolver>
     );
 
     const renderer = this.rendererLibrary.lookupRenderer(model.constructor as Type<unknown>) as Type<TRenderer>;
@@ -153,20 +158,24 @@ export class DashboardRendererService {
 
     fromEvent(rendererElement, subscriber.event)
       .pipe(
-        map(event => ({
-          domEvent: event,
-          model: model,
-          componentRef: rendererInfo.componentRef
-        })),
+        map(event => {
+          return {
+            domEvent: event,
+            model: model,
+            componentRef: rendererInfo.componentRef
+          };
+        }),
         takeUntil(rendererInfo.componentDestruction$)
       )
       .subscribe({
-        next: value => subscriber.eventSubject.next(value)
+        next: value => {
+          subscriber.eventSubject.next(value);
+        }
       });
   }
 
   private cleanupSubscribersForRootModel(model: object): void {
-    const subscribers = this.domEventSubscribers.get(model) || [];
+    const subscribers = this.domEventSubscribers.get(model) ?? [];
     subscribers.forEach(subscriber => {
       subscriber.eventSubject.complete();
     });
@@ -174,9 +183,9 @@ export class DashboardRendererService {
   }
 
   private findMatchingRenderedModels(rootModel: object): object[] {
-    return Array.from(this.renderedComponentByModel.keys()).filter(
-      model => model === rootModel || this.modelManager.isAncestor(model, rootModel)
-    );
+    return Array.from(this.renderedComponentByModel.keys()).filter(model => {
+      return model === rootModel || this.modelManager.isAncestor(model, rootModel);
+    });
   }
 
   private findMatchingSubscribers(renderedModel: object): DomEventSubscriber[] {
@@ -184,7 +193,7 @@ export class DashboardRendererService {
     let currentModel: object | undefined = renderedModel;
 
     while (currentModel) {
-      subscribers.push(...(this.domEventSubscribers.get(currentModel) || []));
+      subscribers.push(...(this.domEventSubscribers.get(currentModel) ?? []));
       currentModel = this.modelManager.getParent(currentModel);
     }
 
@@ -192,7 +201,7 @@ export class DashboardRendererService {
   }
 }
 
-export interface RendererDomEvent<TEvent extends Event, TModel extends object, TRenderer extends unknown> {
+export interface RendererDomEvent<TEvent extends Event, TModel extends object, TRenderer = unknown> {
   domEvent: TEvent;
   model: TModel;
   componentRef: ComponentRef<TRenderer>;
@@ -201,7 +210,7 @@ export interface RendererDomEvent<TEvent extends Event, TModel extends object, T
 interface DomEventSubscriber {
   rootModel: object;
   event: string;
-  eventSubject: Subject<RendererDomEvent<Event, object, unknown>>;
+  eventSubject: Subject<RendererDomEvent<Event, object>>;
 }
 
 interface RenderedComponent {

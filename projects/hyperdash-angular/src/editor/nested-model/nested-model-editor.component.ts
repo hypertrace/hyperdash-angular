@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { EditorApi, ModelJson } from '@hypertrace/hyperdash';
+import { EditorApi, type ModelJson } from '@hypertrace/hyperdash';
 import { EDITOR_API } from '../editor-api-injection-token';
 
 /**

@@ -1,9 +1,9 @@
-import { EMPTY, Observable } from 'rxjs';
-import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
-import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
-import { ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
+import { EMPTY, type Observable } from 'rxjs';
+import { type ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
+import { type ModelManagerService } from '../injectable-wrappers/model-manager.service';
+import { type ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
 import { getTestScheduler } from '../test/test-utils';
-import { RendererApi } from './api/renderer-api';
+import { type RendererApi } from './api/renderer-api';
 import { ThemePropertyPipe } from './theme-property.pipe';
 
 describe('Theme property pipe', () => {
@@ -36,7 +36,9 @@ describe('Theme property pipe', () => {
 
     mockModelChangeObservable = EMPTY;
     mockModelChanged = {
-      getObservableForModel: jest.fn(() => mockModelChangeObservable)
+      getObservableForModel: jest.fn(() => {
+        return mockModelChangeObservable;
+      })
     };
   });
 

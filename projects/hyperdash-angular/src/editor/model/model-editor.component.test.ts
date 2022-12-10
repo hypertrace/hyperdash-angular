@@ -1,8 +1,8 @@
 import { Component, Injector } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { By } from '@angular/platform-browser';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, type Observable } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { getTestScheduler, moduleWithEntryComponents } from '../../test/test-utils';
 import { DashboardEditorModule } from '../dashboard-editor.module';
@@ -11,8 +11,12 @@ import { ModelEditorService } from '../model-editor.service';
 describe('Model editor component', () => {
   let mockModelEditorService: Partial<ModelEditorService>;
   let host: ComponentFixture<HostComponent>;
-  let mockModelChangedEvent: Partial<ModelChangedEventService>;
-  let modelChangedObservable: Observable<object>;
+  let modelChangedObservable: Observable<object> = EMPTY;
+  const mockModelChangedEvent: Partial<ModelChangedEventService> = {
+    getObservableForModel: jest.fn(() => {
+      return modelChangedObservable;
+    })
+  };
 
   @Component({
     selector: 'hda-host',
@@ -20,6 +24,7 @@ describe('Model editor component', () => {
   })
   class HostComponent {
     public model?: object;
+
     public readonly modelChanged: jest.Mock = jest.fn();
   }
 
@@ -28,10 +33,6 @@ describe('Model editor component', () => {
     template: 'property editor'
   })
   class PropEditorComponent {}
-  modelChangedObservable = EMPTY;
-  mockModelChangedEvent = {
-    getObservableForModel: jest.fn(() => modelChangedObservable)
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,16 +57,16 @@ describe('Model editor component', () => {
   });
 
   test('renders empty if no data provided', () => {
-    expect(host.debugElement.nativeElement.textContent.trim()).toBe('');
+    expect((host.debugElement.nativeElement as HTMLElement).textContent?.trim()).toBe('');
   });
 
   test('renders subeditors if model is provided', () => {
     host.componentInstance.model = {};
     host.detectChanges();
 
-    expect(host.debugElement.query(By.directive(PropEditorComponent)).nativeElement.textContent.trim()).toBe(
-      'property editor'
-    );
+    expect(
+      (host.debugElement.query(By.directive(PropEditorComponent)).nativeElement as HTMLElement).textContent?.trim()
+    ).toBe('property editor');
   });
 
   test('emits a change when model is edited', () => {

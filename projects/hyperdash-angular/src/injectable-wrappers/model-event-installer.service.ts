@@ -1,5 +1,5 @@
-import { Injectable, Injector, Type } from '@angular/core';
-import { DashboardEventKey, ModelEventInstaller } from '@hypertrace/hyperdash';
+import { Injectable, Injector, type Type } from '@angular/core';
+import { type DashboardEventKey, ModelEventInstaller } from '@hypertrace/hyperdash';
 import { DashboardEventManagerService } from './dashboard-event-manager.service';
 import { LoggerService } from './logger.service';
 import { ModelDestroyedEventService } from './model-destroyed-event.service';

@@ -4,14 +4,14 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
+  type OnChanges,
+  type OnDestroy,
   Output
 } from '@angular/core';
-import { Dashboard, ModelJson } from '@hypertrace/hyperdash';
+import { type Dashboard, ModelJson } from '@hypertrace/hyperdash';
 import { DashboardManagerService } from '../injectable-wrappers/dashboard-manager.service';
 import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
-import { TypedSimpleChanges } from '../util/angular-change-object';
+import { type TypedSimpleChanges } from '../util/angular-change-object';
 import { DashboardRendererService } from './dashboard-renderer.service';
 
 /**
@@ -34,10 +34,10 @@ export class DashboardComponent<TRoot extends object = object> implements OnChan
    * each time json is changed.
    */
   @Output()
-  public readonly dashboardReady: EventEmitter<Dashboard<TRoot>> = new EventEmitter();
+  public readonly dashboardReady = new EventEmitter<Dashboard<TRoot>>();
 
   @Output()
-  public readonly widgetSelectionChange: EventEmitter<object> = new EventEmitter();
+  public readonly widgetSelectionChange = new EventEmitter<object>();
 
   /**
    * The dashboard object produced from the provided JSON
@@ -57,9 +57,9 @@ export class DashboardComponent<TRoot extends object = object> implements OnChan
       this.destroyDashboardIfDefined();
       this.dashboardObject = this.dashboardManager.create(this.json);
       this.addSelectionListenerToWidgets(this.dashboardObject.root);
-      this.modelChangedEvent
-        .getObservableForModel(this.dashboardObject.root)
-        .subscribe(() => this.changeDetector.markForCheck());
+      this.modelChangedEvent.getObservableForModel(this.dashboardObject.root).subscribe(() => {
+        this.changeDetector.markForCheck();
+      });
       this.dashboardReady.emit(this.dashboardObject);
     }
   }
@@ -76,7 +76,7 @@ export class DashboardComponent<TRoot extends object = object> implements OnChan
   }
 
   private addSelectionListenerToWidgets(dashboardRoot: object): void {
-    const heardEvents: WeakSet<Event> = new WeakSet();
+    const heardEvents = new WeakSet<Event>();
 
     this.dashboardRenderer.getObservableForRendererDomEvent('click', dashboardRoot).subscribe(({ model, domEvent }) => {
       if (!heardEvents.has(domEvent)) {

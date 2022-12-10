@@ -202,12 +202,12 @@ describe('Injectable wrappers', () => {
         {
           title: 'String property',
           editor: TestEditorClass,
-          validator: expect.any(Function)
+          validator: expect.any(Function) as Function
         },
         {
           title: 'Boolean property',
           editor: LateTestEditorClass,
-          validator: expect.any(Function)
+          validator: expect.any(Function) as Function
         }
       ]
     });
