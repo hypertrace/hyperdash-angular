@@ -5,7 +5,7 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["tsconfig.json", "e2e/tsconfig.json"],
+        "project": ["tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -17,22 +17,6 @@
       ],
       "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn"],
       "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "hda",
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "hda",
-            "style": "camelCase"
-          }
-        ],
         "@angular-eslint/component-max-inline-declarations": [
           "error",
           {

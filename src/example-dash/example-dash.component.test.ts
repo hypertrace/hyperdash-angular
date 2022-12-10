@@ -1,5 +1,5 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { fakeAsync, tick, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
   DashboardCoreModule,
@@ -7,82 +7,80 @@ import {
   DefaultConfigurationService,
   LoggerService
 } from '@hypertrace/hyperdash-angular';
+import { createComponentFactory, type Spectator } from '@ngneat/spectator/jest';
 import { ExampleDashComponent } from './example-dash.component';
 import { ExampleDashModule } from './example-dash.module';
 import { GraphQlDataSourceModule } from './graphql-data-source.module';
 
 describe('example dash component', () => {
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [ExampleDashComponent],
-        imports: [
-          ExampleDashModule,
-          DashboardCoreModule,
-          DashboardEditorModule,
-          FormsModule,
-          GraphQlDataSourceModule,
-          HttpClientTestingModule
-        ],
-        providers: [{ provide: LoggerService, useValue: { warn: jest.fn() } }]
-      }).compileComponents();
+  let spectator: Spectator<ExampleDashComponent>;
 
-      TestBed.inject(DefaultConfigurationService).configure();
-    })
-  );
+  const createComponent = createComponentFactory({
+    component: ExampleDashComponent,
+    imports: [
+      ExampleDashModule,
+      DashboardCoreModule,
+      DashboardEditorModule,
+      FormsModule,
+      GraphQlDataSourceModule,
+      HttpClientTestingModule
+    ],
+    providers: [{ provide: LoggerService, useValue: { warn: jest.fn() } }]
+  });
+
+  beforeEach(waitForAsync(() => {
+    spectator = createComponent();
+    spectator.inject(DefaultConfigurationService).configure();
+  }));
 
   test('can detect clicks inside the dashboard', () => {
-    const fixture = TestBed.createComponent(ExampleDashComponent);
-    fixture.componentInstance.onClick = jest.fn();
-    fixture.detectChanges();
+    spectator.component.onClick = jest.fn();
+    spectator.detectChanges();
 
-    fixture.nativeElement.querySelector('app-example-renderer').click();
-    fixture.detectChanges();
+    spectator.query<HTMLElement>('app-example-renderer')?.click();
+    spectator.detectChanges();
 
-    expect(fixture.componentInstance.onClick).toHaveBeenCalled();
+    expect(spectator.component.onClick).toHaveBeenCalled();
   });
 
   test('clicking a nested renderer only emits a single event', () => {
-    const fixture = TestBed.createComponent(ExampleDashComponent);
-    fixture.componentInstance.onWidgetSelectionChange = jest.fn();
-    fixture.detectChanges();
+    spectator.component.onWidgetSelectionChange = jest.fn();
+    spectator.detectChanges();
 
-    fixture.nativeElement.querySelector('app-example-renderer').click();
-    fixture.detectChanges();
+    spectator.query<HTMLElement>('app-example-renderer')?.click();
+    spectator.detectChanges();
 
-    expect(fixture.componentInstance.onWidgetSelectionChange).toHaveBeenCalledTimes(1);
+    expect(spectator.component.onWidgetSelectionChange).toHaveBeenCalledTimes(1);
   });
 
   test('can render a dashboard model end to end', fakeAsync(() => {
-    const fixture = TestBed.createComponent(ExampleDashComponent);
-
-    fixture.detectChanges();
-    fixture.componentInstance.dashboard!.setVariable('foo', 'render me!');
-    fixture.detectChanges();
+    spectator.detectChanges();
+    spectator.component.dashboard!.setVariable('foo', 'render me!');
+    spectator.detectChanges();
     tick(5000);
-    fixture.detectChanges();
+    spectator.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('render me!');
+    expect(spectator.element.textContent).toContain('render me!');
 
-    fixture.componentInstance.dashboard!.setVariable('foo', 'new text!');
-    fixture.detectChanges();
+    spectator.component.dashboard!.setVariable('foo', 'new text!');
+    spectator.detectChanges();
     tick(5000);
-    fixture.detectChanges();
+    spectator.detectChanges();
 
-    expect(fixture.nativeElement.textContent).not.toContain('render me!');
+    expect(spectator.element.textContent).not.toContain('render me!');
 
-    expect(fixture.nativeElement.textContent).toContain('new text!');
+    expect(spectator.element.textContent).toContain('new text!');
 
-    fixture.componentInstance.json = {
+    spectator.component.json = {
       type: 'example-model',
       title: 'wipe it all away'
     };
-    fixture.detectChanges();
+    spectator.detectChanges();
     tick(5000);
-    fixture.detectChanges();
+    spectator.detectChanges();
 
-    expect(fixture.nativeElement.textContent).not.toContain('new text!');
+    expect(spectator.element.textContent).not.toContain('new text!');
 
-    expect(fixture.nativeElement.textContent).toContain('wipe it all away');
+    expect(spectator.element.textContent).toEqual('wipe it all away');
   }));
 });

@@ -1,11 +1,11 @@
 {
-  "extends": "../../.eslintrc.json",
+  "extends": "../.eslintrc.json",
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["projects/hyperdash-angular/tsconfig.lib.json", "projects/hyperdash-angular/tsconfig.spec.json"],
+        "project": ["tsconfig.app.json", "tsconfig.spec.json"],
         "createDefaultProgram": true
       },
       "rules": {
@@ -13,7 +13,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "hda",
+            "prefix": "app",
             "style": "kebab-case"
           }
         ],
@@ -21,7 +21,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "hda",
+            "prefix": "app",
             "style": "camelCase"
           }
         ]

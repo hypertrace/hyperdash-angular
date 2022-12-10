@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ModelScopedDashboardEvent, ModelScopedData } from '@hypertrace/hyperdash';
+import { ModelScopedDashboardEvent, type ModelScopedData } from '@hypertrace/hyperdash';
 import { DashboardEventManagerService, ModelDestroyedEventService } from '@hypertrace/hyperdash-angular';
-import { Observer } from 'rxjs';
+import { type Observer } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
 @Injectable({
@@ -18,7 +18,9 @@ export class GraphQlQueryEventService extends ModelScopedDashboardEvent<GraphQlQ
   ) {
     super(dashboardEventManager);
 
-    this.getObservable().subscribe(event => this.onQueryEvent(event));
+    this.getObservable().subscribe(event => {
+      this.onQueryEvent(event);
+    });
   }
 
   protected onQueryEvent(event: ModelScopedData<GraphQlQueryObject>): void {
@@ -28,7 +30,11 @@ export class GraphQlQueryEventService extends ModelScopedDashboardEvent<GraphQlQ
       })
       .pipe(
         takeUntil(
-          this.modelDestroyedEvent.getObservable().pipe(filter(destroyedModel => destroyedModel === event.source))
+          this.modelDestroyedEvent.getObservable().pipe(
+            filter(destroyedModel => {
+              return destroyedModel === event.source;
+            })
+          )
         )
       )
       .subscribe(event.data.responseObserver);

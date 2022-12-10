@@ -1,20 +1,20 @@
 import {
-  DataSource,
+  type DataSource,
   dataSourceMarker,
   Model,
   ModelEventPublisher,
   ModelProperty,
   STRING_PROPERTY
 } from '@hypertrace/hyperdash';
-import { Observable, Subject } from 'rxjs';
-import { GraphQlQueryEventService, GraphQlQueryObject } from './graphql-query-event.service';
+import { type Observable, Subject } from 'rxjs';
+import { GraphQlQueryEventService, type GraphQlQueryObject } from './graphql-query-event.service';
 
 @Model({
   type: 'graphql-data-source'
 })
 export class GraphQlDataSource implements DataSource<object> {
   @ModelEventPublisher(GraphQlQueryEventService)
-  public readonly query$: Subject<GraphQlQueryObject> = new Subject();
+  public readonly query$ = new Subject<GraphQlQueryObject>();
 
   public readonly dataSourceMarker: typeof dataSourceMarker = dataSourceMarker;
 
