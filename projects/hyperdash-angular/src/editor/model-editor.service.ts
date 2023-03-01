@@ -41,7 +41,11 @@ export class ModelEditorService {
       editorsToUse.push(editorData.themeEditor);
     }
 
-    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model) ?? []).flat();
+    return editorsToUse
+      .map(editor => {
+        return this.getRenderableEditorForEditorData(editor, model) ?? [];
+      })
+      .flat();
   }
 
   private createInjectorForEditorData(editorData: NestedEditorData, model: object): Injector {
