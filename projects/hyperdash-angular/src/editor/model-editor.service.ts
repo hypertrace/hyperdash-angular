@@ -3,7 +3,6 @@ import { CompositeEditorData, EditorKind, NestedEditorData } from '@hypertrace/h
 import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
 import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
-import { NestedModelEditorComponent } from './nested-model/nested-model-editor.component';
 
 /**
  * Service which will accept a model and generate render data for it
@@ -42,7 +41,7 @@ export class ModelEditorService {
       editorsToUse.push(editorData.themeEditor);
     }
 
-    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model));
+    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model) ?? []).flat();
   }
 
   private createInjectorForEditorData(editorData: NestedEditorData, model: object): Injector {
@@ -74,21 +73,24 @@ export class ModelEditorService {
     }
   }
 
-  private getRenderableEditorForEditorData(editorData: NestedEditorData, model: object): RenderableEditor {
-    return {
-      component: this.getRendererComponentForEditorData(editorData),
-      injector: this.createInjectorForEditorData(editorData, model)
-    };
+  private getRenderableEditorForEditorData(editorData: NestedEditorData, model: object): RenderableEditor | undefined {
+    const renderer = this.getRendererComponentForEditorData(editorData);
+
+    return renderer
+      ? ({
+          component: this.getRendererComponentForEditorData(editorData),
+          injector: this.createInjectorForEditorData(editorData, model)
+        } as RenderableEditor)
+      : undefined;
   }
 
-  private getRendererComponentForEditorData(editorData: NestedEditorData): Type<unknown> {
+  private getRendererComponentForEditorData(editorData: NestedEditorData): Type<unknown> | undefined {
     switch (editorData.kind) {
       case EditorKind.Leaf:
         return editorData.editor;
       case EditorKind.Unresolved:
       default:
-        // Should never be a default
-        return NestedModelEditorComponent;
+        return undefined;
     }
   }
 }
