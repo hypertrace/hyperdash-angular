@@ -71,7 +71,6 @@ describe('DashboardModelDirective', () => {
   template: '<ng-container [hdaDashboardModel]=model><ng-container>'
 })
 class HostComponent {
-  // tslint:disable-next-line:completed-docs
   @Input()
   public model?: object;
 }

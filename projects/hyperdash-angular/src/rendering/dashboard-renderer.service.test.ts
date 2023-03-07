@@ -31,7 +31,7 @@ describe('Dashboard Renderer Service', () => {
     modelManager = TestBed.inject(ModelManagerService);
     modelManager.registerModelApiBuilder({
       matches: () => true,
-      // tslint:disable-next-line: no-object-literal-type-assertion
+      // eslint-disable-next-line: no-object-literal-type-assertion
       build: () => ({} as ModelApi)
     });
     const rendererLibrary = TestBed.inject(RendererLibraryService);
@@ -184,7 +184,6 @@ describe('Dashboard Renderer Service', () => {
   template: 'Host > <ng-container #container><ng-container>'
 })
 class HostComponent {
-  // tslint:disable-next-line:completed-docs
   @ViewChild('container', { read: ViewContainerRef, static: true })
   public viewContainerRef!: ViewContainerRef;
 }

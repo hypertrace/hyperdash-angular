@@ -1,6 +1,5 @@
 import { Component, Inject, NgModule } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-// tslint:disable-next-line:no-implicit-dependencies
 import { By } from '@angular/platform-browser';
 import {
   EditorApi,
