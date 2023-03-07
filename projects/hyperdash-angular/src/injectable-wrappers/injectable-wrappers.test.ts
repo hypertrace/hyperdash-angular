@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
+// tslint:disable:ban-types completed-docs
 import { TestBed } from '@angular/core/testing';
 import {
   ArrayDeserializer,
@@ -202,12 +202,12 @@ describe('Injectable wrappers', () => {
         {
           title: 'String property',
           editor: TestEditorClass,
-          validator: expect.any(Function) as Function
+          validator: expect.any(Function)
         },
         {
           title: 'Boolean property',
           editor: LateTestEditorClass,
-          validator: expect.any(Function) as Function
+          validator: expect.any(Function)
         }
       ]
     });

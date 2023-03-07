@@ -10,6 +10,7 @@ import { NestedModelEditorComponent } from './nested-model/nested-model-editor.c
 @NgModule({
   declarations: [ModelEditorComponent, ModelJsonEditorComponent, NestedModelEditorComponent],
   exports: [ModelEditorComponent, ModelJsonEditorComponent],
+  entryComponents: [NestedModelEditorComponent],
   imports: [CommonModule]
 })
 export class DashboardEditorModule {}

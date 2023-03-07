@@ -1,5 +1,5 @@
-import { Directive, Input, type OnChanges, ViewContainerRef } from '@angular/core';
-import { type TypedSimpleChanges } from '../util/angular-change-object';
+import { Directive, Input, OnChanges, ViewContainerRef } from '@angular/core';
+import { TypedSimpleChanges } from '../util/angular-change-object';
 import { DashboardRendererService } from './dashboard-renderer.service';
 
 /**

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { type ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
+import { ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
 import { DashboardCoreModule, MODEL_PROPERTY_TYPES } from './dashboard-core.module';
 
 describe('Dashboard core module', () => {

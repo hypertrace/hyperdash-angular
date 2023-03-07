@@ -1,4 +1,4 @@
-import { type SimpleChange, type SimpleChanges } from '@angular/core';
+import { SimpleChange, SimpleChanges } from '@angular/core';
 
 /**
  * A typed version of Angular's `SimpleChange`

@@ -1,8 +1,9 @@
-import { Injectable, Injector, type Type } from '@angular/core';
-import { type CompositeEditorData, EditorKind, type NestedEditorData } from '@hypertrace/hyperdash';
+import { Injectable, Injector, Type } from '@angular/core';
+import { CompositeEditorData, EditorKind, NestedEditorData } from '@hypertrace/hyperdash';
 import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
 import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
+import { NestedModelEditorComponent } from './nested-model/nested-model-editor.component';
 
 /**
  * Service which will accept a model and generate render data for it
@@ -41,7 +42,7 @@ export class ModelEditorService {
       editorsToUse.push(editorData.themeEditor);
     }
 
-    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model) ?? []).flat();
+    return editorsToUse.map(editor => this.getRenderableEditorForEditorData(editor, model));
   }
 
   private createInjectorForEditorData(editorData: NestedEditorData, model: object): Injector {
@@ -73,24 +74,21 @@ export class ModelEditorService {
     }
   }
 
-  private getRenderableEditorForEditorData(editorData: NestedEditorData, model: object): RenderableEditor | undefined {
-    const renderer = this.getRendererComponentForEditorData(editorData);
-
-    return renderer
-      ? ({
-          component: this.getRendererComponentForEditorData(editorData),
-          injector: this.createInjectorForEditorData(editorData, model)
-        } as RenderableEditor)
-      : undefined;
+  private getRenderableEditorForEditorData(editorData: NestedEditorData, model: object): RenderableEditor {
+    return {
+      component: this.getRendererComponentForEditorData(editorData),
+      injector: this.createInjectorForEditorData(editorData, model)
+    };
   }
 
-  private getRendererComponentForEditorData(editorData: NestedEditorData): Type<unknown> | undefined {
+  private getRendererComponentForEditorData(editorData: NestedEditorData): Type<unknown> {
     switch (editorData.kind) {
       case EditorKind.Leaf:
         return editorData.editor;
       case EditorKind.Unresolved:
       default:
-        return undefined;
+        // Should never be a default
+        return NestedModelEditorComponent;
     }
   }
 }

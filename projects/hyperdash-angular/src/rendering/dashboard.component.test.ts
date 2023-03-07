@@ -1,4 +1,4 @@
-/* eslint-disable */
+// tslint:disable:completed-docs
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -23,7 +23,7 @@ describe('Dashboard Component', () => {
 
   @Component({
     selector: 'hda-host',
-    // eslint-disable-next-line
+    // tslint:disable-next-line: max-inline-declarations
     template: `
       <hda-dashboard
         [json]="json"

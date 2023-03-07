@@ -1,11 +1,12 @@
-/* eslint-disable */
+// tslint:disable:completed-docs
 import { Directive, NgModule, Type } from '@angular/core';
-// eslint-disable-next-line import/no-internal-modules
+// tslint:disable-next-line: no-submodule-imports
 import { TestScheduler } from 'rxjs/testing';
 
 export const moduleWithEntryComponents = (...components: Type<unknown>[]): unknown =>
   NgModule({
-    declarations: [...components]
+    declarations: [...components],
+    entryComponents: [...components]
   })(class {});
 
 export const mockDirective = <T = unknown>(config: {

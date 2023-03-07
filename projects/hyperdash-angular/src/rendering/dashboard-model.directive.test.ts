@@ -1,17 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { DashboardModelDirective } from './dashboard-model.directive';
 import { DashboardRendererService } from './dashboard-renderer.service';
-
-@Component({
-  selector: 'hda-dash-model-directive-host',
-  template: '<ng-container [hdaDashboardModel]=model><ng-container>'
-})
-class HostComponent {
-  // eslint-disable-next-line
-  @Input()
-  public model?: object;
-}
 
 describe('DashboardModelDirective', () => {
   let dashboardRendererService: DashboardRendererService;
@@ -75,3 +65,13 @@ describe('DashboardModelDirective', () => {
     );
   });
 });
+
+@Component({
+  selector: 'hda-dash-model-directive-host',
+  template: '<ng-container [hdaDashboardModel]=model><ng-container>'
+})
+class HostComponent {
+  // tslint:disable-next-line:completed-docs
+  @Input()
+  public model?: object;
+}
