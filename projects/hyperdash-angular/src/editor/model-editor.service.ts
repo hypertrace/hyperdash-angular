@@ -90,6 +90,7 @@ export class ModelEditorService {
         return editorData.editor;
       case EditorKind.Unresolved:
       default:
+        // Should never be a default
         return undefined;
     }
   }

@@ -13,6 +13,7 @@ import {
 
 @NgModule({
   declarations: [ExampleContainerRendererComponent, ExampleRendererComponent, StringPropertyEditorComponent],
+  entryComponents: [ExampleContainerRendererComponent, ExampleRendererComponent, StringPropertyEditorComponent],
   imports: [
     CommonModule,
     FormsModule,

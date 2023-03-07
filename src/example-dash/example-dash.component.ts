@@ -1,4 +1,4 @@
-// tslint:disable:no-invalid-template-strings max-inline-declarations
+// eslint-disable:no-invalid-template-strings max-inline-declarations
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import {
   Dashboard,
@@ -24,7 +24,7 @@ import {
 } from '@hypertrace/hyperdash-angular';
 import { remove } from 'lodash-es';
 import { EMPTY, interval, Observable, of } from 'rxjs';
-// tslint:disable-next-line:no-submodule-imports
+// eslint-disable-next-line:no-submodule-imports
 import { catchError, map, take } from 'rxjs/operators';
 
 @Component({
@@ -94,13 +94,13 @@ export class ExampleDashComponent implements OnInit {
   public constructor(private readonly modelChangedEvent: ModelChangedEventService) {}
 
   public ngOnInit(): void {
-    // tslint:disable-next-line:no-null-keyword
+    // eslint-disable-next-line:no-null-keyword
     this.jsonAsString = JSON.stringify(this.json, null, 4);
   }
 
   public updateJson(): void {
     this.json = JSON.parse(this.jsonAsString);
-    // tslint:disable-next-line:no-null-keyword
+    // eslint-disable-next-line:no-null-keyword
     this.jsonAsString = JSON.stringify(this.json, null, 4);
   }
 
@@ -185,10 +185,10 @@ export class ExampleModel {
           return value;
         }
 
-        // tslint:disable-next-line:no-null-keyword
+        // eslint-disable-next-line:no-null-keyword
         return JSON.stringify(value, null, 2);
       }),
-      // tslint:disable-next-line:no-null-keyword
+      // eslint-disable-next-line:no-null-keyword
       catchError(err => of(JSON.stringify(err, null, 2)))
     );
   }

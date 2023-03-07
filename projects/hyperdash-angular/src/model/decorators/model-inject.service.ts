@@ -36,7 +36,7 @@ export class ModelInjectService implements ModelDecorator {
       new Map(
         this.getConstructorChain(modelInstance)
           .reverse() // Starting at the base of the inheritance chain, so descendents overwrite parents
-          .map(constructor => this.injectData.get(constructor) || [])
+          .map(constructor => this.injectData.get(constructor) ?? [])
           .flat()
           .map(injectData => [injectData.propertyKey, injectData])
       ).values()
@@ -44,7 +44,7 @@ export class ModelInjectService implements ModelDecorator {
   }
 
   private addInjectData(data: ModelInjectData): void {
-    const injectArray = this.injectData.get(data.injectHostClass) || [];
+    const injectArray = this.injectData.get(data.injectHostClass) ?? [];
     injectArray.push(data);
     this.injectData.set(data.injectHostClass, injectArray);
   }
@@ -94,7 +94,7 @@ const injectDefinitions: ModelInjectData[] = [];
  * against the root of the DI tree, with one special token available for resolving the model api:
  * `MODEL_API`
  */
-// tslint:disable-next-line:only-arrow-functions
+// eslint-disable-next-line:only-arrow-functions
 export function ModelInject(
   injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>
 ): PropertyDecorator {
