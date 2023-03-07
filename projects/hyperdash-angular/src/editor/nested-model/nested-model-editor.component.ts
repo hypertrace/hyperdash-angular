@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { EditorApi, type ModelJson } from '@hypertrace/hyperdash';
+import { EditorApi, ModelJson } from '@hypertrace/hyperdash';
 import { EDITOR_API } from '../editor-api-injection-token';
 
 /**
@@ -9,7 +9,9 @@ import { EDITOR_API } from '../editor-api-injection-token';
 @Component({
   selector: 'hda-nested-model-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ' To be Added! '
+  template: `
+    <hda-model-json-editor [modelJson]="api.value" (modelJsonChange)="api.valueChange($event)"> </hda-model-json-editor>
+  `
 })
 export class NestedModelEditorComponent {
   public constructor(@Inject(EDITOR_API) public readonly api: EditorApi<ModelJson>) {}

@@ -34,7 +34,7 @@ describe('example dash component', () => {
     fixture.componentInstance.onClick = jest.fn();
     fixture.detectChanges();
 
-    (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('app-example-renderer')?.click();
+    fixture.nativeElement.querySelector('app-example-renderer').click();
     fixture.detectChanges();
 
     expect(fixture.componentInstance.onClick).toHaveBeenCalled();
@@ -45,7 +45,7 @@ describe('example dash component', () => {
     fixture.componentInstance.onWidgetSelectionChange = jest.fn();
     fixture.detectChanges();
 
-    (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('app-example-renderer')?.click();
+    fixture.nativeElement.querySelector('app-example-renderer').click();
     fixture.detectChanges();
 
     expect(fixture.componentInstance.onWidgetSelectionChange).toHaveBeenCalledTimes(1);
@@ -60,16 +60,16 @@ describe('example dash component', () => {
     tick(5000);
     fixture.detectChanges();
 
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('render me!');
+    expect(fixture.nativeElement.textContent).toContain('render me!');
 
     fixture.componentInstance.dashboard!.setVariable('foo', 'new text!');
     fixture.detectChanges();
     tick(5000);
     fixture.detectChanges();
 
-    expect((fixture.nativeElement as HTMLElement).textContent).not.toContain('render me!');
+    expect(fixture.nativeElement.textContent).not.toContain('render me!');
 
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('new text!');
+    expect(fixture.nativeElement.textContent).toContain('new text!');
 
     fixture.componentInstance.json = {
       type: 'example-model',
@@ -79,8 +79,8 @@ describe('example dash component', () => {
     tick(5000);
     fixture.detectChanges();
 
-    expect((fixture.nativeElement as HTMLElement).textContent).not.toContain('new text!');
+    expect(fixture.nativeElement.textContent).not.toContain('new text!');
 
-    expect((fixture.nativeElement as HTMLElement).textContent).toContain('wipe it all away');
+    expect(fixture.nativeElement.textContent).toContain('wipe it all away');
   }));
 });

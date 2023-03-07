@@ -1,13 +1,12 @@
 import { Component, Inject, NgModule } from '@angular/core';
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
   EditorApi,
   Model,
   ModelProperty,
   ModelPropertyEditor,
-  type ModelPropertyTypeRegistrationInformation
+  ModelPropertyTypeRegistrationInformation
 } from '@hypertrace/hyperdash';
 import { DefaultConfigurationService } from '../../configuration/default-configuration.service';
 import { ModelDestroyedEventService } from '../../injectable-wrappers/model-destroyed-event.service';
@@ -53,6 +52,7 @@ describe('Model JSON editor component', () => {
 
   @NgModule({
     declarations: [PropEditorComponent],
+    entryComponents: [PropEditorComponent],
     imports: [
       DashboardCoreModule.with({
         models: [TestModel],
@@ -74,7 +74,7 @@ describe('Model JSON editor component', () => {
   });
 
   test('renders empty if no data provided', () => {
-    expect((host.debugElement.nativeElement as HTMLElement).textContent?.trim()).toBe('');
+    expect(host.debugElement.nativeElement.textContent.trim()).toBe('');
   });
 
   test('renders subeditors for provided model', () => {

@@ -1,19 +1,13 @@
-import { type AbstractType, Injectable, InjectionToken, Injector, type Type } from '@angular/core';
-import { type ModelApi, type ModelDecorator } from '@hypertrace/hyperdash';
-
-export const MODEL_API = new InjectionToken<ModelApi>('MODEL_API');
-
-const injectDefinitions: ModelInjectData[] = [];
+import { AbstractType, Injectable, InjectionToken, Injector, Type } from '@angular/core';
+import { ModelApi, ModelDecorator } from '@hypertrace/hyperdash';
 
 @Injectable({ providedIn: 'root' })
 export class ModelInjectService implements ModelDecorator {
   private readonly injectData: WeakMap<Type<unknown>, ModelInjectData[]> = new Map();
-
   private lastDefinitionIndexRead: number = 0;
 
   public constructor(private readonly injector: Injector) {}
-
-  public decorate(modelInstance: Record<string, unknown>, api: ModelApi): void {
+  public decorate(modelInstance: { [key: string]: unknown }, api: ModelApi): void {
     this.processDefinitionQueue();
     const injector = this.createInjectorWithApi(api);
     this.getRequestedInjects(modelInstance).forEach(injectData => {
@@ -42,13 +36,9 @@ export class ModelInjectService implements ModelDecorator {
       new Map(
         this.getConstructorChain(modelInstance)
           .reverse() // Starting at the base of the inheritance chain, so descendents overwrite parents
-          .map(constructor => {
-            return this.injectData.get(constructor) ?? [];
-          })
+          .map(constructor => this.injectData.get(constructor) ?? [])
           .flat()
-          .map(injectData => {
-            return [injectData.propertyKey, injectData];
-          })
+          .map(injectData => [injectData.propertyKey, injectData])
       ).values()
     );
   }
@@ -85,25 +75,28 @@ export class ModelInjectService implements ModelDecorator {
   }
 }
 
+export const MODEL_API = new InjectionToken<ModelApi>('MODEL_API');
+
 // TS limitation prevents symbols as index types ( https://github.com/microsoft/TypeScript/issues/1863 ). Also prevents unions. And type aliases.
 // We'll hardcode in the index declaration, and use this on the other side.
 // Symbols would still work at runtime if used, and the decorators don't enforce types anyway.
-type PropertyKey = number | string;
+type PropertyKey = string | number;
 
 interface ModelInjectData {
   injectHostClass: Type<unknown>;
   propertyKey: PropertyKey;
-  injectKey: AbstractType<unknown> | InjectionToken<unknown> | Type<unknown>;
+  injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>;
 }
 
+const injectDefinitions: ModelInjectData[] = [];
 /**
  * Registers the decorated property for injection usisng the provided DI token. This will be resolved
  * against the root of the DI tree, with one special token available for resolving the model api:
  * `MODEL_API`
  */
-// eslint-disable-next-line prefer-arrow/prefer-arrow-functions, @typescript-eslint/naming-convention
+// eslint-disable-next-line:only-arrow-functions
 export function ModelInject(
-  injectKey: AbstractType<unknown> | InjectionToken<unknown> | Type<unknown>
+  injectKey: InjectionToken<unknown> | Type<unknown> | AbstractType<unknown>
 ): PropertyDecorator {
   return (modelPrototype: object, propertyKey: string | symbol): void => {
     injectDefinitions.push({

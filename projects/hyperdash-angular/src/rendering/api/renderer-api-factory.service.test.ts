@@ -1,8 +1,8 @@
-import { type ModelApi, type TimeRange } from '@hypertrace/hyperdash';
-import { EMPTY, type Observable } from 'rxjs';
-import { type DataRefreshEventService } from '../../injectable-wrappers/data-refresh-event.service';
-import { type DefaultModelApiBuilderService } from '../../injectable-wrappers/default-model-api-builder.service';
-import { type TimeRangeChangedEventService } from '../../injectable-wrappers/time-range-changed-event.service';
+import { ModelApi, TimeRange } from '@hypertrace/hyperdash';
+import { EMPTY, Observable } from 'rxjs';
+import { DataRefreshEventService } from '../../injectable-wrappers/data-refresh-event.service';
+import { DefaultModelApiBuilderService } from '../../injectable-wrappers/default-model-api-builder.service';
+import { TimeRangeChangedEventService } from '../../injectable-wrappers/time-range-changed-event.service';
 import { getTestScheduler } from '../../test/test-utils';
 import { RendererApiFactoryService } from './renderer-api-factory.service';
 
@@ -18,22 +18,16 @@ describe('Renderer API Factory', () => {
 
   beforeEach(() => {
     mockModelApiBuilder = {
-      build: jest.fn(() => {
-        return {
-          getData: jest.fn(),
-          change$: mockModelChange$
-        };
-      }) as jest.Mock
+      build: jest.fn(() => ({
+        getData: jest.fn(),
+        change$: mockModelChange$
+      })) as jest.Mock
     };
     mockDataRefreshEvent = {
-      getObservableForModel: jest.fn(() => {
-        return mockRefresh$;
-      })
+      getObservableForModel: jest.fn(() => mockRefresh$)
     };
     mockTimeRangeChangedEvent = {
-      getObservableForModel: jest.fn(() => {
-        return mockTimeRangeChanged$;
-      })
+      getObservableForModel: jest.fn(() => mockTimeRangeChanged$)
     };
     mockModelChange$ = EMPTY;
     mockRefresh$ = EMPTY;
@@ -74,9 +68,7 @@ describe('Renderer API Factory', () => {
       change$: mockModelChange$
     };
 
-    mockModelApiBuilder.build = jest.fn(() => {
-      return mockModelApi as ModelApi;
-    });
+    mockModelApiBuilder.build = jest.fn(() => mockModelApi as ModelApi);
 
     const rendererApi = rendererApiFactory.buildApi(mockModel, EMPTY);
 

@@ -1,5 +1,5 @@
-import { type AbstractType, Inject, Injectable, Injector, type Type } from '@angular/core';
-import { type Deserializer, type ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
+import { AbstractType, Inject, Injectable, Injector, Type } from '@angular/core';
+import { Deserializer, ModelPropertyTypeRegistrationInformation } from '@hypertrace/hyperdash';
 import { flatten, uniq } from 'lodash-es';
 import { DefaultModelApiBuilderService } from '../injectable-wrappers/default-model-api-builder.service';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
@@ -23,8 +23,7 @@ import { DASHBOARD_DESERIALIZERS, MODEL_PROPERTY_TYPES } from '../module/dashboa
 })
 export class DefaultConfigurationService {
   private configured: boolean = false;
-
-  private readonly registeredObjects = new WeakSet();
+  private readonly registeredObjects: WeakSet<object> = new WeakSet();
 
   public constructor(
     private readonly deserializationManager: DeserializationManagerService,
@@ -42,7 +41,7 @@ export class DefaultConfigurationService {
     private readonly injector: Injector,
     @Inject(MODEL_PROPERTY_TYPES) private readonly propertyTypes: PropertyTypeRegistration[][],
     @Inject(DASHBOARD_DESERIALIZERS)
-    private readonly deserializers: (AbstractType<Deserializer> | Type<Deserializer>)[][]
+    private readonly deserializers: (Type<Deserializer> | AbstractType<Deserializer>)[][]
   ) {}
 
   /**

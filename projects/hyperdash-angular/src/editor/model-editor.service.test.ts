@@ -1,9 +1,10 @@
 import { Injector } from '@angular/core';
-import { EditorKind, type LeafEditorData, type UnresolvedCompositeEditorData } from '@hypertrace/hyperdash';
-import { type EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
-import { type EditorLibraryService } from '../injectable-wrappers/editor-library.service';
+import { EditorKind, LeafEditorData, UnresolvedCompositeEditorData } from '@hypertrace/hyperdash';
+import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
+import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
 import { ModelEditorService } from './model-editor.service';
+import { NestedModelEditorComponent } from './nested-model/nested-model-editor.component';
 
 describe('Model editor service', () => {
   let modelEditorService: ModelEditorService;
@@ -17,12 +18,8 @@ describe('Model editor service', () => {
 
   beforeEach(() => {
     mockEditorApiFactory = {
-      buildLeafEditorApi: jest.fn((_, editorData: LeafEditorData) => {
-        return `${editorData.title} LEAF API`;
-      }) as jest.Mock,
-      buildNestedEditorApi: jest.fn((_, data: UnresolvedCompositeEditorData) => {
-        return `${data.title} NESTED API`;
-      }) as jest.Mock
+      buildLeafEditorApi: jest.fn((_, editorData: LeafEditorData) => `${editorData.title} LEAF API`) as jest.Mock,
+      buildNestedEditorApi: jest.fn((_, data: UnresolvedCompositeEditorData) => `${data.title} NESTED API`) as jest.Mock
     };
     mockInjector = Injector.create({ providers: [] });
     model = new modelClass();
@@ -36,13 +33,11 @@ describe('Model editor service', () => {
           title: 'Model editor',
           kind: EditorKind.Composite,
           subeditors: [
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               title: 'first prop editor',
               editor: editorClass1,
               kind: EditorKind.Leaf
             } as LeafEditorData,
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
             {
               title: 'second prop editor',
               editor: editorClass2,
@@ -106,8 +101,12 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData.length).toBe(0);
-    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
+    expect(renderData[0].injector.get(EDITOR_API)).toBe('first prop model editor NESTED API');
+    expect(renderData[0].component).toBe(NestedModelEditorComponent);
+    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
+      kind: EditorKind.Unresolved,
+      title: 'first prop model editor'
+    });
   });
 
   test('creates render data for theme model', () => {
@@ -122,8 +121,12 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData.length).toBe(0);
-    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
+    expect(renderData[0].injector.get(EDITOR_API)).toBe('Theme NESTED API');
+    expect(renderData[0].component).toBe(NestedModelEditorComponent);
+    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
+      kind: EditorKind.Unresolved,
+      title: 'Theme'
+    });
   });
 
   test('creates render data for data model', () => {
@@ -138,7 +141,11 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData.length).toBe(0);
-    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
+    expect(renderData[0].injector.get(EDITOR_API)).toBe('Data NESTED API');
+    expect(renderData[0].component).toBe(NestedModelEditorComponent);
+    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
+      kind: EditorKind.Unresolved,
+      title: 'Data'
+    });
   });
 });

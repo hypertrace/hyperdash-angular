@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable no-template-curly-in-string */
-import { ChangeDetectionStrategy, Component, Inject, type OnInit } from '@angular/core';
+// eslint-disable:no-invalid-template-strings max-inline-declarations
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import {
-  type Dashboard,
-  type DataSource,
+  Dashboard,
+  DataSource,
   dataSourceMarker,
   EditorApi,
-  type JsonPrimitive,
+  JsonPrimitive,
   Model,
   ModelApi,
   ModelProperty,
@@ -24,7 +23,8 @@ import {
   RENDERER_API
 } from '@hypertrace/hyperdash-angular';
 import { remove } from 'lodash-es';
-import { EMPTY, interval, type Observable, of } from 'rxjs';
+import { EMPTY, interval, Observable, of } from 'rxjs';
+// eslint-disable-next-line:no-submodule-imports
 import { catchError, map, take } from 'rxjs/operators';
 
 @Component({
@@ -33,7 +33,7 @@ import { catchError, map, take } from 'rxjs/operators';
   styleUrls: ['./example-dash.component.scss']
 })
 export class ExampleDashComponent implements OnInit {
-  public json: Record<string, JsonPrimitive> = {
+  public json: { [key: string]: JsonPrimitive } = {
     type: 'example-container',
     children: [
       {
@@ -80,7 +80,6 @@ export class ExampleDashComponent implements OnInit {
   };
 
   public jsonAsString!: string;
-
   public variablePairs: VariablePair[] = [
     { name: 'foo', value: 'variable text' },
     { name: 'bar', value: '3' },
@@ -89,21 +88,19 @@ export class ExampleDashComponent implements OnInit {
   ];
 
   public dashboard?: Dashboard;
-
   public serializedDashboard?: object;
-
   public selectedWidget?: object;
 
   public constructor(private readonly modelChangedEvent: ModelChangedEventService) {}
 
   public ngOnInit(): void {
-    // eslint-disable-next-line no-null/no-null
+    // eslint-disable-next-line:no-null-keyword
     this.jsonAsString = JSON.stringify(this.json, null, 4);
   }
 
   public updateJson(): void {
-    this.json = JSON.parse(this.jsonAsString) as Record<string, JsonPrimitive>;
-    // eslint-disable-next-line no-null/no-null
+    this.json = JSON.parse(this.jsonAsString);
+    // eslint-disable-next-line:no-null-keyword
     this.jsonAsString = JSON.stringify(this.json, null, 4);
   }
 
@@ -119,9 +116,7 @@ export class ExampleDashComponent implements OnInit {
 
   public setVariables(): void {
     if (this.dashboard) {
-      this.variablePairs.forEach(pair => {
-        this.updatePair(pair);
-      });
+      this.variablePairs.forEach(pair => this.updatePair(pair));
     }
   }
 
@@ -130,9 +125,7 @@ export class ExampleDashComponent implements OnInit {
   }
 
   public removePair(pairToRemove: VariablePair): void {
-    remove(this.variablePairs, pair => {
-      return pair === pairToRemove;
-    });
+    remove(this.variablePairs, pair => pair === pairToRemove);
   }
 
   public updatePair(pair: VariablePair): void {
@@ -192,13 +185,11 @@ export class ExampleModel {
           return value;
         }
 
-        // eslint-disable-next-line no-null/no-null
+        // eslint-disable-next-line:no-null-keyword
         return JSON.stringify(value, null, 2);
       }),
-      catchError(err => {
-        // eslint-disable-next-line no-null/no-null
-        return of(JSON.stringify(err, null, 2));
-      })
+      // eslint-disable-next-line:no-null-keyword
+      catchError(err => of(JSON.stringify(err, null, 2)))
     );
   }
 }
@@ -232,9 +223,7 @@ export class ExampleDataSource implements DataSource<string> {
     if (this.text !== undefined) {
       return interval(this.rateMs).pipe(
         take(this.exclamations + 1),
-        map(sequenceNumber => {
-          return `${this.text!}${'!'.repeat(sequenceNumber)}`;
-        })
+        map(sequenceNumber => `${this.text}${'!'.repeat(sequenceNumber)}`)
       );
     }
 
@@ -265,9 +254,7 @@ export class ExampleRendererComponent implements OnInit {
 
   public ngOnInit(): void {
     this.fetchData();
-    this.api.change$.subscribe(() => {
-      this.fetchData();
-    });
+    this.api.change$.subscribe(() => this.fetchData());
   }
 
   private fetchData(): void {
@@ -305,9 +292,7 @@ export class ExampleContainerRendererComponent {
 })
 export class StringPropertyEditorComponent {
   public currentValue?: string;
-
   public readonly label: string;
-
   private lastPropagatedValue?: string;
 
   public constructor(@Inject(EDITOR_API) private readonly api: EditorApi<string | undefined>) {

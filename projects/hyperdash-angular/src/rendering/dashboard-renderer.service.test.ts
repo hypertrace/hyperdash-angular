@@ -1,34 +1,13 @@
 import { Component, Inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { type ModelApi } from '@hypertrace/hyperdash';
+import { ModelApi } from '@hypertrace/hyperdash';
 import { ReplaySubject } from 'rxjs';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { RendererLibraryService } from '../injectable-wrappers/renderer-library.service';
 import { getTestScheduler, moduleWithEntryComponents } from '../test/test-utils';
 import { RendererApi, RENDERER_API } from './api/renderer-api';
-import { DashboardRendererService, type RendererDomEvent } from './dashboard-renderer.service';
-class TestModel {
-  public modelProp?: string;
-}
-
-@Component({
-  selector: 'hda-dash-angular-renderer-service-host',
-  template: 'Host > <ng-container #container><ng-container>'
-})
-class HostComponent {
-  // eslint-disable-next-line
-  @ViewChild('container', { read: ViewContainerRef, static: true })
-  public viewContainerRef!: ViewContainerRef;
-}
-
-@Component({
-  selector: 'hda-dash-angular-renderer-service-renderer',
-  template: '{{ api.model.modelProp }}'
-})
-class RendererComponent {
-  public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
-}
+import { DashboardRendererService, RendererDomEvent } from './dashboard-renderer.service';
 
 describe('Dashboard Renderer Service', () => {
   let dashboardRendererService: DashboardRendererService;
@@ -51,13 +30,9 @@ describe('Dashboard Renderer Service', () => {
     dashboardRendererService = TestBed.inject(DashboardRendererService);
     modelManager = TestBed.inject(ModelManagerService);
     modelManager.registerModelApiBuilder({
-      matches: () => {
-        return true;
-      },
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      build: () => {
-        return {} as ModelApi;
-      }
+      matches: () => true,
+      // eslint-disable-next-line: no-object-literal-type-assertion
+      build: () => ({} as ModelApi)
     });
     const rendererLibrary = TestBed.inject(RendererLibraryService);
     rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
@@ -70,7 +45,7 @@ describe('Dashboard Renderer Service', () => {
 
     host.detectChanges();
 
-    expect((host.nativeElement as HTMLElement).textContent).toBe('Host > Renderer');
+    expect(host.nativeElement.textContent).toBe('Host > Renderer');
   });
 
   test('new model replaces old model', () => {
@@ -85,7 +60,7 @@ describe('Dashboard Renderer Service', () => {
 
     host.detectChanges();
 
-    expect((host.nativeElement as HTMLElement).textContent).toBe('Host > Second Model');
+    expect(host.nativeElement.textContent).toBe('Host > Second Model');
   });
 
   test('allows subscribing to DOM events', () => {
@@ -96,14 +71,14 @@ describe('Dashboard Renderer Service', () => {
     getTestScheduler().run(({ expectObservable }) => {
       const observable = dashboardRendererService.getObservableForRendererDomEvent('click', model);
       // DOM events are hot, we need to capture a replay so we can trigger then test the expectation
-      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object>>();
+      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object, unknown>>();
       observable.subscribe(replay);
 
       (host.debugElement.query(By.directive(RendererComponent)).nativeElement as HTMLElement).click();
 
       expectObservable(replay).toBe('x', {
         x: {
-          domEvent: expect.any(MouseEvent) as MouseEvent,
+          domEvent: expect.any(MouseEvent),
           model: model,
           componentRef: ref
         }
@@ -119,14 +94,14 @@ describe('Dashboard Renderer Service', () => {
 
     getTestScheduler().run(({ expectObservable }) => {
       const observable = dashboardRendererService.getObservableForRendererDomEvent('click', parentModel);
-      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object>>();
+      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object, unknown>>();
       observable.subscribe(replay);
 
       (host.debugElement.query(By.directive(RendererComponent)).nativeElement as HTMLElement).click();
 
       expectObservable(replay).toBe('x', {
         x: {
-          domEvent: expect.any(MouseEvent) as MouseEvent,
+          domEvent: expect.any(MouseEvent),
           model: model,
           componentRef: ref
         }
@@ -141,14 +116,14 @@ describe('Dashboard Renderer Service', () => {
     host.detectChanges();
 
     getTestScheduler().run(({ expectObservable }) => {
-      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object>>();
+      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object, unknown>>();
       observable.subscribe(replay);
 
       (host.debugElement.query(By.directive(RendererComponent)).nativeElement as HTMLElement).click();
 
       expectObservable(replay).toBe('x', {
         x: {
-          domEvent: expect.any(MouseEvent) as MouseEvent,
+          domEvent: expect.any(MouseEvent),
           model: model,
           componentRef: ref
         }
@@ -163,17 +138,15 @@ describe('Dashboard Renderer Service', () => {
 
     getTestScheduler().run(({ cold, expectObservable }) => {
       const observable = dashboardRendererService.getObservableForRendererDomEvent('click', model);
-      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object>>();
+      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object, unknown>>();
       observable.subscribe(replay);
 
       (host.debugElement.query(By.directive(RendererComponent)).nativeElement as HTMLElement).click();
 
-      cold('--x').subscribe(() => {
-        modelManager.destroy(model);
-      });
+      cold('--x').subscribe(() => modelManager.destroy(model));
       expectObservable(replay).toBe('x-|', {
         x: {
-          domEvent: expect.any(MouseEvent) as MouseEvent,
+          domEvent: expect.any(MouseEvent),
           model: model,
           componentRef: ref
         }
@@ -188,7 +161,7 @@ describe('Dashboard Renderer Service', () => {
 
     getTestScheduler().run(({ expectObservable }) => {
       const observable = dashboardRendererService.getObservableForRendererDomEvent('click', model);
-      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object>>();
+      const replay = new ReplaySubject<RendererDomEvent<MouseEvent, object, unknown>>();
       observable.subscribe(replay);
 
       const element = host.debugElement.query(By.directive(RendererComponent)).nativeElement as HTMLElement;
@@ -197,7 +170,7 @@ describe('Dashboard Renderer Service', () => {
       element.click();
       expectObservable(replay).toBe('x', {
         x: {
-          domEvent: expect.any(MouseEvent) as MouseEvent,
+          domEvent: expect.any(MouseEvent),
           model: model,
           componentRef: ref
         }
@@ -205,3 +178,24 @@ describe('Dashboard Renderer Service', () => {
     });
   });
 });
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-host',
+  template: 'Host > <ng-container #container><ng-container>'
+})
+class HostComponent {
+  @ViewChild('container', { read: ViewContainerRef, static: true })
+  public viewContainerRef!: ViewContainerRef;
+}
+
+class TestModel {
+  public modelProp?: string;
+}
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-renderer',
+  template: '{{ api.model.modelProp }}'
+})
+class RendererComponent {
+  public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
+}

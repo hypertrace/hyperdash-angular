@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { type Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataRefreshEventService } from '../../injectable-wrappers/data-refresh-event.service';
 import { DefaultModelApiBuilderService } from '../../injectable-wrappers/default-model-api-builder.service';
 import { TimeRangeChangedEventService } from '../../injectable-wrappers/time-range-changed-event.service';
-import { type RendererApi } from './renderer-api';
+import { RendererApi } from './renderer-api';
 
 @Injectable({
   providedIn: 'root'
@@ -21,18 +21,12 @@ export class RendererApiFactoryService {
 
     return {
       model: model,
-      getDataFromModelDataSource: () => {
-        return modelApi.getData();
-      },
+      getDataFromModelDataSource: () => modelApi.getData(),
       change$: modelApi.change$.pipe(takeUntil(rendererDestruction$)),
-      getTheme: () => {
-        return modelApi.getTheme();
-      },
+      getTheme: () => modelApi.getTheme(),
       dataRefresh$: this.dataRefreshEvent.getObservableForModel(model).pipe(takeUntil(rendererDestruction$)),
       timeRangeChanged$: this.timeRangeChangedEvent.getObservableForModel(model).pipe(takeUntil(rendererDestruction$)),
-      getTimeRange: () => {
-        return modelApi.getTimeRange();
-      }
+      getTimeRange: () => modelApi.getTimeRange()
     };
   }
 }

@@ -1,5 +1,5 @@
-import { Inject, type OnDestroy, Pipe, type PipeTransform } from '@angular/core';
-import { type Subscription } from 'rxjs';
+import { Inject, OnDestroy, Pipe, PipeTransform } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
@@ -11,20 +11,18 @@ import { RendererApi, RENDERER_API } from './api/renderer-api';
  */
 @Pipe({
   name: 'themeProp',
-  // eslint-disable-next-line @angular-eslint/no-pipe-impure,
+  // Must be impure - result depends on state of model tree
+  // eslint-disable-next-line @angular-eslint/no-pipe-impure
   pure: false
 })
 export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   private modelChanged: boolean = true;
-
   private lastKeyRequested: string = '';
-
   private lastValue: string = '';
-
   private readonly modelChangedSubscription: Subscription;
 
   public constructor(
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line:ban-types TODO - ngc doesn't seem to support `object` here
     @Inject(RENDERER_API) public readonly rendererApi: RendererApi<object>,
     private readonly themeManager: ThemeManagerService,
     modelManager: ModelManagerService,
@@ -32,9 +30,7 @@ export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   ) {
     this.modelChangedSubscription = modelChangedEvent
       .getObservableForModel(modelManager.getRoot(rendererApi.model))
-      .subscribe(() => {
-        return (this.modelChanged = true);
-      });
+      .subscribe(() => (this.modelChanged = true));
   }
 
   /**

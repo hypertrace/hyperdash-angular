@@ -1,5 +1,4 @@
 /* eslint-disable unicorn/filename-case */
-
 /*
  * Public API Surface of hyperdash-angular
  */

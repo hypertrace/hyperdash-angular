@@ -1,9 +1,9 @@
-import { EMPTY, type Observable } from 'rxjs';
-import { type ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
-import { type ModelManagerService } from '../injectable-wrappers/model-manager.service';
-import { type ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
+import { EMPTY, Observable } from 'rxjs';
+import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
+import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
+import { ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
 import { getTestScheduler } from '../test/test-utils';
-import { type RendererApi } from './api/renderer-api';
+import { RendererApi } from './api/renderer-api';
 import { ThemePropertyPipe } from './theme-property.pipe';
 
 describe('Theme property pipe', () => {
@@ -36,9 +36,7 @@ describe('Theme property pipe', () => {
 
     mockModelChangeObservable = EMPTY;
     mockModelChanged = {
-      getObservableForModel: jest.fn(() => {
-        return mockModelChangeObservable;
-      })
+      getObservableForModel: jest.fn(() => mockModelChangeObservable)
     };
   });
 
@@ -78,7 +76,7 @@ describe('Theme property pipe', () => {
       mockModelChangeObservable = coldMock;
       buildPipe();
       mockThemeManager.getThemePropertyForModel = jest.fn();
-      // eslint-disable-next-line @angular-eslint/no-lifecycle-call
+      // eslint-disable-next-line: no-lifecycle-call
       pipe.ngOnDestroy();
 
       expectSubscriptions(coldMock.subscriptions).toBe('(^!)');
