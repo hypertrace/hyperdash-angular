@@ -44,7 +44,7 @@
     "@compodoc/compodoc": "^1.1.19",
     "@ngneat/spectator": "^8.3.2",
     "@types/jest": "^27.4.1",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.15.3",
     "@types/webpack-env": "^1.18.0",
     "codelyzer": "^6.0.2",
