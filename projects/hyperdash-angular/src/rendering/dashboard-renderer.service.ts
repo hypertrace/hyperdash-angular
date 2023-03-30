@@ -94,9 +94,9 @@ export class DashboardRendererService {
     const subscriber: DomEventSubscriber = {
       event: eventName,
       rootModel: rootModel,
-      eventSubject: (eventSubject as unknown) as Subject<RendererDomEvent<Event, object, unknown>> // TODO better cast?
+      eventSubject: eventSubject as unknown as Subject<RendererDomEvent<Event, object, unknown>> // TODO better cast?
     };
-    const subscribers = this.domEventSubscribers.get(rootModel) || [];
+    const subscribers = this.domEventSubscribers.get(rootModel) ?? [];
     subscribers.push(subscriber);
     this.domEventSubscribers.set(rootModel, subscribers);
 
@@ -118,7 +118,7 @@ export class DashboardRendererService {
     /* Get it from the appropriate injector based on usage location. Need to jump through hoops here
     because ComponentFactoryResolver is an abstract type which doesn't play nice with generics */
     const resolver = viewContainerRef.injector.get(
-      (ComponentFactoryResolver as unknown) as Type<ComponentFactoryResolver>
+      ComponentFactoryResolver as unknown as Type<ComponentFactoryResolver>
     );
 
     const renderer = this.rendererLibrary.lookupRenderer(model.constructor as Type<unknown>) as Type<TRenderer>;
@@ -166,7 +166,7 @@ export class DashboardRendererService {
   }
 
   private cleanupSubscribersForRootModel(model: object): void {
-    const subscribers = this.domEventSubscribers.get(model) || [];
+    const subscribers = this.domEventSubscribers.get(model) ?? [];
     subscribers.forEach(subscriber => {
       subscriber.eventSubject.complete();
     });
@@ -184,7 +184,7 @@ export class DashboardRendererService {
     let currentModel: object | undefined = renderedModel;
 
     while (currentModel) {
-      subscribers.push(...(this.domEventSubscribers.get(currentModel) || []));
+      subscribers.push(...(this.domEventSubscribers.get(currentModel) ?? []));
       currentModel = this.modelManager.getParent(currentModel);
     }
 

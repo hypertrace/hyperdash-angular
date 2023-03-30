@@ -21,26 +21,24 @@ describe('Dashboard Renderer Service', () => {
     return model;
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [HostComponent],
-        imports: [moduleWithEntryComponents(RendererComponent)]
-      }).compileComponents();
+  beforeEach(waitForAsync(() => {
+    TestBed.configureTestingModule({
+      declarations: [HostComponent],
+      imports: [moduleWithEntryComponents(RendererComponent)]
+    }).compileComponents();
 
-      dashboardRendererService = TestBed.inject(DashboardRendererService);
-      modelManager = TestBed.inject(ModelManagerService);
-      modelManager.registerModelApiBuilder({
-        matches: () => true,
-        // tslint:disable-next-line: no-object-literal-type-assertion
-        build: () => ({} as ModelApi)
-      });
-      const rendererLibrary = TestBed.inject(RendererLibraryService);
-      rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
+    dashboardRendererService = TestBed.inject(DashboardRendererService);
+    modelManager = TestBed.inject(ModelManagerService);
+    modelManager.registerModelApiBuilder({
+      matches: () => true,
+      // eslint-disable-next-line: no-object-literal-type-assertion
+      build: () => ({} as ModelApi)
+    });
+    const rendererLibrary = TestBed.inject(RendererLibraryService);
+    rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
 
-      host = TestBed.createComponent(HostComponent);
-    })
-  );
+    host = TestBed.createComponent(HostComponent);
+  }));
 
   test('can render', () => {
     dashboardRendererService.renderInViewContainer(createModel('Renderer'), host.componentInstance.viewContainerRef);
@@ -186,7 +184,6 @@ describe('Dashboard Renderer Service', () => {
   template: 'Host > <ng-container #container><ng-container>'
 })
 class HostComponent {
-  // tslint:disable-next-line:completed-docs
   @ViewChild('container', { read: ViewContainerRef, static: true })
   public viewContainerRef!: ViewContainerRef;
 }

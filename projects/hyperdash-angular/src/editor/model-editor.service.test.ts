@@ -4,7 +4,6 @@ import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-facto
 import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
 import { ModelEditorService } from './model-editor.service';
-import { NestedModelEditorComponent } from './nested-model/nested-model-editor.component';
 
 describe('Model editor service', () => {
   let modelEditorService: ModelEditorService;
@@ -33,13 +32,11 @@ describe('Model editor service', () => {
           title: 'Model editor',
           kind: EditorKind.Composite,
           subeditors: [
-            // tslint:disable-next-line: no-object-literal-type-assertion
             {
               title: 'first prop editor',
               editor: editorClass1,
               kind: EditorKind.Leaf
             } as LeafEditorData,
-            // tslint:disable-next-line: no-object-literal-type-assertion
             {
               title: 'second prop editor',
               editor: editorClass2,
@@ -103,12 +100,8 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData[0].injector.get(EDITOR_API)).toBe('first prop model editor NESTED API');
-    expect(renderData[0].component).toBe(NestedModelEditorComponent);
-    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
-      kind: EditorKind.Unresolved,
-      title: 'first prop model editor'
-    });
+    expect(renderData.length).toBe(0);
+    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
   });
 
   test('creates render data for theme model', () => {
@@ -123,12 +116,8 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData[0].injector.get(EDITOR_API)).toBe('Theme NESTED API');
-    expect(renderData[0].component).toBe(NestedModelEditorComponent);
-    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
-      kind: EditorKind.Unresolved,
-      title: 'Theme'
-    });
+    expect(renderData.length).toBe(0);
+    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
   });
 
   test('creates render data for data model', () => {
@@ -143,11 +132,7 @@ describe('Model editor service', () => {
     });
 
     const renderData = modelEditorService.getRenderData(model);
-    expect(renderData[0].injector.get(EDITOR_API)).toBe('Data NESTED API');
-    expect(renderData[0].component).toBe(NestedModelEditorComponent);
-    expect(mockEditorApiFactory.buildNestedEditorApi).nthCalledWith(1, model, {
-      kind: EditorKind.Unresolved,
-      title: 'Data'
-    });
+    expect(renderData.length).toBe(0);
+    expect(mockEditorApiFactory.buildNestedEditorApi).not.toHaveBeenCalled();
   });
 });

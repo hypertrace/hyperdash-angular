@@ -14,9 +14,9 @@
     "commit": "pushd ../.. && npm run commit"
   },
   "peerDependencies": {
-    "@angular/common": "^12.2.1",
-    "@angular/core": "^12.2.1",
-    "@angular/platform-browser": "^12.2.1",
+    "@angular/common": "^14.2.12",
+    "@angular/core": "^14.2.12",
+    "@angular/platform-browser": "^14.2.12",
     "core-js": "^3.16.2",
     "rxjs": "^6.6.7",
     "zone.js": "~0.11.4",
@@ -25,5 +25,8 @@
   },
   "dependencies": {
     "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "@ngneat/spectator": "^8.3.2"
   }
 }
