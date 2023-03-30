@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { type ModelApi } from '@hypertrace/hyperdash';
+import { ModelApi } from '@hypertrace/hyperdash';
 import { createServiceFactory } from '@ngneat/spectator/jest';
 import { ModelInject, ModelInjectService, MODEL_API } from './model-inject.service';
 
