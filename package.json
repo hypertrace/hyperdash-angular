@@ -68,7 +68,7 @@
     "jest-config": "^27.0.3",
     "jest-environment-jsdom": "^28.0.0",
     "jest-html-reporter": "^3.3.0",
-    "jest-junit": "14.0.1",
+    "jest-junit": "15.0.0",
     "codelyzer": "^6.0.2",
     "lodash": "^4.17.21",
     "ng-packagr": "^14.2.2",
