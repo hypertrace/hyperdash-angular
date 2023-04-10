@@ -50,7 +50,7 @@
     "@types/node": "^18.14.2",
     "@types/webpack-env": "^1.18.0",
     "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.54.1",
+    "@typescript-eslint/parser": "^5.57.1",
     "@commitlint/cli": "^17.5.0",
     "@commitlint/config-conventional": "^17.4.4",
     "commitizen": "^4.2.5",
