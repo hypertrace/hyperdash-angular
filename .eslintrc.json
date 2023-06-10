@@ -9,10 +9,9 @@
         "createDefaultProgram": true
       },
       "extends": [
-        "plugin:@angular-eslint/ng-cli-compat",
-        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:@typescript-eslint/all",
         "prettier"
       ],
       "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn"],
@@ -158,7 +157,12 @@
             }
           }
         ],
-        "@typescript-eslint/parameter-properties": ["error", { "prefer": "parameter-property" }],
+        "@typescript-eslint/parameter-properties": [
+          "error",
+          {
+            "prefer": "parameter-property"
+          }
+        ],
         "@typescript-eslint/array-type": [
           "error",
           {
@@ -231,25 +235,6 @@
         "complexity": "error",
         "default-case": "error",
         "eqeqeq": ["error", "always"],
-        "import/no-default-export": "error",
-        "import/no-extraneous-dependencies": "error",
-        "import/no-internal-modules": [
-          "error",
-          {
-            "allow": [
-              "@angular/core/testing/*",
-              "@angular/platform-browser-dynamic/testing/*",
-              "zone.js/dist/*",
-              "core-js/*",
-              "@angular/common/http/*",
-              "rxjs/operators",
-              "@ngneat/spectator/*",
-              "rxjs/testing"
-            ]
-          }
-        ],
-        "import/no-unassigned-import": "error",
-        "import/order": "error",
         "max-lines": ["error", 500],
         "no-duplicate-case": "error",
         "no-duplicate-imports": "error",

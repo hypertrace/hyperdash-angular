@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
-import { getTestScheduler, moduleWithEntryComponents } from '../../test/test-utils';
+import { getTestScheduler } from '../../test/test-utils';
 import { DashboardEditorModule } from '../dashboard-editor.module';
 import { ModelEditorService } from '../model-editor.service';
 
@@ -38,8 +38,8 @@ describe('Model editor component', () => {
         { provide: ModelEditorService, useValue: {} },
         { provide: ModelChangedEventService, useValue: mockModelChangedEvent }
       ],
-      declarations: [HostComponent],
-      imports: [DashboardEditorModule, moduleWithEntryComponents(PropEditorComponent)]
+      declarations: [HostComponent, PropEditorComponent],
+      imports: [DashboardEditorModule]
     });
 
     mockModelEditorService = TestBed.inject(ModelEditorService);

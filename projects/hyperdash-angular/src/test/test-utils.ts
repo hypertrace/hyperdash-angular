@@ -1,12 +1,6 @@
-import { Directive, NgModule, Type } from '@angular/core';
+import { Directive, Type } from '@angular/core';
 // eslint-disable-next-line: no-submodule-imports
 import { TestScheduler } from 'rxjs/testing';
-
-export const moduleWithEntryComponents = (...components: Type<unknown>[]): unknown =>
-  NgModule({
-    declarations: [...components],
-    entryComponents: [...components]
-  })(class {});
 
 export const mockDirective = <T = unknown>(config: {
   selector: string;
