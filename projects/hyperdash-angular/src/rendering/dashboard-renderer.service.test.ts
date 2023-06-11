@@ -5,7 +5,7 @@ import { ModelApi } from '@hypertrace/hyperdash';
 import { ReplaySubject } from 'rxjs';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { RendererLibraryService } from '../injectable-wrappers/renderer-library.service';
-import { getTestScheduler, moduleWithEntryComponents } from '../test/test-utils';
+import { getTestScheduler } from '../test/test-utils';
 import { RendererApi, RENDERER_API } from './api/renderer-api';
 import { DashboardRendererService, RendererDomEvent } from './dashboard-renderer.service';
 
@@ -23,8 +23,7 @@ describe('Dashboard Renderer Service', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HostComponent],
-      imports: [moduleWithEntryComponents(RendererComponent)]
+      declarations: [HostComponent, RendererComponent]
     }).compileComponents();
 
     dashboardRendererService = TestBed.inject(DashboardRendererService);

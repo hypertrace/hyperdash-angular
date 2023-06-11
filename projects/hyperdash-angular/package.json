@@ -14,9 +14,9 @@
     "commit": "pushd ../.. && npm run commit"
   },
   "peerDependencies": {
-    "@angular/common": "^15.2.1",
-    "@angular/core": "^15.2.1",
-    "@angular/platform-browser": "^15.2.1",
+    "@angular/common": "^16.0.0",
+    "@angular/core": "^16.0.0",
+    "@angular/platform-browser": "^16.0.0",
     "core-js": "^3.16.2",
     "rxjs": "^6.6.7",
     "zone.js": "~0.11.4",
