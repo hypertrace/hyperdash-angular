@@ -27,7 +27,7 @@
     "core-js": "^3.31.0",
     "lodash-es": "^4.17.21",
     "rxjs": "^6.6.7",
-    "tslib": "^2.5.3",
+    "tslib": "^2.6.0",
     "zone.js": "~0.13.1"
   },
   "devDependencies": {
