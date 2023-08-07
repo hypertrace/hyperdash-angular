@@ -21,4 +21,10 @@ export * from './rendering/theme-property.pipe';
 export * from './injectable-wrappers/data-source-manager.service';
 export * from './injectable-wrappers/model-property-type.service';
 export * from './injectable-wrappers/model-manager.service';
+export * from './injectable-wrappers/serialization/serialization-manager.service';
+export * from './injectable-wrappers/deserialization/deserialization-manager.service';
+export * from './injectable-wrappers/serialization/model-serializer.service';
+export * from './injectable-wrappers/deserialization/deserialization-manager.service';
+export * from './injectable-wrappers/deserialization/model-deserializer.service';
+
 export { MODEL_API, ModelInject } from './model/decorators/model-inject.service';
