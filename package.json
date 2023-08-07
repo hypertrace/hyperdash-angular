@@ -46,7 +46,7 @@
     "@angular/router": "^16.0.5",
     "@compodoc/compodoc": "^1.1.21",
     "@ngneat/spectator": "^15.0.1",
-    "@types/lodash-es": "^4.17.6",
+    "@types/lodash-es": "^4.17.8",
     "@types/node": "^18.17.3",
     "@types/webpack-env": "^1.18.1",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
