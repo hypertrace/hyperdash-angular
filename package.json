@@ -48,7 +48,7 @@
     "@ngneat/spectator": "^15.0.1",
     "@types/lodash-es": "^4.17.11",
     "@types/node": "^18.19.3",
-    "@types/webpack-env": "^1.18.3",
+    "@types/webpack-env": "^1.18.4",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@commitlint/cli": "^18.4.1",
