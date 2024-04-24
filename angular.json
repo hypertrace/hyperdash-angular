@@ -65,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "hyperdash-angular-app:build"
+            "buildTarget": "hyperdash-angular-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "hyperdash-angular-app:build:production"
+              "buildTarget": "hyperdash-angular-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "hyperdash-angular-app:build"
+            "buildTarget": "hyperdash-angular-app:build"
           }
         },
         "test": {
