@@ -47,7 +47,7 @@
     "@angular/router": "^18.0.1",
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-    "@compodoc/compodoc": "^1.1.24",
+    "@compodoc/compodoc": "^1.1.25",
     "@ngneat/spectator": "^18.0.2",
     "@types/jest": "^29.0.0",
     "@types/lodash-es": "^4.17.12",
