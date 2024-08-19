@@ -38,7 +38,7 @@
     "@angular-eslint/eslint-plugin": "18.1.0",
     "@angular-eslint/eslint-plugin-template": "18.2.0",
     "@angular-eslint/schematics": "^18.2.0",
-    "@angular-eslint/template-parser": "18.2.0",
+    "@angular-eslint/template-parser": "18.3.0",
     "@angular/animations": "^18.0.1",
     "@angular/cli": "^18.0.2",
     "@angular/compiler": "^18.0.1",
