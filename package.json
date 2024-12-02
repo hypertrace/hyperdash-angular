@@ -74,7 +74,7 @@
     "jest-preset-angular": "^14.4.1",
     "lodash": "^4.17.21",
     "ng-packagr": "^18.0.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.1",
     "pretty-quick": "^4.0.0",
     "semantic-release": "^19.0.5",
     "ts-node": "~10.9.2",
