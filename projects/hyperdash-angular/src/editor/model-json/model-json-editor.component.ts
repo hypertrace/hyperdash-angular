@@ -11,7 +11,8 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
 @Component({
   selector: 'hda-model-json-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ' <hda-model-editor [model]="modelObject"></hda-model-editor> '
+  template: ' <hda-model-editor [model]="modelObject"></hda-model-editor> ',
+  standalone: false
 })
 export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
   /**

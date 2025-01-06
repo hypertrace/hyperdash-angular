@@ -11,7 +11,8 @@ import { EDITOR_API } from '../editor-api-injection-token';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <hda-model-json-editor [modelJson]="api.value" (modelJsonChange)="api.valueChange($event)"> </hda-model-json-editor>
-  `
+  `,
+  standalone: false
 })
 export class NestedModelEditorComponent {
   public constructor(@Inject(EDITOR_API) public readonly api: EditorApi<ModelJson>) {}

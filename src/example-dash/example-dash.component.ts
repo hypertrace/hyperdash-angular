@@ -30,7 +30,8 @@ import { catchError, map, take } from 'rxjs/operators';
 @Component({
   selector: 'app-example-dash',
   templateUrl: './example-dash.component.html',
-  styleUrls: ['./example-dash.component.scss']
+  styleUrls: ['./example-dash.component.scss'],
+  standalone: false
 })
 export class ExampleDashComponent implements OnInit {
   public json: { [key: string]: JsonPrimitive } = {
@@ -245,7 +246,8 @@ export class ExampleDataSource implements DataSource<string> {
         <pre style="overflow-x: auto">{{ dataObservable | async }}</pre>
       </div>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ExampleRendererComponent implements OnInit {
   public dataObservable!: Observable<string>;
@@ -273,7 +275,8 @@ export class ExampleRendererComponent implements OnInit {
     >
       <ng-container *ngFor="let child of api.model.children" [hdaDashboardModel]="child"> </ng-container>
     </div>
-  `
+  `,
+  standalone: false
 })
 export class ExampleContainerRendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<ExampleContainer>) {}
@@ -288,7 +291,8 @@ export class ExampleContainerRendererComponent {
   template: `
     <h5>{{ label }}</h5>
     <input type="text" [(ngModel)]="currentValue" (keyup.enter)="propagateChange()" (focusout)="propagateChange()" />
-  `
+  `,
+  standalone: false
 })
 export class StringPropertyEditorComponent {
   public currentValue?: string;
