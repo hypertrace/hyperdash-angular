@@ -30,7 +30,8 @@ describe('Dashboard Component', () => {
         (widgetSelectionChange)="widgetSelected($event)"
       >
       </hda-dashboard>
-    `
+    `,
+    standalone: false
   })
   class HostComponent {
     public json?: ModelJson;
@@ -50,7 +51,7 @@ describe('Dashboard Component', () => {
         { provide: DashboardRendererService, useValue: mockDashboardRendererService }
       ],
       declarations: [HostComponent, DashboardComponent, mockDashDirective]
-    });
+    }).compileComponents();
 
     dashboardManagerService = TestBed.inject(DashboardManagerService);
     dashboardManagerService.create = jest.fn().mockImplementation(val => ({ root: val, destroy: jest.fn() }));

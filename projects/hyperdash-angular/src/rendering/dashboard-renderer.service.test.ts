@@ -31,7 +31,7 @@ describe('Dashboard Renderer Service', () => {
     modelManager.registerModelApiBuilder({
       matches: () => true,
       // eslint-disable-next-line: no-object-literal-type-assertion
-      build: () => ({} as ModelApi)
+      build: () => ({}) as ModelApi
     });
     const rendererLibrary = TestBed.inject(RendererLibraryService);
     rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
@@ -180,7 +180,8 @@ describe('Dashboard Renderer Service', () => {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-host',
-  template: 'Host > <ng-container #container><ng-container>'
+  template: 'Host > <ng-container #container><ng-container>',
+  standalone: false
 })
 class HostComponent {
   @ViewChild('container', { read: ViewContainerRef, static: true })
@@ -193,7 +194,8 @@ class TestModel {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-renderer',
-  template: '{{ api.model.modelProp }}'
+  template: '{{ api.model.modelProp }}',
+  standalone: false
 })
 class RendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}

@@ -15,7 +15,8 @@ describe('Model editor component', () => {
 
   @Component({
     selector: 'hda-host',
-    template: ' <hda-model-editor [model]="model" (modelChange)="modelChanged($event)"> </hda-model-editor> '
+    template: ' <hda-model-editor [model]="model" (modelChange)="modelChanged($event)"> </hda-model-editor> ',
+    standalone: false
   })
   class HostComponent {
     public model?: object;
@@ -24,7 +25,8 @@ describe('Model editor component', () => {
 
   @Component({
     selector: 'hda-prop-editor',
-    template: 'property editor'
+    template: 'property editor',
+    standalone: false
   })
   class PropEditorComponent {}
   modelChangedObservable = EMPTY;

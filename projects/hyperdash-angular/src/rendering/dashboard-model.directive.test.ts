@@ -68,7 +68,8 @@ describe('DashboardModelDirective', () => {
 
 @Component({
   selector: 'hda-dash-model-directive-host',
-  template: '<ng-container [hdaDashboardModel]=model><ng-container>'
+  template: '<ng-container [hdaDashboardModel]=model><ng-container>',
+  standalone: false
 })
 class HostComponent {
   @Input()
