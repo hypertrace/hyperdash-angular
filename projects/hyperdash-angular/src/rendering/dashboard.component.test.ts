@@ -50,8 +50,9 @@ describe('Dashboard Component', () => {
         { provide: DashboardManagerService, useValue: {} },
         { provide: DashboardRendererService, useValue: mockDashboardRendererService }
       ],
-      declarations: [HostComponent, DashboardComponent, mockDashDirective]
-    }).compileComponents();
+      imports: [mockDashDirective],
+      declarations: [HostComponent, DashboardComponent]
+    });
 
     dashboardManagerService = TestBed.inject(DashboardManagerService);
     dashboardManagerService.create = jest.fn().mockImplementation(val => ({ root: val, destroy: jest.fn() }));
