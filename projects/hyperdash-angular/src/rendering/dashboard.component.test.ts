@@ -15,7 +15,8 @@ describe('Dashboard Component', () => {
   let host: ComponentFixture<HostComponent>;
   const mockDashDirective = mockDirective<DashboardModelDirective>({
     selector: '[hdaDashboardModel]',
-    inputs: ['hdaDashboardModel']
+    inputs: ['hdaDashboardModel'],
+    standalone: false
   });
   let mockDashboardRendererService: Partial<DashboardRendererService>;
   let mockRendererDomEventObservable: Observable<RendererDomEvent<Event, object, unknown>>;
@@ -50,8 +51,7 @@ describe('Dashboard Component', () => {
         { provide: DashboardManagerService, useValue: {} },
         { provide: DashboardRendererService, useValue: mockDashboardRendererService }
       ],
-      imports: [mockDashDirective],
-      declarations: [HostComponent, DashboardComponent]
+      declarations: [HostComponent, DashboardComponent, mockDashDirective]
     });
 
     dashboardManagerService = TestBed.inject(DashboardManagerService);
