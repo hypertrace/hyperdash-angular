@@ -20,7 +20,8 @@ describe('Model JSON editor component', () => {
 
   @Component({
     selector: 'hda-host',
-    template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> '
+    template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
+    standalone: false
   })
   class HostComponent {
     public modelJson?: object;
@@ -44,7 +45,8 @@ describe('Model JSON editor component', () => {
   @ModelPropertyEditor({ propertyType: TEST_PROP_TYPE.type })
   @Component({
     selector: 'hda-prop-editor',
-    template: 'property editor'
+    template: 'property editor',
+    standalone: false
   })
   class PropEditorComponent {
     public constructor(@Inject(EDITOR_API) public editorApi: EditorApi<string>) {}

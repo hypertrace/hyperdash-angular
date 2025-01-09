@@ -13,7 +13,8 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
     <ng-container *ngFor="let subeditor of subeditors">
       <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector"></ng-container>
     </ng-container>
-  `
+  `,
+  standalone: false
 })
 export class ModelEditorComponent implements OnChanges, OnDestroy {
   /**
