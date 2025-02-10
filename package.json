@@ -54,7 +54,7 @@
     "@types/node": "^22.13.0",
     "@types/webpack-env": "^1.18.8",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
+    "@typescript-eslint/parser": "^8.23.0",
     "codelyzer": "^6.0.2",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
