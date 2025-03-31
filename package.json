@@ -46,7 +46,7 @@
     "@angular/language-service": "^19.0.5",
     "@angular/router": "^19.0.5",
     "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.7.1",
+    "@commitlint/config-conventional": "^19.8.0",
     "@compodoc/compodoc": "^1.1.26",
     "@ngneat/spectator": "^19.4.1",
     "@types/jest": "^29.0.0",
