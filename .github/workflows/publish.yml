@@ -5,7 +5,7 @@ on:
       - main
 jobs:
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -26,6 +26,5 @@ jobs:
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
-          NPM_PASSWORD: ${{ secrets.NPM_PASSWORD }}
-          NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+          NPM_TOKEN: ${{ secrets.HAR_PUBLISH_TOKEN }}
+          NPM_CONFIG_REGISTRY: ${{ secrets.HAR_NPM_REGISTRY }}
