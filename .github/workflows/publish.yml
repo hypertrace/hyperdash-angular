@@ -5,7 +5,12 @@ on:
       - main
 jobs:
   publish:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: 'write'
+      id-token: 'write'
+      issues: 'write'
+      pull-requests: 'write'
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -22,10 +27,16 @@ jobs:
       - name: Build
         run: npm run build:ci
 
+      - uses: google-github-actions/auth@v2
+        id: auth
+        with:
+          token_format: access_token
+          workload_identity_provider: projects/1030413944741/locations/global/workloadIdentityPools/github-pool/providers/github-provider
+          service_account: github-publisher@hypertrace-repos.iam.gserviceaccount.com
+
       - name: Publish
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_USERNAME: ${{ secrets.NPM_USERNAME }}
-          NPM_PASSWORD: ${{ secrets.NPM_PASSWORD }}
-          NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
+          NPM_TOKEN: ${{ steps.auth.outputs.access_token }}
+          NPM_CONFIG_REGISTRY: ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
