@@ -23,7 +23,7 @@
     "@angular/forms": "^19.0.5",
     "@angular/platform-browser": "^19.0.5",
     "@angular/platform-browser-dynamic": "^19.0.5",
-    "@hypertrace/hyperdash": "^1.4.0",
+    "@hypertrace/hyperdash": "^1.4.1",
     "@typescript-eslint/utils": "^8.33.0",
     "core-js": "^3.43.0",
     "lodash-es": "^4.17.21",
