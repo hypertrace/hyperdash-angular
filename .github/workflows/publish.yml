@@ -33,9 +33,13 @@ jobs:
           token_format: access_token
           workload_identity_provider: projects/1030413944741/locations/global/workloadIdentityPools/github-pool/providers/github-provider
           service_account: github-publisher@hypertrace-repos.iam.gserviceaccount.com
-
+      # Can't seem to get it to override this for publish otherwise...
+      - name: Remove npmrc
+        shell: bash
+        run: rm .npmrc
       - name: Publish
         run: npm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ steps.auth.outputs.access_token }}
+          NPM_CONFIG_REGISTRY: ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
