@@ -39,4 +39,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ steps.auth.outputs.access_token }}
-          NPM_CONFIG_REGISTRY: ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
