@@ -33,6 +33,10 @@ jobs:
           token_format: access_token
           workload_identity_provider: projects/1030413944741/locations/global/workloadIdentityPools/github-pool/providers/github-provider
           service_account: github-publisher@hypertrace-repos.iam.gserviceaccount.com
+      # Ref https://github.com/semantic-release/npm/pull/844
+      - name: Update npmrc for publish
+        shell: bash
+        run: npm config -L project @hypertrace:registry ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
 
       - name: Publish
         run: npm run semantic-release

@@ -94,9 +94,6 @@
     "type": "git",
     "url": "git@github.com:hypertrace/hyperdash-angular.git"
   },
-  "publishConfig": {
-    "@hypertrace:registry": "https://us-npm.pkg.dev/hypertrace-repos/npm-publish"
-  },
   "release": {
     "branches": [
       "main"
