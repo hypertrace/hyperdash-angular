@@ -36,7 +36,7 @@ jobs:
       # Ref https://github.com/semantic-release/npm/pull/844
       - name: Update npmrc for publish
         shell: bash
-        run: npm config -L project @hypertrace:registry ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
+        run: npm config set -L project @hypertrace:registry ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
 
       - name: Publish
         run: npm run semantic-release
