@@ -10,9 +10,9 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
   selector: 'hda-model-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *ngFor="let subeditor of subeditors">
+    @for (subeditor of subeditors; track subeditor) {
       <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector"></ng-container>
-    </ng-container>
+    }
   `,
   standalone: false
 })

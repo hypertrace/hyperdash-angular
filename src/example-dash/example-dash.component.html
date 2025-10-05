@@ -20,17 +20,23 @@
     >
     </hda-dashboard>
     <h3>Editor</h3>
-    <hda-model-editor *ngIf="dashboard" [model]="selectedWidget"> </hda-model-editor>
+    @if (dashboard) {
+      <hda-model-editor [model]="selectedWidget"> </hda-model-editor>
+    }
     <div class="var-setter row">
       <h3>Variables</h3>
 
-      <label *ngFor="let pair of variablePairs" class="var-control">
-        <input #name="ngModel" class="var-name-input" type="text" [(ngModel)]="pair.name" />
-        <span class="var-separator">: </span>
-        <input #value="ngModel" class="var-value-input" type="text" [(ngModel)]="pair.value" />
-        <button class="remove-button" (click)="removePair(pair)">-</button>
-        <button *ngIf="name.dirty || value.dirty" class="update-variable-button" (click)="updatePair(pair)">✔</button>
-      </label>
+      @for (pair of variablePairs; track pair) {
+        <label class="var-control">
+          <input #name="ngModel" class="var-name-input" type="text" [(ngModel)]="pair.name" />
+          <span class="var-separator">: </span>
+          <input #value="ngModel" class="var-value-input" type="text" [(ngModel)]="pair.value" />
+          <button class="remove-button" (click)="removePair(pair)">-</button>
+          @if (name.dirty || value.dirty) {
+            <button class="update-variable-button" (click)="updatePair(pair)">✔</button>
+          }
+        </label>
+      }
 
       <button class="add-button" (click)="addVariable()">Add...</button>
     </div>
