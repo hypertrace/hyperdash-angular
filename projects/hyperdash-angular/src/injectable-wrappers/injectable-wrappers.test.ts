@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-restricted-types */
 import { TestBed } from '@angular/core/testing';
 import {
   ArrayDeserializer,
