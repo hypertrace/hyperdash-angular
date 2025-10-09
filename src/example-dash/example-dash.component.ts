@@ -273,9 +273,7 @@ export class ExampleRendererComponent implements OnInit {
       [style.backgroundColor]="'background-color' | themeProp"
       [style.color]="'text-color' | themeProp"
     >
-      @for (child of api.model.children; track child) {
-        <ng-container [hdaDashboardModel]="child" />
-      }
+      <ng-container *ngFor="let child of api.model.children" [hdaDashboardModel]="child"> </ng-container>
     </div>
   `,
   standalone: false

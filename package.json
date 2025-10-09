@@ -28,8 +28,7 @@
     "core-js": "^3.45.1",
     "lodash-es": "^4.17.21",
     "rxjs": "^6.6.7",
-    "tslib": "^2.8.1",
-    "zone.js": "~0.15.1"
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@angular-builders/jest": "^20.0.0",

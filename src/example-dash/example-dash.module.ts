@@ -5,6 +5,7 @@ import { DashboardCoreModule } from '@hypertrace/hyperdash-angular';
 import {
   ExampleContainer,
   ExampleContainerRendererComponent,
+  ExampleDashComponent,
   ExampleDataSource,
   ExampleModel,
   ExampleRendererComponent,
@@ -12,7 +13,13 @@ import {
 } from './example-dash.component';
 
 @NgModule({
-  declarations: [ExampleContainerRendererComponent, ExampleRendererComponent, StringPropertyEditorComponent],
+  declarations: [
+    ExampleDashComponent,
+    ExampleContainerRendererComponent,
+    ExampleRendererComponent,
+    StringPropertyEditorComponent
+  ],
+  exports: [ExampleDashComponent],
   imports: [
     CommonModule,
     FormsModule,

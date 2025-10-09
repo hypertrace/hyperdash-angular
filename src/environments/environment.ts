@@ -14,4 +14,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // eslint-disable-next-line capitalized-comments
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
