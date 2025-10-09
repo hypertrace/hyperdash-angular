@@ -274,7 +274,7 @@ export class ExampleRendererComponent implements OnInit {
       [style.color]="'text-color' | themeProp"
     >
       @for (child of api.model.children; track child) {
-        <ng-container [hdaDashboardModel]="child"> </ng-container>
+        <ng-container [hdaDashboardModel]="child" />
       }
     </div>
   `,

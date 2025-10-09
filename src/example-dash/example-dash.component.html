@@ -17,11 +17,10 @@
       [json]="json"
       (dashboardReady)="setDashboard($event)"
       (widgetSelectionChange)="onWidgetSelectionChange($event)"
-    >
-    </hda-dashboard>
+    />
     <h3>Editor</h3>
     @if (dashboard) {
-      <hda-model-editor [model]="selectedWidget"> </hda-model-editor>
+      <hda-model-editor [model]="selectedWidget" />
     }
     <div class="var-setter row">
       <h3>Variables</h3>
