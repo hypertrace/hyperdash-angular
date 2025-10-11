@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, input, output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { ModelEditorService, RenderableEditor } from '../model-editor.service';
@@ -10,9 +10,9 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
   selector: 'hda-model-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <ng-container *ngFor="let subeditor of subeditors">
-      <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector"></ng-container>
-    </ng-container>
+    @for (subeditor of subeditors; track subeditor.component) {
+      <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector" />
+    }
   `,
   standalone: false
 })
@@ -20,8 +20,7 @@ export class ModelEditorComponent implements OnChanges, OnDestroy {
   /**
    * Model to be edited
    */
-  @Input()
-  public model?: object;
+  public readonly model = input<object>();
 
   /**
    * Emitted when any attribute in the model changes. Assume this is a new model from the input. If the changes
@@ -30,8 +29,7 @@ export class ModelEditorComponent implements OnChanges, OnDestroy {
    * TODO - eventually, would like to treat input model as immutable but that requires some thought.
    * Would need to clone variable, theme, data state as well as figure out how to destroy the original
    */
-  @Output()
-  public readonly modelChange: EventEmitter<object> = new EventEmitter();
+  public readonly modelChange = output<object>();
 
   /**
    * Discovered subeditors for the provided model, signifying the editable properties or subproperties.
@@ -46,16 +44,20 @@ export class ModelEditorComponent implements OnChanges, OnDestroy {
   ) {}
 
   public ngOnChanges(): void {
-    if (!this.model) {
+    const model = this.model();
+    if (!model) {
       return;
     }
 
     this.unsubscribeModelChanges();
-    this.subeditors = this.modelEditorService.getRenderData(this.model);
+    this.subeditors = this.modelEditorService.getRenderData(model);
 
-    this.modelChangeSubscription = this.modelChangedEvent
-      .getObservableForModel(this.model)
-      .subscribe(() => this.modelChange.emit(this.model));
+    this.modelChangeSubscription = this.modelChangedEvent.getObservableForModel(model).subscribe(() => {
+      const model = this.model();
+      if (model) {
+        this.modelChange.emit(model);
+      }
+    });
   }
 
   public ngOnDestroy(): void {

@@ -28,10 +28,11 @@
         "@angular-eslint/no-pipe-impure": "error",
         "@angular-eslint/no-queries-metadata-property": "error",
         "@angular-eslint/prefer-output-readonly": "error",
-        "@angular-eslint/prefer-standalone": "warn",
+        "@angular-eslint/prefer-standalone": "off",
         "@angular-eslint/use-component-selector": "error",
         "@angular-eslint/use-component-view-encapsulation": "error",
-        "@typescript-eslint/ban-types": [
+        "@angular-eslint/prefer-inject": "off",
+        "@typescript-eslint/no-restricted-types": [
           "error",
           {
             "types": {
@@ -216,7 +217,7 @@
         "@typescript-eslint/no-var-requires": "error",
         "@typescript-eslint/prefer-readonly": "error",
         "@typescript-eslint/promise-function-async": "error",
-        "@typescript-eslint/quotes": [
+        "quotes": [
           "error",
           "single",
           {

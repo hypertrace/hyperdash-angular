@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, ViewContainerRef } from '@angular/core';
+import { Directive, OnChanges, ViewContainerRef, input } from '@angular/core';
 import { TypedSimpleChanges } from '../util/angular-change-object';
 import { DashboardRendererService } from './dashboard-renderer.service';
 
@@ -19,8 +19,7 @@ export class DashboardModelDirective implements OnChanges {
   /**
    * The model to render
    */
-  @Input()
-  public readonly hdaDashboardModel?: object;
+  public readonly hdaDashboardModel = input<object>();
 
   public ngOnChanges(changes: TypedSimpleChanges<this>): void {
     if (changes.hdaDashboardModel) {
@@ -29,8 +28,9 @@ export class DashboardModelDirective implements OnChanges {
   }
 
   private updateRenderer(): void {
-    if (this.hdaDashboardModel) {
-      this.dashboardRendererService.renderInViewContainer(this.hdaDashboardModel, this.viewContainerRef);
+    const hdaDashboardModel = this.hdaDashboardModel();
+    if (hdaDashboardModel) {
+      this.dashboardRendererService.renderInViewContainer(hdaDashboardModel, this.viewContainerRef);
     } else {
       this.viewContainerRef.clear();
     }

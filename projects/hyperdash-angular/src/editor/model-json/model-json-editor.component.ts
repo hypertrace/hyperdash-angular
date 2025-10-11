@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, input, output } from '@angular/core';
 import { DeserializationManagerService } from '../../injectable-wrappers/deserialization/deserialization-manager.service';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../../injectable-wrappers/model-manager.service';
@@ -11,18 +11,16 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
 @Component({
   selector: 'hda-model-json-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: ' <hda-model-editor [model]="modelObject"></hda-model-editor> ',
+  template: ' <hda-model-editor [model]="modelObject" /> ',
   standalone: false
 })
 export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
   /**
    * Model to be edited
    */
-  @Input()
-  public modelJson?: object;
+  public readonly modelJson = input<object>();
 
-  @Output()
-  public readonly modelJsonChange: EventEmitter<object> = new EventEmitter<object>();
+  public readonly modelJsonChange = output<object>();
 
   public modelObject?: object;
   /**
@@ -39,7 +37,8 @@ export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
   ) {}
 
   public ngOnChanges(): void {
-    if (!this.modelJson) {
+    const modelJson = this.modelJson();
+    if (!modelJson) {
       return;
     }
 
@@ -47,7 +46,7 @@ export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
     // TODO this won't have access to variables, data etc. (anything based on model tree)
     // One way of fixing this would be to include a context token in render data that doesn't reveal
     // The model, but allows us to internally use it to lookup values
-    this.modelObject = this.deserializationManager.deserialize<object>(this.modelJson);
+    this.modelObject = this.deserializationManager.deserialize<object>(modelJson);
     this.modelChangedEvent
       .getObservableForModel(this.modelObject)
       .subscribe(() => this.modelJsonChange.emit(this.serializationManager.serialize(this.modelObject)));
