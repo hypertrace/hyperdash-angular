@@ -24,7 +24,7 @@
     "@angular/platform-browser": "^20.3.3",
     "@angular/platform-browser-dynamic": "^20.3.3",
     "@hypertrace/hyperdash": "^1.4.1",
-    "@typescript-eslint/utils": "^8.45.0",
+    "@typescript-eslint/utils": "^8.46.1",
     "core-js": "^3.46.0",
     "lodash-es": "^4.17.21",
     "rxjs": "^6.6.7",
