@@ -47,7 +47,7 @@
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
     "@compodoc/compodoc": "^1.1.31",
-    "@ngneat/spectator": "^22.0.0",
+    "@ngneat/spectator": "^22.1.0",
     "@types/jest": "^29.0.0",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^24.7.0",
