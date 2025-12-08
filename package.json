@@ -38,7 +38,7 @@
     "@angular-eslint/schematics": "^20.6.0",
     "@angular-eslint/template-parser": "20.3.0",
     "@angular/animations": "^20.3.3",
-    "@angular/build": "^20.3.10",
+    "@angular/build": "^20.3.13",
     "@angular/cli": "^20.3.4",
     "@angular/compiler": "^20.3.3",
     "@angular/compiler-cli": "^20.3.3",
