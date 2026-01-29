@@ -15,7 +15,7 @@
     "test:ci": "npm run lint && npm run test:ci:app && npm run test:ci:lib",
     "docs": "compodoc -p projects/hyperdash-angular/tsconfig.lib.json",
     "semantic-release": "semantic-release",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@angular/common": "^20.3.3",
