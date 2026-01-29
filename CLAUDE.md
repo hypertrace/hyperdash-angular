@@ -29,20 +29,25 @@ npm run commit              # Interactive conventional commit (commitizen)
 ## Architecture
 
 ### Injectable Wrappers Pattern
+
 Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services following the pattern `[ClassName]Service`:
+
 - `DashboardManagerService`, `ModelManagerService`, `ThemeManagerService`, etc.
 - Always use the service wrapper (e.g., `DashboardManagerService`) rather than the core class directly.
 
 ### Module System
+
 - `DashboardCoreModule`: Main runtime module with default property types and deserializers
 - `DashboardCoreModule.with(metadata)`: Extend with custom types, models, renderers, editors, deserializers
 - `DashboardEditorModule`: Separate module for editing capabilities
 
 ### Key Injection Tokens
+
 - `MODEL_PROPERTY_TYPES`: Register custom property types
 - `DASHBOARD_DESERIALIZERS`: Register custom deserializers
 
 ### Rendering
+
 - `DashboardComponent` (`<hda-dashboard>`): Main rendering component
 - `DashboardModelDirective` (`hdaDashboardModel`): Injects models into template context
 - `ThemePropertyPipe`: Theme-aware property rendering
@@ -50,22 +55,26 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 ## Code Conventions
 
 ### Selectors
+
 - **Library components**: `hda-*` prefix (kebab-case)
 - **Library directives**: `hda*` prefix (camelCase)
 - **App components**: `app-*` prefix
 
 ### TypeScript
+
 - Strict mode enabled with `noUnusedLocals`, `noUnusedParameters`, `strictNullChecks`
 - Explicit access modifiers required (public/private/protected)
 - No `any` types allowed
 - Parameter properties preferred: `constructor(private readonly service: Service)`
 
 ### Testing
+
 - Jest with `@ngneat/spectator` for component testing
 - Test files: `*.test.ts` or `*.spec.ts`
 - Coverage excludes: `*.module.ts`, `public_api.ts`, `test/` directory
 
 ### Commits
+
 - Conventional commits required (enforced via commitlint)
 - Use `npm run commit` for interactive commit wizard
 - Pre-commit hook runs Prettier on staged files
