@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["webpack-env", "jest"],
+    "types": ["jest"],
     "module": "commonjs"
   },
   "include": ["**/*.spec.ts", "**/*.test.ts"]
