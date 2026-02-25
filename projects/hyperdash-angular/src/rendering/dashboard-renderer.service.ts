@@ -123,7 +123,7 @@ export class DashboardRendererService {
     const rendererInfo = this.renderedComponentByModel.get(model);
     if (!rendererInfo) {
       // Should not be hit, this is checked externally. Extra safety.
-      /* istanbul ignore next */
+      /* v8 ignore next */
       return;
     }
     const rendererElement = rendererInfo.componentRef.location.nativeElement as Element;

@@ -6,7 +6,7 @@ import { ModelJsonEditorComponent } from '../model-json/model-json-editor.compon
 /**
  * An editor for a model object, allowing arbitrary nesting of models
  */
-/* istanbul ignore next */
+/* v8 ignore next */
 @Component({
   selector: 'hda-nested-model-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,

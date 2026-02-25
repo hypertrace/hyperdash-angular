@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ArrayDeserializer } from '@hypertrace/hyperdash';
 import { DeserializationManagerService } from './deserialization-manager.service';
 
-/* istanbul ignore next */
+/* v8 ignore next */
 /**
  * Injectable implementation of ArrayDeserializer
  */
