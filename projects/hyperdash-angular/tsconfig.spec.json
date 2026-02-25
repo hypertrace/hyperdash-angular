@@ -4,12 +4,7 @@
     "outDir": "../../out-tsc/spec",
     "typeRoots": ["../../node_modules/@types", "../../node_modules"],
     "types": ["vitest/globals"],
-    "skipLibCheck": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false
+    "skipLibCheck": true
   },
-  "include": ["**/*.spec.ts", "**/*.test.ts"],
-  "angularCompilerOptions": {
-    "strictTemplates": false
-  }
+  "include": ["**/*.spec.ts", "**/*.test.ts"]
 }
