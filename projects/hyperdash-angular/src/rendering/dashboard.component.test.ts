@@ -26,11 +26,7 @@ describe('Dashboard Component', () => {
     selector: 'hda-host',
     // eslint-disable-next-line: max-inline-declarations
     template: `
-      <hda-dashboard
-        [json]="json"
-        (dashboardReady)="dashboard = $event"
-        (widgetSelectionChange)="widgetSelected($event)"
-      >
+      <hda-dashboard [json]="json" (dashboardReady)="dashboard = $event" (widgetSelectionChange)="widgetSelected($event)">
       </hda-dashboard>
     `,
     standalone: true,

@@ -244,7 +244,7 @@ export class ExampleDataSource implements DataSource<string> {
   selector: 'app-example-renderer',
   template: `
     <div
-      style="border: 1px solid black; padding: 4px;"
+      style="border: 1px solid black; padding: 4px"
       [style.backgroundColor]="'background-color' | themeProp"
       [style.color]="'text-color' | themeProp"
     >
@@ -277,7 +277,7 @@ export class ExampleRendererComponent implements OnInit {
   selector: 'app-example-container',
   template: `
     <div
-      style="border: 1px solid black; padding: 4px;"
+      style="border: 1px solid black; padding: 4px"
       [style.backgroundColor]="'background-color' | themeProp"
       [style.color]="'text-color' | themeProp"
     >

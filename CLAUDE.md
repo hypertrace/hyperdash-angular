@@ -79,7 +79,7 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 
 - Conventional commits required (enforced via commitlint)
 - Use `npm run commit` for interactive commit wizard
-- Pre-commit hook runs Prettier on staged files
+- Pre-commit hook runs oxfmt on staged files
 
 ## ESLint Rules of Note
 

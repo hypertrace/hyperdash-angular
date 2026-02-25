@@ -3,6 +3,6 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     commit-message:
-      prefix: "chore"
+      prefix: 'chore'
     schedule:
       interval: 'weekly'

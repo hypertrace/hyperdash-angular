@@ -1,7 +1,9 @@
 :host {
   display: block;
   color: #777;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 .dash-container {
@@ -47,7 +49,6 @@
   margin: 0px 24px;
 }
 
-
 .var-control {
   display: block;
   padding: 12px 0;
@@ -69,11 +70,11 @@
 
 .button {
   padding: 8px 12px;
-  font-size: .8em;
+  font-size: 0.8em;
   border-radius: 4px;
 }
 
-.update-button{
+.update-button {
   @extend .button;
   float: right;
   background-color: cornflowerblue;
@@ -83,7 +84,7 @@
 
 .add-button {
   @extend .button;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 .remove-button {
@@ -92,7 +93,7 @@
   color: white;
   border: none;
   font-weight: bold;
-  line-height: .8;
+  line-height: 0.8;
   padding: 4px 6px;
   margin-left: 8px;
 }
