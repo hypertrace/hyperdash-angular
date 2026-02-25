@@ -1,5 +1,6 @@
 import { Injector } from '@angular/core';
 import { EditorKind, LeafEditorData, UnresolvedCompositeEditorData } from '@hypertrace/hyperdash';
+import { vi } from 'vitest';
 import { EditorApiFactoryService } from '../injectable-wrappers/editor-api-factory.service';
 import { EditorLibraryService } from '../injectable-wrappers/editor-library.service';
 import { EDITOR_API } from './editor-api-injection-token';
@@ -17,13 +18,13 @@ describe('Model editor service', () => {
 
   beforeEach(() => {
     mockEditorApiFactory = {
-      buildLeafEditorApi: jest.fn((_, editorData: LeafEditorData) => `${editorData.title} LEAF API`) as jest.Mock,
-      buildNestedEditorApi: jest.fn((_, data: UnresolvedCompositeEditorData) => `${data.title} NESTED API`) as jest.Mock
-    };
+      buildLeafEditorApi: vi.fn((_, editorData: LeafEditorData) => `${editorData.title} LEAF API`),
+      buildNestedEditorApi: vi.fn((_, data: UnresolvedCompositeEditorData) => `${data.title} NESTED API`)
+    } as unknown as Partial<EditorApiFactoryService>;
     mockInjector = Injector.create({ providers: [] });
     model = new modelClass();
     mockEditorLibrary = {
-      getEditorData: jest.fn(providedModelClass => {
+      getEditorData: vi.fn(providedModelClass => {
         if (providedModelClass !== modelClass) {
           return undefined;
         }
@@ -45,7 +46,7 @@ describe('Model editor service', () => {
           ]
         };
       })
-    };
+    } as unknown as Partial<EditorLibraryService>;
 
     modelEditorService = new ModelEditorService(
       mockEditorLibrary as EditorLibraryService,
@@ -73,14 +74,14 @@ describe('Model editor service', () => {
     const renderData = modelEditorService.getRenderData(model);
 
     expect(renderData[0].injector.get(EDITOR_API)).toBe('first prop editor LEAF API');
-    expect(mockEditorApiFactory.buildLeafEditorApi).nthCalledWith(1, model, {
+    expect(mockEditorApiFactory.buildLeafEditorApi).toHaveBeenNthCalledWith(1, model, {
       editor: editorClass1,
       title: 'first prop editor',
       kind: EditorKind.Leaf
     });
 
     expect(renderData[1].injector.get(EDITOR_API)).toBe('second prop editor LEAF API');
-    expect(mockEditorApiFactory.buildLeafEditorApi).nthCalledWith(2, model, {
+    expect(mockEditorApiFactory.buildLeafEditorApi).toHaveBeenNthCalledWith(2, model, {
       editor: editorClass2,
       title: 'second prop editor',
       kind: EditorKind.Leaf
@@ -88,7 +89,7 @@ describe('Model editor service', () => {
   });
 
   test('creates render data for nested models', () => {
-    mockEditorLibrary.getEditorData = jest.fn().mockReturnValue({
+    mockEditorLibrary.getEditorData = vi.fn().mockReturnValue({
       title: 'Model editor',
       kind: EditorKind.Composite,
       subeditors: [
@@ -105,7 +106,7 @@ describe('Model editor service', () => {
   });
 
   test('creates render data for theme model', () => {
-    mockEditorLibrary.getEditorData = jest.fn().mockReturnValue({
+    mockEditorLibrary.getEditorData = vi.fn().mockReturnValue({
       title: 'Model editor',
       kind: EditorKind.Composite,
       subeditors: [],
@@ -121,7 +122,7 @@ describe('Model editor service', () => {
   });
 
   test('creates render data for data model', () => {
-    mockEditorLibrary.getEditorData = jest.fn().mockReturnValue({
+    mockEditorLibrary.getEditorData = vi.fn().mockReturnValue({
       title: 'Model editor',
       kind: EditorKind.Composite,
       subeditors: [],

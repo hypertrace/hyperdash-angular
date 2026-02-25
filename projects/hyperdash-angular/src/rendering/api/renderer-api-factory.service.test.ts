@@ -1,5 +1,6 @@
 import { ModelApi, TimeRange } from '@hypertrace/hyperdash';
 import { EMPTY, Observable } from 'rxjs';
+import { vi } from 'vitest';
 import { DataRefreshEventService } from '../../injectable-wrappers/data-refresh-event.service';
 import { DefaultModelApiBuilderService } from '../../injectable-wrappers/default-model-api-builder.service';
 import { TimeRangeChangedEventService } from '../../injectable-wrappers/time-range-changed-event.service';
@@ -18,16 +19,16 @@ describe('Renderer API Factory', () => {
 
   beforeEach(() => {
     mockModelApiBuilder = {
-      build: jest.fn(() => ({
-        getData: jest.fn(),
+      build: vi.fn(() => ({
+        getData: vi.fn(),
         change$: mockModelChange$
-      })) as jest.Mock
-    };
+      }))
+    } as unknown as Partial<DefaultModelApiBuilderService>;
     mockDataRefreshEvent = {
-      getObservableForModel: jest.fn(() => mockRefresh$)
+      getObservableForModel: vi.fn(() => mockRefresh$)
     };
     mockTimeRangeChangedEvent = {
-      getObservableForModel: jest.fn(() => mockTimeRangeChanged$)
+      getObservableForModel: vi.fn(() => mockTimeRangeChanged$)
     };
     mockModelChange$ = EMPTY;
     mockRefresh$ = EMPTY;
@@ -62,13 +63,13 @@ describe('Renderer API Factory', () => {
     const mockTheme = {};
 
     const mockModelApi: Partial<ModelApi> = {
-      getData: jest.fn().mockReturnValue(mockDataSource),
-      getTheme: jest.fn().mockReturnValue(mockTheme),
-      getTimeRange: jest.fn().mockReturnValue(mockTimeRange),
+      getData: vi.fn().mockReturnValue(mockDataSource),
+      getTheme: vi.fn().mockReturnValue(mockTheme),
+      getTimeRange: vi.fn().mockReturnValue(mockTimeRange),
       change$: mockModelChange$
     };
 
-    mockModelApiBuilder.build = jest.fn(() => mockModelApi as ModelApi);
+    mockModelApiBuilder.build = vi.fn(() => mockModelApi as ModelApi);
 
     const rendererApi = rendererApiFactory.buildApi(mockModel, EMPTY);
 

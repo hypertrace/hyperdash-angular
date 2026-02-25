@@ -8,7 +8,7 @@ import { DashboardRendererService } from './dashboard-renderer.service';
  */
 @Directive({
   selector: '[hdaDashboardModel]',
-  standalone: false
+  standalone: true
 })
 export class DashboardModelDirective implements OnChanges {
   public constructor(

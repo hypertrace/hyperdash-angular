@@ -31,7 +31,7 @@ const RETAINED_REFERENCES = new InjectionToken<Type<object>[][]>('RETAINED_REFER
  * Main dashboarding runtime angular module
  */
 @NgModule({
-  declarations: [DashboardModelDirective, DashboardComponent, ThemePropertyPipe],
+  imports: [DashboardModelDirective, DashboardComponent, ThemePropertyPipe],
   exports: [DashboardModelDirective, DashboardComponent, ThemePropertyPipe],
   providers: [
     {

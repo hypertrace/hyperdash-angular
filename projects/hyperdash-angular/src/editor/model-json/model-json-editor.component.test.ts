@@ -1,6 +1,7 @@
-import { Component, Inject, NgModule } from '@angular/core';
+import { Component, Inject, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { vi } from 'vitest';
 import {
   EditorApi,
   Model,
@@ -17,15 +18,6 @@ import { EDITOR_API } from '../editor-api-injection-token';
 // Large test - testing all machinery, no mocks
 describe('Model JSON editor component', () => {
   let host: ComponentFixture<HostComponent>;
-
-  @Component({
-    selector: 'hda-host',
-    template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
-    standalone: false
-  })
-  class HostComponent {
-    public modelJson?: object;
-  }
 
   const TEST_PROP_TYPE: ModelPropertyTypeRegistrationInformation = {
     type: 'test-prop-type'
@@ -63,14 +55,25 @@ describe('Model JSON editor component', () => {
   })
   class TestDashboardModule {}
 
+  @Component({
+    selector: 'hda-host',
+    template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
+    standalone: true,
+    imports: [DashboardEditorModule],
+    schemas: [NO_ERRORS_SCHEMA]
+  })
+  class HostComponent {
+    public modelJson?: object;
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HostComponent],
-      imports: [DashboardEditorModule, TestDashboardModule]
+      imports: [HostComponent, DashboardEditorModule, TestDashboardModule]
     });
 
     TestBed.inject(DefaultConfigurationService).configure();
     host = TestBed.createComponent(HostComponent);
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
   });
 
@@ -82,6 +85,7 @@ describe('Model JSON editor component', () => {
     host.componentInstance.modelJson = {
       type: 'test-model'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
 
     expect(host.debugElement.query(By.directive(PropEditorComponent))).toBeDefined();
@@ -91,6 +95,7 @@ describe('Model JSON editor component', () => {
     host.componentInstance.modelJson = {
       type: 'test-model'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
     const propEditor = host.debugElement.query(By.directive(PropEditorComponent))
       .componentInstance as PropEditorComponent;
@@ -100,6 +105,7 @@ describe('Model JSON editor component', () => {
       type: 'test-model',
       prop: 'non default'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
     const updatedPropEditor = host.debugElement.query(By.directive(PropEditorComponent))
       .componentInstance as PropEditorComponent;
@@ -110,6 +116,7 @@ describe('Model JSON editor component', () => {
     host.componentInstance.modelJson = {
       type: 'test-model'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
     const propEditor = host.debugElement.query(By.directive(PropEditorComponent))
       .componentInstance as PropEditorComponent;
@@ -122,7 +129,7 @@ describe('Model JSON editor component', () => {
   });
 
   test('destroys models when a new json object is provided', () => {
-    const destroySpy = jest.fn();
+    const destroySpy = vi.fn();
 
     TestBed.inject(ModelDestroyedEventService).getObservable().subscribe(destroySpy);
 
@@ -130,11 +137,13 @@ describe('Model JSON editor component', () => {
       type: 'test-model',
       prop: 'first copy'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
     host.componentInstance.modelJson = {
       type: 'test-model',
       prop: 'second copy'
     };
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
 
     const expectedToDestroy = new TestModel();

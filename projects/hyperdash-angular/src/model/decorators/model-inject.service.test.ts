@@ -1,28 +1,24 @@
 import { InjectionToken } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { ModelApi } from '@hypertrace/hyperdash';
-import { createServiceFactory } from '@ngneat/spectator/jest';
 import { ModelInject, ModelInjectService, MODEL_API } from './model-inject.service';
 
 describe('Model inject service', () => {
   const INJECT_FOO = new InjectionToken<string>('INJECT_FOO');
   const INJECT_BAR = new InjectionToken<string>('INJECT_BAR');
   const INJECT_BAZ = new InjectionToken<string>('INJECT_BAZ');
-  const serviceFactory = createServiceFactory({
-    service: ModelInjectService,
-    providers: [
-      {
-        provide: INJECT_FOO,
-        useValue: 'foo'
-      },
-      {
-        provide: INJECT_BAR,
-        useValue: 'bar'
-      },
-      {
-        provide: INJECT_BAZ,
-        useValue: 'baz'
-      }
-    ]
+  let service: ModelInjectService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        ModelInjectService,
+        { provide: INJECT_FOO, useValue: 'foo' },
+        { provide: INJECT_BAR, useValue: 'bar' },
+        { provide: INJECT_BAZ, useValue: 'baz' }
+      ]
+    });
+    service = TestBed.inject(ModelInjectService);
   });
 
   class ParentModel {
@@ -44,20 +40,18 @@ describe('Model inject service', () => {
   }
 
   test('supports injecting into a model', () => {
-    const spectator = serviceFactory();
     const model = new ParentModel();
     const apiMock = {};
-    spectator.service.decorate(model, apiMock as ModelApi);
+    service.decorate(model, apiMock as ModelApi);
 
     expect(model.api).toBe(apiMock);
     expect(model.inject1).toBe('foo');
   });
 
   test('injects properties defined in a base class', () => {
-    const spectator = serviceFactory();
     const model = new ChildModel();
     const apiMock = {};
-    spectator.service.decorate(model, apiMock as ModelApi);
+    service.decorate(model, apiMock as ModelApi);
 
     expect(model.api).toBe(apiMock);
     expect(model.inject1).toBe('bar');

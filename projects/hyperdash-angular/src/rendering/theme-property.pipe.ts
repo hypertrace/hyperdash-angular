@@ -14,7 +14,7 @@ import { RendererApi, RENDERER_API } from './api/renderer-api';
   // Must be impure - result depends on state of model tree
   // eslint-disable-next-line @angular-eslint/no-pipe-impure
   pure: false,
-  standalone: false
+  standalone: true
 })
 export class ThemePropertyPipe implements PipeTransform, OnDestroy {
   private modelChanged: boolean = true;

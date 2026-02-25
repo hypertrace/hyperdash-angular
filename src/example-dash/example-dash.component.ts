@@ -1,5 +1,7 @@
 // eslint-disable:no-invalid-template-strings max-inline-declarations
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   Dashboard,
   DataSource,
@@ -15,12 +17,16 @@ import {
   STRING_PROPERTY
 } from '@hypertrace/hyperdash';
 import {
+  DashboardComponent,
+  DashboardModelDirective,
   EDITOR_API,
   ModelChangedEventService,
+  ModelEditorComponent,
   ModelInject,
   MODEL_API,
   RendererApi,
-  RENDERER_API
+  RENDERER_API,
+  ThemePropertyPipe
 } from '@hypertrace/hyperdash-angular';
 import { remove } from 'lodash-es';
 import { EMPTY, interval, Observable, of } from 'rxjs';
@@ -31,7 +37,8 @@ import { catchError, map, take } from 'rxjs/operators';
   selector: 'app-example-dash',
   templateUrl: './example-dash.component.html',
   styleUrls: ['./example-dash.component.scss'],
-  standalone: false
+  standalone: true,
+  imports: [FormsModule, JsonPipe, DashboardComponent, ModelEditorComponent]
 })
 export class ExampleDashComponent implements OnInit {
   public json: { [key: string]: JsonPrimitive } = {
@@ -247,7 +254,8 @@ export class ExampleDataSource implements DataSource<string> {
       </div>
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [AsyncPipe, ThemePropertyPipe]
 })
 export class ExampleRendererComponent implements OnInit {
   public dataObservable!: Observable<string>;
@@ -273,10 +281,13 @@ export class ExampleRendererComponent implements OnInit {
       [style.backgroundColor]="'background-color' | themeProp"
       [style.color]="'text-color' | themeProp"
     >
-      <ng-container *ngFor="let child of api.model.children" [hdaDashboardModel]="child"> </ng-container>
+      @for (child of api.model.children; track $index) {
+        <ng-container [hdaDashboardModel]="child"> </ng-container>
+      }
     </div>
   `,
-  standalone: false
+  standalone: true,
+  imports: [DashboardModelDirective, ThemePropertyPipe]
 })
 export class ExampleContainerRendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<ExampleContainer>) {}
@@ -292,7 +303,8 @@ export class ExampleContainerRendererComponent {
     <h5>{{ label }}</h5>
     <input type="text" [(ngModel)]="currentValue" (keyup.enter)="propagateChange()" (focusout)="propagateChange()" />
   `,
-  standalone: false
+  standalone: true,
+  imports: [FormsModule]
 })
 export class StringPropertyEditorComponent {
   public currentValue?: string;

@@ -37,9 +37,10 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 
 ### Module System
 
-- `DashboardCoreModule`: Main runtime module with default property types and deserializers
+- All library components, directives, and pipes are **standalone**
+- `DashboardCoreModule`: Re-exports standalone declarables with default property types and deserializers
 - `DashboardCoreModule.with(metadata)`: Extend with custom types, models, renderers, editors, deserializers
-- `DashboardEditorModule`: Separate module for editing capabilities
+- `DashboardEditorModule`: Re-exports standalone editor components
 
 ### Key Injection Tokens
 
@@ -69,9 +70,10 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 
 ### Testing
 
-- Jest with `@ngneat/spectator` for component testing
+- Vitest via `@angular/build:unit-test` (zoneless, AOT)
 - Test files: `*.test.ts` or `*.spec.ts`
 - Coverage excludes: `*.module.ts`, `public_api.ts`, `test/` directory
+- Zoneless requires `fixture.changeDetectorRef.markForCheck()` before `fixture.detectChanges()` when mutating component properties between change detection cycles
 
 ### Commits
 

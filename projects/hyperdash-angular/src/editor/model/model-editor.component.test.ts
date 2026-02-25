@@ -1,7 +1,8 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { EMPTY, Observable } from 'rxjs';
+import { type Mock, vi } from 'vitest';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { getTestScheduler } from '../../test/test-utils';
 import { DashboardEditorModule } from '../dashboard-editor.module';
@@ -16,11 +17,13 @@ describe('Model editor component', () => {
   @Component({
     selector: 'hda-host',
     template: ' <hda-model-editor [model]="model" (modelChange)="modelChanged($event)"> </hda-model-editor> ',
-    standalone: false
+    standalone: true,
+    imports: [DashboardEditorModule],
+    schemas: [NO_ERRORS_SCHEMA]
   })
   class HostComponent {
     public model?: object;
-    public readonly modelChanged: jest.Mock = jest.fn();
+    public readonly modelChanged: Mock = vi.fn();
   }
 
   @Component({
@@ -29,9 +32,10 @@ describe('Model editor component', () => {
     standalone: false
   })
   class PropEditorComponent {}
+
   modelChangedObservable = EMPTY;
   mockModelChangedEvent = {
-    getObservableForModel: jest.fn(() => modelChangedObservable)
+    getObservableForModel: vi.fn(() => modelChangedObservable)
   };
 
   beforeEach(() => {
@@ -40,12 +44,12 @@ describe('Model editor component', () => {
         { provide: ModelEditorService, useValue: {} },
         { provide: ModelChangedEventService, useValue: mockModelChangedEvent }
       ],
-      declarations: [HostComponent, PropEditorComponent],
-      imports: [DashboardEditorModule]
+      declarations: [PropEditorComponent],
+      imports: [HostComponent, DashboardEditorModule]
     });
 
     mockModelEditorService = TestBed.inject(ModelEditorService);
-    mockModelEditorService.getRenderData = jest.fn().mockReturnValue([
+    mockModelEditorService.getRenderData = vi.fn().mockReturnValue([
       {
         component: PropEditorComponent,
         injector: TestBed.inject(Injector)
@@ -53,6 +57,7 @@ describe('Model editor component', () => {
     ]);
 
     host = TestBed.createComponent(HostComponent);
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
   });
 
@@ -62,6 +67,7 @@ describe('Model editor component', () => {
 
   test('renders subeditors if model is provided', () => {
     host.componentInstance.model = {};
+    host.changeDetectorRef.markForCheck();
     host.detectChanges();
 
     expect(host.debugElement.query(By.directive(PropEditorComponent)).nativeElement.textContent.trim()).toBe(
@@ -75,6 +81,7 @@ describe('Model editor component', () => {
       const modelChanges = cold('x', { x: model });
       modelChangedObservable = modelChanges;
       host.componentInstance.model = model;
+      host.changeDetectorRef.markForCheck();
       host.detectChanges();
       expect(host.componentInstance.modelChanged).not.toHaveBeenCalled();
 
@@ -90,10 +97,12 @@ describe('Model editor component', () => {
       const modelChanges = cold<object>('-x');
       modelChangedObservable = modelChanges;
       host.componentInstance.model = firstModel;
+      host.changeDetectorRef.markForCheck();
       host.detectChanges();
 
       flush();
       host.componentInstance.model = secondModel;
+      host.changeDetectorRef.markForCheck();
       host.detectChanges();
 
       host.destroy();

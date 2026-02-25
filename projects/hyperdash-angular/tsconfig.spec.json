@@ -2,8 +2,14 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    "types": ["jest"],
-    "module": "commonjs"
+    "typeRoots": ["../../node_modules/@types", "../../node_modules"],
+    "types": ["vitest/globals"],
+    "skipLibCheck": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   },
-  "include": ["**/*.spec.ts", "**/*.test.ts"]
+  "include": ["**/*.spec.ts", "**/*.test.ts"],
+  "angularCompilerOptions": {
+    "strictTemplates": false
+  }
 }

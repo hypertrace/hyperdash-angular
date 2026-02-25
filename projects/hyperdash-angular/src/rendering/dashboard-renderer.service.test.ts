@@ -1,8 +1,9 @@
 import { Component, Inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModelApi } from '@hypertrace/hyperdash';
 import { ReplaySubject } from 'rxjs';
+import { vi } from 'vitest';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { RendererLibraryService } from '../injectable-wrappers/renderer-library.service';
 import { getTestScheduler } from '../test/test-utils';
@@ -21,8 +22,8 @@ describe('Dashboard Renderer Service', () => {
     return model;
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [HostComponent, RendererComponent]
     }).compileComponents();
 
@@ -34,10 +35,10 @@ describe('Dashboard Renderer Service', () => {
       build: () => ({}) as ModelApi
     });
     const rendererLibrary = TestBed.inject(RendererLibraryService);
-    rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
+    rendererLibrary.lookupRenderer = vi.fn().mockReturnValue(RendererComponent);
 
     host = TestBed.createComponent(HostComponent);
-  }));
+  });
 
   test('can render', () => {
     dashboardRendererService.renderInViewContainer(createModel('Renderer'), host.componentInstance.viewContainerRef);

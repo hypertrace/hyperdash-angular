@@ -7,6 +7,7 @@ import {
   LogMessage,
   ModelPropertyTypeRegistrationInformation
 } from '@hypertrace/hyperdash';
+import { vi } from 'vitest';
 import { DeserializationManagerService } from '../injectable-wrappers/deserialization/deserialization-manager.service';
 import { LoggerService } from '../injectable-wrappers/logger.service';
 import { ModelLibraryService } from '../injectable-wrappers/model-library.service';
@@ -38,16 +39,16 @@ describe('Default configuration service', () => {
 
     defaultConfigurationService = TestBed.inject(DefaultConfigurationService);
     logger = TestBed.inject(LoggerService);
-    const errorSpy = jest.spyOn(logger, 'error');
+    const errorSpy = vi.spyOn(logger, 'error');
     errorSpy.mockImplementation(
       message =>
         ({
           throw: () => {
             throw new Error(message);
           }
-        } as LogMessage)
+        }) as LogMessage
     );
-    logger.warn = jest.fn();
+    logger.warn = vi.fn();
   });
 
   test('correctly configures serialization', () => {
@@ -87,7 +88,7 @@ describe('Default configuration service', () => {
 
   test('registers provided property types', () => {
     const propertyTypeLibrary = TestBed.inject(ModelPropertyTypeLibraryService);
-    propertyTypeLibrary.registerPropertyType = jest.fn();
+    propertyTypeLibrary.registerPropertyType = vi.fn();
     defaultConfigurationService.configure();
 
     expect(propertyTypeLibrary.registerPropertyType).toHaveBeenCalledTimes(2);
@@ -101,7 +102,7 @@ describe('Default configuration service', () => {
 
   test('registers provided deserializers', () => {
     const deserializationManager = TestBed.inject(DeserializationManagerService);
-    deserializationManager.registerDeserializer = jest.fn();
+    deserializationManager.registerDeserializer = vi.fn();
     defaultConfigurationService.configure();
     expect(deserializationManager.registerDeserializer).toHaveBeenCalledTimes(1);
     expect(deserializationManager.registerDeserializer).toHaveBeenCalledWith(expect.any(TestDeserializer));
