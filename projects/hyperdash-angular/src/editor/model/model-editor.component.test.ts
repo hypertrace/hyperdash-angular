@@ -28,8 +28,7 @@ describe('Model editor component', () => {
 
   @Component({
     selector: 'hda-prop-editor',
-    template: 'property editor',
-    standalone: false
+    template: 'property editor'
   })
   class PropEditorComponent {}
 
@@ -44,8 +43,7 @@ describe('Model editor component', () => {
         { provide: ModelEditorService, useValue: {} },
         { provide: ModelChangedEventService, useValue: mockModelChangedEvent }
       ],
-      declarations: [PropEditorComponent],
-      imports: [HostComponent, DashboardEditorModule]
+      imports: [HostComponent, DashboardEditorModule, PropEditorComponent]
     });
 
     mockModelEditorService = TestBed.inject(ModelEditorService);

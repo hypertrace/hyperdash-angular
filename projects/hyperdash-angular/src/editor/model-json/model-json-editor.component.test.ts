@@ -33,16 +33,15 @@ class TestModel {
 @ModelPropertyEditor({ propertyType: TEST_PROP_TYPE.type })
 @Component({
   selector: 'hda-prop-editor',
-  template: 'property editor',
-  standalone: false
+  template: 'property editor'
 })
 class PropEditorComponent {
   public constructor(@Inject(EDITOR_API) public editorApi: EditorApi<string>) {}
 }
 
 @NgModule({
-  declarations: [PropEditorComponent],
   imports: [
+    PropEditorComponent,
     DashboardCoreModule.with({
       models: [TestModel],
       propertyTypes: [TEST_PROP_TYPE]

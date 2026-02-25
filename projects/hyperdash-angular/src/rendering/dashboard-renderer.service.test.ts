@@ -24,7 +24,7 @@ describe('Dashboard Renderer Service', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HostComponent, RendererComponent]
+      imports: [HostComponent, RendererComponent]
     }).compileComponents();
 
     dashboardRendererService = TestBed.inject(DashboardRendererService);
@@ -181,8 +181,7 @@ describe('Dashboard Renderer Service', () => {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-host',
-  template: 'Host > <ng-container #container><ng-container>',
-  standalone: false
+  template: 'Host > <ng-container #container><ng-container>'
 })
 class HostComponent {
   @ViewChild('container', { read: ViewContainerRef, static: true })
@@ -195,8 +194,7 @@ class TestModel {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-renderer',
-  template: '{{ api.model.modelProp }}',
-  standalone: false
+  template: '{{ api.model.modelProp }}'
 })
 class RendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
