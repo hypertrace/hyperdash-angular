@@ -15,56 +15,56 @@ import { DashboardCoreModule } from '../../module/dashboard-core.module';
 import { DashboardEditorModule } from '../dashboard-editor.module';
 import { EDITOR_API } from '../editor-api-injection-token';
 
+const TEST_PROP_TYPE: ModelPropertyTypeRegistrationInformation = {
+  type: 'test-prop-type'
+};
+
+@Model({
+  type: 'test-model'
+})
+class TestModel {
+  @ModelProperty({
+    type: TEST_PROP_TYPE.type,
+    key: 'prop'
+  })
+  public property: string = 'default';
+}
+
+@ModelPropertyEditor({ propertyType: TEST_PROP_TYPE.type })
+@Component({
+  selector: 'hda-prop-editor',
+  template: 'property editor',
+  standalone: false
+})
+class PropEditorComponent {
+  public constructor(@Inject(EDITOR_API) public editorApi: EditorApi<string>) {}
+}
+
+@NgModule({
+  declarations: [PropEditorComponent],
+  imports: [
+    DashboardCoreModule.with({
+      models: [TestModel],
+      propertyTypes: [TEST_PROP_TYPE]
+    })
+  ]
+})
+class TestDashboardModule {}
+
+@Component({
+  selector: 'hda-host',
+  template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
+  standalone: true,
+  imports: [DashboardEditorModule],
+  schemas: [NO_ERRORS_SCHEMA]
+})
+class HostComponent {
+  public modelJson?: object;
+}
+
 // Large test - testing all machinery, no mocks
 describe('Model JSON editor component', () => {
   let host: ComponentFixture<HostComponent>;
-
-  const TEST_PROP_TYPE: ModelPropertyTypeRegistrationInformation = {
-    type: 'test-prop-type'
-  };
-
-  @Model({
-    type: 'test-model'
-  })
-  class TestModel {
-    @ModelProperty({
-      type: TEST_PROP_TYPE.type,
-      key: 'prop'
-    })
-    public property: string = 'default';
-  }
-
-  @ModelPropertyEditor({ propertyType: TEST_PROP_TYPE.type })
-  @Component({
-    selector: 'hda-prop-editor',
-    template: 'property editor',
-    standalone: false
-  })
-  class PropEditorComponent {
-    public constructor(@Inject(EDITOR_API) public editorApi: EditorApi<string>) {}
-  }
-
-  @NgModule({
-    declarations: [PropEditorComponent],
-    imports: [
-      DashboardCoreModule.with({
-        models: [TestModel],
-        propertyTypes: [TEST_PROP_TYPE]
-      })
-    ]
-  })
-  class TestDashboardModule {}
-
-  @Component({
-    selector: 'hda-host',
-    template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
-    standalone: true,
-    imports: [DashboardEditorModule],
-    schemas: [NO_ERRORS_SCHEMA]
-  })
-  class HostComponent {
-    public modelJson?: object;
-  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
