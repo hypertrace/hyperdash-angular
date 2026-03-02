@@ -1,7 +1,6 @@
 # Hyperdash Angular
 
 ![build-and-test](https://github.com/hypertrace/hyperdash-angular/workflows/build-and-test/badge.svg)
-[![codecov](https://codecov.io/gh/hypertrace/hyperdash-angular/branch/main/graph/badge.svg)](https://codecov.io/gh/hypertrace/hyperdash-angular)
 
 ## Prerequisites
 
