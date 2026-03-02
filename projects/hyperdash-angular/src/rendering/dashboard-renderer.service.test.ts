@@ -199,3 +199,59 @@ class TestModel {
 class RendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
 }
+
+describe('Dashboard Renderer Service with non-standalone renderers', () => {
+  let dashboardRendererService: DashboardRendererService;
+  let host: ComponentFixture<LegacyHostComponent>;
+  let modelManager: ModelManagerService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [LegacyHostComponent, LegacyRendererComponent]
+    }).compileComponents();
+
+    dashboardRendererService = TestBed.inject(DashboardRendererService);
+    modelManager = TestBed.inject(ModelManagerService);
+    modelManager.registerModelApiBuilder({
+      matches: () => true,
+      // eslint-disable-next-line: no-object-literal-type-assertion
+      build: () => ({}) as ModelApi
+    });
+
+    const rendererLibrary = TestBed.inject(RendererLibraryService);
+    rendererLibrary.lookupRenderer = vi.fn().mockReturnValue(LegacyRendererComponent);
+
+    host = TestBed.createComponent(LegacyHostComponent);
+  });
+
+  test('renders renderer declared in an NgModule context', () => {
+    const model = modelManager.create(TestModel);
+    model.modelProp = 'Legacy Renderer';
+
+    dashboardRendererService.renderInViewContainer(model, host.componentInstance.viewContainerRef);
+    host.detectChanges();
+
+    expect(host.nativeElement.textContent).toBe('Legacy > Legacy Renderer');
+  });
+});
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-legacy-host',
+  template: 'Legacy > <ng-container #container><ng-container>',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone -- intentionally testing non-standalone backward compatibility
+  standalone: false
+})
+class LegacyHostComponent {
+  @ViewChild('container', { read: ViewContainerRef, static: true })
+  public viewContainerRef!: ViewContainerRef;
+}
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-legacy-renderer',
+  template: '{{ api.model.modelProp }}',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone -- intentionally testing non-standalone backward compatibility
+  standalone: false
+})
+class LegacyRendererComponent {
+  public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
+}

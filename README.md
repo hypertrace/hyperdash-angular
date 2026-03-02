@@ -4,7 +4,9 @@
 
 ## Prerequisites
 
-Install Node + NPM
+- Angular `^21.0.0`
+- Node `^20.19.0 || ^22.12.0 || >=23`
+- NPM
 
 ## Setup
 
@@ -12,10 +14,9 @@ Install Node + NPM
 
 ## RxJS Compatibility
 
-`@hypertrace/hyperdash-angular` currently uses `rxjs` `^6.5.5`.
+`@hypertrace/hyperdash-angular` supports both RxJS 6 (`^6.5.5`) and RxJS 7 (`^7.0.0`).
 
-The library code is kept compatible with both RxJS 6 and RxJS 7 import styles where practical, but
-published compatibility currently follows `@hypertrace/hyperdash` peer requirements.
+The library code is kept compatible with both RxJS 6 and RxJS 7 import styles where practical.
 
 ## Development server
 
