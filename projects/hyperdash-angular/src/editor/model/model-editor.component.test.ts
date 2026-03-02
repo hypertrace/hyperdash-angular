@@ -17,7 +17,6 @@ describe('Model editor component', () => {
   @Component({
     selector: 'hda-host',
     template: ' <hda-model-editor [model]="model" (modelChange)="modelChanged($event)"> </hda-model-editor> ',
-    standalone: true,
     imports: [DashboardEditorModule],
     schemas: [NO_ERRORS_SCHEMA]
   })

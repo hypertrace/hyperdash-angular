@@ -7,8 +7,7 @@ import { DashboardRendererService } from './dashboard-renderer.service';
  * for injection
  */
 @Directive({
-  selector: '[hdaDashboardModel]',
-  standalone: true
+  selector: '[hdaDashboardModel]'
 })
 export class DashboardModelDirective implements OnChanges {
   public constructor(

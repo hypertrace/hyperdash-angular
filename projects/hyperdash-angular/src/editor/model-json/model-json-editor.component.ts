@@ -13,7 +13,6 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
   selector: 'hda-model-json-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ' <hda-model-editor [model]="modelObject" /> ',
-  standalone: true,
   imports: [ModelEditorComponent]
 })
 export class ModelJsonEditorComponent implements OnChanges, OnDestroy {

@@ -37,7 +37,6 @@ import { catchError, map, take } from 'rxjs/operators';
   selector: 'app-example-dash',
   templateUrl: './example-dash.component.html',
   styleUrls: ['./example-dash.component.scss'],
-  standalone: true,
   imports: [FormsModule, JsonPipe, DashboardComponent, ModelEditorComponent]
 })
 export class ExampleDashComponent implements OnInit {
@@ -254,7 +253,6 @@ export class ExampleDataSource implements DataSource<string> {
       </div>
     </div>
   `,
-  standalone: true,
   imports: [AsyncPipe, ThemePropertyPipe]
 })
 export class ExampleRendererComponent implements OnInit {
@@ -286,7 +284,6 @@ export class ExampleRendererComponent implements OnInit {
       }
     </div>
   `,
-  standalone: true,
   imports: [DashboardModelDirective, ThemePropertyPipe]
 })
 export class ExampleContainerRendererComponent {
@@ -303,7 +300,6 @@ export class ExampleContainerRendererComponent {
     <h5>{{ label }}</h5>
     <input type="text" [(ngModel)]="currentValue" (keyup.enter)="propagateChange()" (focusout)="propagateChange()" />
   `,
-  standalone: true,
   imports: [FormsModule]
 })
 export class StringPropertyEditorComponent {

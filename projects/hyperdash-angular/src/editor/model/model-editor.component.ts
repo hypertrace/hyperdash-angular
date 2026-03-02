@@ -15,7 +15,6 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
       <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector" />
     }
   `,
-  standalone: true,
   imports: [NgComponentOutlet]
 })
 export class ModelEditorComponent implements OnChanges, OnDestroy {

@@ -76,7 +76,6 @@ describe('DashboardModelDirective', () => {
 @Component({
   selector: 'hda-dash-model-directive-host',
   template: '<ng-container [hdaDashboardModel]=model><ng-container>',
-  standalone: true,
   imports: [DashboardModelDirective],
   schemas: [NO_ERRORS_SCHEMA]
 })

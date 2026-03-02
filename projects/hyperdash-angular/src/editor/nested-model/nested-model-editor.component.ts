@@ -11,7 +11,6 @@ import { ModelJsonEditorComponent } from '../model-json/model-json-editor.compon
   selector: 'hda-nested-model-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<hda-model-json-editor [modelJson]="api.value" (modelJsonChange)="api.valueChange($event)" /> ',
-  standalone: true,
   imports: [ModelJsonEditorComponent]
 })
 export class NestedModelEditorComponent {

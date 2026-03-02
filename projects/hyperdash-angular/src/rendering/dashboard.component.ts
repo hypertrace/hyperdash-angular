@@ -21,7 +21,6 @@ import { DashboardRendererService } from './dashboard-renderer.service';
   selector: 'hda-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ' <ng-container [hdaDashboardModel]="dashboardObject?.root" /> ',
-  standalone: true,
   imports: [DashboardModelDirective]
 })
 export class DashboardComponent<TRoot extends object = object> implements OnChanges, OnDestroy {

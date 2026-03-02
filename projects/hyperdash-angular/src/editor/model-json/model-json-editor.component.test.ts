@@ -53,7 +53,6 @@ class TestDashboardModule {}
 @Component({
   selector: 'hda-host',
   template: ' <hda-model-json-editor [(modelJson)]="modelJson"> </hda-model-json-editor> ',
-  standalone: true,
   imports: [DashboardEditorModule],
   schemas: [NO_ERRORS_SCHEMA]
 })

@@ -16,8 +16,7 @@ describe('Dashboard Component', () => {
   let host: ComponentFixture<HostComponent>;
   const mockDashDirective = mockDirective<DashboardModelDirective>({
     selector: '[hdaDashboardModel]',
-    inputs: ['hdaDashboardModel'],
-    standalone: true
+    inputs: ['hdaDashboardModel']
   });
   let mockDashboardRendererService: Partial<DashboardRendererService>;
   let mockRendererDomEventObservable: Observable<RendererDomEvent<Event, object, unknown>>;
@@ -29,7 +28,6 @@ describe('Dashboard Component', () => {
       <hda-dashboard [json]="json" (dashboardReady)="dashboard = $event" (widgetSelectionChange)="widgetSelected($event)">
       </hda-dashboard>
     `,
-    standalone: true,
     imports: [DashboardComponent],
     schemas: [NO_ERRORS_SCHEMA]
   })
