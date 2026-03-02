@@ -27,6 +27,10 @@ describe('example dash component', () => {
     TestBed.inject(DefaultConfigurationService).configure();
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   test('can detect clicks inside the dashboard', () => {
     const fixture = TestBed.createComponent(ExampleDashComponent);
     fixture.componentInstance.onClick = vi.fn();
@@ -90,8 +94,6 @@ describe('example dash component', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.textContent).not.toContain('new text!');
-
     expect(fixture.nativeElement.textContent).toContain('wipe it all away');
-    vi.useRealTimers();
   });
 });
