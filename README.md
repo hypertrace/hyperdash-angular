@@ -11,6 +11,13 @@ Install Node + NPM
 
 `npm install`
 
+## RxJS Compatibility
+
+`@hypertrace/hyperdash-angular` currently uses `rxjs` `^6.5.5`.
+
+The library code is kept compatible with both RxJS 6 and RxJS 7 import styles where practical, but
+published compatibility currently follows `@hypertrace/hyperdash` peer requirements.
+
 ## Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
