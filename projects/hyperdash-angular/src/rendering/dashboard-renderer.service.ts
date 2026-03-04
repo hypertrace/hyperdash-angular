@@ -1,12 +1,4 @@
-import {
-  ComponentFactory,
-  ComponentFactoryResolver,
-  ComponentRef,
-  Injectable,
-  Injector,
-  Type,
-  ViewContainerRef
-} from '@angular/core';
+import { ComponentRef, Injectable, Injector, Type, ViewContainerRef } from '@angular/core';
 import { fromEvent, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ModelDestroyedEventService } from '../injectable-wrappers/model-destroyed-event.service';
@@ -41,11 +33,11 @@ export class DashboardRendererService {
 
     const rendererDestructionSubject = new Subject<void>();
 
-    const componentRef = viewContainerRef.createComponent<TRenderer>(
-      this.buildRendererFactory(model, viewContainerRef),
-      0,
-      this.buildInjector(model, rendererDestructionSubject.asObservable(), viewContainerRef)
-    );
+    const renderer = this.rendererLibrary.lookupRenderer(model.constructor as Type<unknown>) as Type<TRenderer>;
+    const componentRef = viewContainerRef.createComponent<TRenderer>(renderer, {
+      index: 0,
+      injector: this.buildInjector(model, rendererDestructionSubject.asObservable(), viewContainerRef)
+    });
 
     componentRef.onDestroy(() => {
       rendererDestructionSubject.next();
@@ -111,42 +103,27 @@ export class DashboardRendererService {
     return eventSubject.asObservable();
   }
 
-  private buildRendererFactory<TRenderer>(
-    model: object,
-    viewContainerRef: ViewContainerRef
-  ): ComponentFactory<TRenderer> {
-    /* Get it from the appropriate injector based on usage location. Need to jump through hoops here
-    because ComponentFactoryResolver is an abstract type which doesn't play nice with generics */
-    const resolver = viewContainerRef.injector.get(
-      ComponentFactoryResolver as unknown as Type<ComponentFactoryResolver>
-    );
-
-    const renderer = this.rendererLibrary.lookupRenderer(model.constructor as Type<unknown>) as Type<TRenderer>;
-
-    return resolver.resolveComponentFactory(renderer);
-  }
-
   private buildInjector(
     model: object,
     rendererDestruction$: Observable<void>,
     viewContainerRef: ViewContainerRef
   ): Injector {
-    return Injector.create(
-      [
+    return Injector.create({
+      providers: [
         {
           provide: RENDERER_API,
           useValue: this.rendererApiFactory.buildApi(model, rendererDestruction$)
         }
       ],
-      viewContainerRef.injector
-    );
+      parent: viewContainerRef.injector
+    });
   }
 
   private addEventSubscriptionForRenderedModel(model: object, subscriber: DomEventSubscriber): void {
     const rendererInfo = this.renderedComponentByModel.get(model);
     if (!rendererInfo) {
       // Should not be hit, this is checked externally. Extra safety.
-      /* istanbul ignore next */
+      /* v8 ignore next */
       return;
     }
     const rendererElement = rendererInfo.componentRef.location.nativeElement as Element;

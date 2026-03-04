@@ -78,9 +78,13 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "detectOpenHandles": true
+            "buildTarget": "hyperdash-angular-app:build",
+            "tsConfig": "tsconfig.spec.json",
+            "runner": "vitest",
+            "runnerConfig": "vitest.config.ts",
+            "reporters": ["default", ["junit", { "outputFile": "test-results/hyperdash-angular-app/results.xml" }]]
           }
         },
         "lint": {
@@ -110,8 +114,22 @@
           }
         },
         "test": {
-          "builder": "@angular-builders/jest:run",
-          "options": {}
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "hyperdash-angular:build",
+            "tsConfig": "projects/hyperdash-angular/tsconfig.spec.json",
+            "runner": "vitest",
+            "runnerConfig": "vitest.config.ts",
+            "coverage": true,
+            "coverageInclude": ["projects/hyperdash-angular/src/**/*.ts"],
+            "coverageExclude": [
+              "**/*.module.ts",
+              "**/public_api.ts",
+              "projects/hyperdash-angular/src/test/**",
+              "projects/hyperdash-angular/src/util/**"
+            ],
+            "reporters": ["default", ["junit", { "outputFile": "test-results/hyperdash-angular/results.xml" }]]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",

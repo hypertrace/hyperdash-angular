@@ -12,18 +12,18 @@ Hyperdash Angular (`@hypertrace/hyperdash-angular`) is an Angular library provid
 
 ```bash
 # Development
-npm start                    # Dev server at localhost:4200
-npm run build               # Build app and library
+pnpm start                    # Dev server at localhost:4200
+pnpm run build               # Build app and library
 
 # Testing
-npm test                    # Run tests (watch mode)
-npm run test:ci:lib         # Library tests only (CI mode)
-npm run test:ci:app         # App tests only (CI mode)
-npm run test:ci             # Full CI suite (lint + all tests)
+pnpm test                    # Run tests (watch mode)
+pnpm run test:ci:lib         # Library tests only (CI mode)
+pnpm run test:ci:app         # App tests only (CI mode)
+pnpm run test:ci             # Full CI suite (lint + all tests)
 
 # Code Quality
-npm run lint                # Run ESLint
-npm run commit              # Interactive conventional commit (commitizen)
+pnpm run lint                # Run ESLint
+pnpm run commit              # Interactive conventional commit (commitizen)
 ```
 
 ## Architecture
@@ -37,9 +37,10 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 
 ### Module System
 
-- `DashboardCoreModule`: Main runtime module with default property types and deserializers
+- All library components, directives, and pipes are **standalone**
+- `DashboardCoreModule`: Re-exports standalone declarables with default property types and deserializers
 - `DashboardCoreModule.with(metadata)`: Extend with custom types, models, renderers, editors, deserializers
-- `DashboardEditorModule`: Separate module for editing capabilities
+- `DashboardEditorModule`: Re-exports standalone editor components
 
 ### Key Injection Tokens
 
@@ -69,15 +70,16 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 
 ### Testing
 
-- Jest with `@ngneat/spectator` for component testing
+- Vitest via `@angular/build:unit-test` (zoneless, AOT)
 - Test files: `*.test.ts` or `*.spec.ts`
 - Coverage excludes: `*.module.ts`, `public_api.ts`, `test/` directory
+- Zoneless requires `fixture.changeDetectorRef.markForCheck()` before `fixture.detectChanges()` when mutating component properties between change detection cycles
 
 ### Commits
 
 - Conventional commits required (enforced via commitlint)
-- Use `npm run commit` for interactive commit wizard
-- Pre-commit hook runs Prettier on staged files
+- Use `pnpm run commit` for interactive commit wizard
+- Pre-commit hook runs oxfmt on staged files
 
 ## ESLint Rules of Note
 

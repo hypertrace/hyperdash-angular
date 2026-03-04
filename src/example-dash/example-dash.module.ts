@@ -1,6 +1,4 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { DashboardCoreModule } from '@hypertrace/hyperdash-angular';
 import {
   ExampleContainer,
@@ -13,19 +11,15 @@ import {
 } from './example-dash.component';
 
 @NgModule({
-  declarations: [
+  imports: [
     ExampleDashComponent,
     ExampleContainerRendererComponent,
     ExampleRendererComponent,
-    StringPropertyEditorComponent
-  ],
-  exports: [ExampleDashComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
+    StringPropertyEditorComponent,
     DashboardCoreModule.with({
       models: [ExampleDataSource, ExampleContainer, ExampleModel]
     })
-  ]
+  ],
+  exports: [ExampleDashComponent]
 })
 export class ExampleDashModule {}

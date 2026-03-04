@@ -1,8 +1,9 @@
 import { Component, Inject, ViewChild, ViewContainerRef } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ModelApi } from '@hypertrace/hyperdash';
 import { ReplaySubject } from 'rxjs';
+import { vi } from 'vitest';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { RendererLibraryService } from '../injectable-wrappers/renderer-library.service';
 import { getTestScheduler } from '../test/test-utils';
@@ -21,9 +22,9 @@ describe('Dashboard Renderer Service', () => {
     return model;
   };
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [HostComponent, RendererComponent]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HostComponent, RendererComponent]
     }).compileComponents();
 
     dashboardRendererService = TestBed.inject(DashboardRendererService);
@@ -34,10 +35,10 @@ describe('Dashboard Renderer Service', () => {
       build: () => ({}) as ModelApi
     });
     const rendererLibrary = TestBed.inject(RendererLibraryService);
-    rendererLibrary.lookupRenderer = jest.fn().mockReturnValue(RendererComponent);
+    rendererLibrary.lookupRenderer = vi.fn().mockReturnValue(RendererComponent);
 
     host = TestBed.createComponent(HostComponent);
-  }));
+  });
 
   test('can render', () => {
     dashboardRendererService.renderInViewContainer(createModel('Renderer'), host.componentInstance.viewContainerRef);
@@ -180,8 +181,7 @@ describe('Dashboard Renderer Service', () => {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-host',
-  template: 'Host > <ng-container #container><ng-container>',
-  standalone: false
+  template: 'Host > <ng-container #container><ng-container>'
 })
 class HostComponent {
   @ViewChild('container', { read: ViewContainerRef, static: true })
@@ -194,9 +194,64 @@ class TestModel {
 
 @Component({
   selector: 'hda-dash-angular-renderer-service-renderer',
-  template: '{{ api.model.modelProp }}',
-  standalone: false
+  template: '{{ api.model.modelProp }}'
 })
 class RendererComponent {
+  public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
+}
+
+describe('Dashboard Renderer Service with non-standalone renderers', () => {
+  let dashboardRendererService: DashboardRendererService;
+  let host: ComponentFixture<LegacyHostComponent>;
+  let modelManager: ModelManagerService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [LegacyHostComponent, LegacyRendererComponent]
+    }).compileComponents();
+
+    dashboardRendererService = TestBed.inject(DashboardRendererService);
+    modelManager = TestBed.inject(ModelManagerService);
+    modelManager.registerModelApiBuilder({
+      matches: () => true,
+      // eslint-disable-next-line: no-object-literal-type-assertion
+      build: () => ({}) as ModelApi
+    });
+
+    const rendererLibrary = TestBed.inject(RendererLibraryService);
+    rendererLibrary.lookupRenderer = vi.fn().mockReturnValue(LegacyRendererComponent);
+
+    host = TestBed.createComponent(LegacyHostComponent);
+  });
+
+  test('renders renderer declared in an NgModule context', () => {
+    const model = modelManager.create(TestModel);
+    model.modelProp = 'Legacy Renderer';
+
+    dashboardRendererService.renderInViewContainer(model, host.componentInstance.viewContainerRef);
+    host.detectChanges();
+
+    expect(host.nativeElement.textContent).toBe('Legacy > Legacy Renderer');
+  });
+});
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-legacy-host',
+  template: 'Legacy > <ng-container #container><ng-container>',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone -- intentionally testing non-standalone backward compatibility
+  standalone: false
+})
+class LegacyHostComponent {
+  @ViewChild('container', { read: ViewContainerRef, static: true })
+  public viewContainerRef!: ViewContainerRef;
+}
+
+@Component({
+  selector: 'hda-dash-angular-renderer-service-legacy-renderer',
+  template: '{{ api.model.modelProp }}',
+  // eslint-disable-next-line @angular-eslint/prefer-standalone -- intentionally testing non-standalone backward compatibility
+  standalone: false
+})
+class LegacyRendererComponent {
   public constructor(@Inject(RENDERER_API) public readonly api: RendererApi<TestModel>) {}
 }

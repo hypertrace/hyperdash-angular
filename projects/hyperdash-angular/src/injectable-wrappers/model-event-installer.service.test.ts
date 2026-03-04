@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ModelEventMetadataType } from '@hypertrace/hyperdash';
 import { Subject } from 'rxjs';
+import { vi } from 'vitest';
 import { DashboardEventManagerService } from './dashboard-event-manager.service';
 import { ModelEventInstallerService } from './model-event-installer.service';
 
@@ -20,7 +21,7 @@ describe('Model event installer service', () => {
 
   test('should support injecting event keys', () => {
     const dashEventManagerService: DashboardEventManagerService = TestBed.inject(DashboardEventManagerService);
-    dashEventManagerService.publishEvent = jest.fn();
+    dashEventManagerService.publishEvent = vi.fn();
 
     class TestModelClass {
       public event$: Subject<string> = new Subject();

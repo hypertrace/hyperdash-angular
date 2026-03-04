@@ -11,8 +11,7 @@
       "extends": [
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "prettier"
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "plugins": ["eslint-plugin-no-null", "eslint-plugin-unicorn"],
       "rules": {
@@ -28,7 +27,7 @@
         "@angular-eslint/no-pipe-impure": "error",
         "@angular-eslint/no-queries-metadata-property": "error",
         "@angular-eslint/prefer-output-readonly": "error",
-        "@angular-eslint/prefer-standalone": "off",
+        "@angular-eslint/prefer-standalone": "error",
         "@angular-eslint/use-component-selector": "error",
         "@angular-eslint/use-component-view-encapsulation": "error",
         "@angular-eslint/prefer-inject": "off",

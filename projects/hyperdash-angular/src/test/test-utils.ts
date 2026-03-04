@@ -6,7 +6,6 @@ export const mockDirective = <T = unknown>(config: {
   selector: string;
   inputs?: string[];
   outputs?: string[];
-  standalone: boolean;
 }): Type<T> => Directive(config)(class {} as Type<T>);
 
 export const getTestScheduler = () =>

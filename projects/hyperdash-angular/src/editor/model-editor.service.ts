@@ -66,7 +66,7 @@ export class ModelEditorService {
           ],
           parent: this.injector
         });
-      /* istanbul ignore next */
+      /* v8 ignore next */
       default:
         // TODO multiple
         return this.injector;

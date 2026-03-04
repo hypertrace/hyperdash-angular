@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, input, output } from '@angular/core';
+import { ModelEditorComponent } from '../model/model-editor.component';
 import { DeserializationManagerService } from '../../injectable-wrappers/deserialization/deserialization-manager.service';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../../injectable-wrappers/model-manager.service';
@@ -12,7 +13,7 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
   selector: 'hda-model-json-editor',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ' <hda-model-editor [model]="modelObject" /> ',
-  standalone: false
+  imports: [ModelEditorComponent]
 })
 export class ModelJsonEditorComponent implements OnChanges, OnDestroy {
   /**

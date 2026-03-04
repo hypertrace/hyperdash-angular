@@ -11,17 +11,25 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Node 20
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
-      - name: NPM Install
-        run: npm ci
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install
+        run: pnpm run ci
 
       - name: Build
-        run: npm run build:ci
+        run: pnpm run build:ci
   test:
     runs-on: ubuntu-24.04
     steps:
@@ -30,23 +38,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Node 20
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
-      - name: NPM Install
-        run: npm ci
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install
+        run: pnpm run ci
 
       - name: Test
-        run: npm run test:ci
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
-        with:
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
+        run: pnpm run test:ci
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2

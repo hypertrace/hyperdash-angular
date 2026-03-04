@@ -1,4 +1,5 @@
 import { EMPTY, Observable } from 'rxjs';
+import { vi } from 'vitest';
 import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
 import { ModelManagerService } from '../injectable-wrappers/model-manager.service';
 import { ThemeManagerService } from '../injectable-wrappers/theme-manager.service';
@@ -31,25 +32,25 @@ describe('Theme property pipe', () => {
     mockThemeManager = {};
     mockRendererApi = { model: mockModel };
     mockModelManager = {
-      getRoot: jest.fn().mockReturnValue(mockRoot)
+      getRoot: vi.fn().mockReturnValue(mockRoot)
     };
 
     mockModelChangeObservable = EMPTY;
     mockModelChanged = {
-      getObservableForModel: jest.fn(() => mockModelChangeObservable)
+      getObservableForModel: vi.fn(() => mockModelChangeObservable)
     };
   });
 
   test('should delegate to theme manager', () => {
     buildPipe();
-    mockThemeManager.getThemePropertyForModel = jest.fn();
+    mockThemeManager.getThemePropertyForModel = vi.fn();
     pipe.transform('test-string');
     expect(mockThemeManager.getThemePropertyForModel).toHaveBeenCalledWith(mockModel, 'test-string');
   });
 
   test('should cache value only if matched previous request', () => {
     buildPipe();
-    mockThemeManager.getThemePropertyForModel = jest.fn();
+    mockThemeManager.getThemePropertyForModel = vi.fn();
     pipe.transform('test-string');
     pipe.transform('test-string');
     expect(mockThemeManager.getThemePropertyForModel).toHaveBeenCalledTimes(1);
@@ -62,7 +63,7 @@ describe('Theme property pipe', () => {
     getTestScheduler().run(({ cold, flush }) => {
       mockModelChangeObservable = cold('x');
       buildPipe();
-      mockThemeManager.getThemePropertyForModel = jest.fn();
+      mockThemeManager.getThemePropertyForModel = vi.fn();
       pipe.transform('test-string');
       flush();
       pipe.transform('test-string');
@@ -75,7 +76,7 @@ describe('Theme property pipe', () => {
       const coldMock = cold<object>('x');
       mockModelChangeObservable = coldMock;
       buildPipe();
-      mockThemeManager.getThemePropertyForModel = jest.fn();
+      mockThemeManager.getThemePropertyForModel = vi.fn();
       // eslint-disable-next-line: no-lifecycle-call
       pipe.ngOnDestroy();
 

@@ -11,6 +11,7 @@ import { Dashboard, ModelJson } from '@hypertrace/hyperdash';
 import { DashboardManagerService } from '../injectable-wrappers/dashboard-manager.service';
 import { ModelChangedEventService } from '../injectable-wrappers/model-changed-event.service';
 import { TypedSimpleChanges } from '../util/angular-change-object';
+import { DashboardModelDirective } from './dashboard-model.directive';
 import { DashboardRendererService } from './dashboard-renderer.service';
 
 /**
@@ -20,7 +21,7 @@ import { DashboardRendererService } from './dashboard-renderer.service';
   selector: 'hda-dashboard',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ' <ng-container [hdaDashboardModel]="dashboardObject?.root" /> ',
-  standalone: false
+  imports: [DashboardModelDirective]
 })
 export class DashboardComponent<TRoot extends object = object> implements OnChanges, OnDestroy {
   /**

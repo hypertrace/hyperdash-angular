@@ -15,17 +15,25 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Set up Node 20
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node 22
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
-      - name: NPM Install
-        run: npm ci
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+
+      - name: Install
+        run: pnpm run ci
 
       - name: Build
-        run: npm run build:ci
+        run: pnpm run build:ci
 
       - uses: google-github-actions/auth@v2
         id: auth
@@ -36,10 +44,10 @@ jobs:
       # Ref https://github.com/semantic-release/npm/pull/844
       - name: Update npmrc for publish
         shell: bash
-        run: npm config set -L project @hypertrace:registry ${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}
+        run: echo "@hypertrace:registry=${{ secrets.GAR_NPM_PUBLISH_REGISTRY }}" >> .npmrc
 
       - name: Publish
-        run: npm run semantic-release
+        run: pnpm run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ steps.auth.outputs.access_token }}

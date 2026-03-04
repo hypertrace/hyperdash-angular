@@ -1,4 +1,5 @@
 ## Description
+
 Please include a summary of the change, motivation and context.
 
 <!--
@@ -7,16 +8,18 @@ Please include a summary of the change, motivation and context.
 - **on a bugfix**: link relevant information about the bug (github issue or slack thread) and how this change solves it e.g. this change fixes #99999 by adding a lock on read/write to avoid data races.
 -->
 
-
 ### Testing
-Please describe the tests that you ran to verify your changes. Please summarize what did you test and what needs to be tested e.g. deployed and tested helm chart locally. 
+
+Please describe the tests that you ran to verify your changes. Please summarize what did you test and what needs to be tested e.g. deployed and tested helm chart locally.
 
 ### Checklist:
+
 - [ ] My changes generate no new warnings
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] Any dependent changes have been merged and published in downstream modules
 
 ### Documentation
+
 Make sure that you have documented corresponding changes in this repository or [hypertrace docs repo](https://github.com/hypertrace/hypertrace-docs-website) if required.
 
 <!--

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PrimitiveDeserializer } from '@hypertrace/hyperdash';
 
-/* istanbul ignore next */
+/* v8 ignore next */
 /**
  * Injectable implementation of PrimitiveDeserializer
  */

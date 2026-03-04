@@ -1,3 +1,4 @@
+import { NgComponentOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, input, output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ModelChangedEventService } from '../../injectable-wrappers/model-changed-event.service';
@@ -14,7 +15,7 @@ import { ModelEditorService, RenderableEditor } from '../model-editor.service';
       <ng-container *ngComponentOutlet="subeditor.component; injector: subeditor.injector" />
     }
   `,
-  standalone: false
+  imports: [NgComponentOutlet]
 })
 export class ModelEditorComponent implements OnChanges, OnDestroy {
   /**
