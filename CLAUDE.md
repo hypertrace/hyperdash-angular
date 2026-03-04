@@ -12,18 +12,18 @@ Hyperdash Angular (`@hypertrace/hyperdash-angular`) is an Angular library provid
 
 ```bash
 # Development
-npm start                    # Dev server at localhost:4200
-npm run build               # Build app and library
+pnpm start                    # Dev server at localhost:4200
+pnpm run build               # Build app and library
 
 # Testing
-npm test                    # Run tests (watch mode)
-npm run test:ci:lib         # Library tests only (CI mode)
-npm run test:ci:app         # App tests only (CI mode)
-npm run test:ci             # Full CI suite (lint + all tests)
+pnpm test                    # Run tests (watch mode)
+pnpm run test:ci:lib         # Library tests only (CI mode)
+pnpm run test:ci:app         # App tests only (CI mode)
+pnpm run test:ci             # Full CI suite (lint + all tests)
 
 # Code Quality
-npm run lint                # Run ESLint
-npm run commit              # Interactive conventional commit (commitizen)
+pnpm run lint                # Run ESLint
+pnpm run commit              # Interactive conventional commit (commitizen)
 ```
 
 ## Architecture
@@ -78,7 +78,7 @@ Core `@hypertrace/hyperdash` classes are wrapped as Angular injectable services 
 ### Commits
 
 - Conventional commits required (enforced via commitlint)
-- Use `npm run commit` for interactive commit wizard
+- Use `pnpm run commit` for interactive commit wizard
 - Pre-commit hook runs oxfmt on staged files
 
 ## ESLint Rules of Note

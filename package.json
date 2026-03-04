@@ -2,6 +2,7 @@
   "name": "hyperdash-angular",
   "version": "0.0.0",
   "private": true,
+  "packageManager": "pnpm@10.30.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,10 +11,11 @@
     "lint": "ng lint",
     "format": "oxfmt",
     "commit": "git-cz",
+    "ci": "pnpm install --frozen-lockfile",
     "build:ci": "ng build --configuration production hyperdash-angular && ng build --configuration production hyperdash-angular-app",
     "test:ci:app": "ng test hyperdash-angular-app --no-watch",
     "test:ci:lib": "ng test hyperdash-angular --no-watch",
-    "test:ci": "npm run lint && npm run test:ci:app && npm run test:ci:lib",
+    "test:ci": "pnpm run lint && pnpm run test:ci:app && pnpm run test:ci:lib",
     "docs": "compodoc -p projects/hyperdash-angular/tsconfig.lib.json",
     "semantic-release": "semantic-release",
     "prepare": "husky"
@@ -98,6 +100,12 @@
         }
       ],
       "@semantic-release/github"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@parcel/watcher"
     ]
   }
 }
