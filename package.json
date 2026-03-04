@@ -104,8 +104,10 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
       "esbuild",
-      "@parcel/watcher"
+      "lmdb",
+      "msgpackr-extract"
     ]
   }
 }
