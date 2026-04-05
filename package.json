@@ -60,7 +60,7 @@
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-unicorn": "56.0.1",
     "husky": "^9.1.7",
-    "jsdom": "^28.1.0",
+    "jsdom": "^29.0.1",
     "ng-packagr": "^21.2.0",
     "oxfmt": "^0.43.0",
     "semantic-release": "^19.0.5",
