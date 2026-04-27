@@ -62,7 +62,7 @@
     "husky": "^9.1.7",
     "jsdom": "^29.0.2",
     "ng-packagr": "^21.2.0",
-    "oxfmt": "^0.45.0",
+    "oxfmt": "^0.47.0",
     "semantic-release": "^19.0.5",
     "typescript": "~5.9.3",
     "vitest": "^4.0.18"
